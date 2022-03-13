@@ -2,250 +2,244 @@
 layout: reference
 ---
 
-## Summary of Basic Commands
+## 基本命令
 
-| Action      | Files | Folders      |
+| 动作         | 文件  | 目录          |
 |-------------|-------|--------------|
-| Inspect     | ls    | ls           |
-| View content| cat   | ls           |
-| Navigate to |       | cd           |
-| Move        | mv    | mv           |
-| Copy        | cp    | cp -r        |
-| Create      | nano  | mkdir        |
-| Delete      | rm    | rmdir, rm -r |
+| 查看信息     | ls    | ls           |
+| 查看内容     | cat   | ls           |
+| 导航        |       | cd           |
+| 移动        | mv    | mv           |
+| 拷贝        | cp    | cp -r        |
+| 创建        | touch | mkdir        |
+| 删除        | rm    | rmdir, rm -r |
 
-## Filesystem hierarchy
+## 文件系统结构
 
-The following is an overview of a standard Unix filesystem.
-The exact hierarchy depends on the platform. Your file/directory structure may differ slightly:
+以下是标准Linux文件系统的概述。
+确切的层次结构取决于平台。您的文件/目录结构可能略有不同：
 
-![Linux filesystem hierarchy](fig/standard-filesystem-hierarchy.svg)
+![Linux文件系统层次结构](fig/standard-filesystem-hierarchy.svg)
 
-## Glossary
+## 词汇表
 
 {:auto_ids}
-absolute path
-:   A [path](#path) that refers to a particular location in a file system.
-    Absolute paths are usually written with respect to the file system's
-    [root directory](#root-directory),
-    and begin with either "/" (on Unix) or "\\" (on Microsoft Windows).
-    See also: [relative path](#relative-path).
+绝对路径absolute path
+:   一个 [path](#path)，它引用文件系统中的特定位置。
+    绝对路径通常是相对于文件系统的
+    [根目录](#root-directory),
+    并以“/”（在Linux上）或“\\”（在 Microsoft Windows 上）开头。
+    另请参阅：[相对路径](#relative-path)。
 
 argument
-:   A value given to a function or program when it runs.
-    The term is often used interchangeably (and inconsistently) with [parameter](#parameter).
+:   函数或程序运行时赋予它的值。
 
-command shell
-:   See [shell](#shell)
+命令shell
+:   查看[shell](#shell)
 
-command-line interface
-:   A user interface based on typing commands,
-    usually at a [REPL](#read-evaluate-print-loop).
-    See also: [graphical user interface](#graphical-user-interface).
+命令行接口command line interface
+:   基于键入命令的用户界面，
+    通常在 [REPL](#read-evaluate-print-loop)。
+    另请参阅：[图形用户界面](#graphical-user-interface)。
 
-comment
-:   A remark in a program that is intended to help human readers understand what is going on,
-    but is ignored by the computer.
-    Comments in Python, R, and the Unix shell start with a `#` character
-    and run to the end of the line;
-    comments in SQL start with `--`,
-    and other languages have other conventions.
-
-
-current working directory
-:   The directory that [relative paths](#relative-path) are calculated from;
-    equivalently,
-    the place where files referenced by name only are searched for.
-    Every [process](#process) has a current working directory.
-    The current working directory is usually referred to using the shorthand notation `.`
-    (pronounced "dot").
-
-file system
-:   A set of files, directories, and I/O devices (such as keyboards and screens).
-    A file system may be spread across many physical devices,
-    or many file systems may be stored on a single physical device;
-    the [operating system](#operating-system) manages access.
-
-filename extension
-:   The portion of a file's name that comes after the final "." character.
-    By convention this identifies the file's type:
-    `.txt` means "text file", `.png` means "Portable Network Graphics file",
-    and so on. These conventions are not enforced by most operating systems:
-    it is perfectly possible (but confusing!) to name an MP3 sound file `homepage.html`.
-    Since many applications use filename extensions to identify the
-    [MIME type](#mime-type) of the file,
-    misnaming files may cause those applications to fail.
-
-filter
-:   A program that transforms a stream of data.
-    Many Unix command-line tools are written as filters:
-    they read data from [standard input](#standard-input),
-    process it, and write the result to [standard output](#standard-output).
-
-for loop
-:   A loop that is executed once for each value in some kind of set, list, or range.
-    See also: [while loop](#while-loop).
-
-graphical user interface
-:   A user interface based on selecting items and actions from a graphical display,
-    usually controlled by using a mouse.
-    See also: [command-line interface](#command-line-interface).
-
-home directory
-:   The default directory associated with an account on a computer system.
-    By convention, all of a user's files are stored in or below her home directory.
-
-loop
-:   A set of instructions to be executed multiple times.
-    Consists of a [loop body](#loop-body) and (usually) a
-    condition for exiting the loop. See also [for loop](#for-loop) and [while loop](#while-loop).
-
-loop body
-:   The set of statements or commands that are repeated inside a [for loop](#for-loop)
-    or [while loop](#while-loop).
-
-MIME type
-:   MIME (Multi-Purpose Internet Mail Extensions) types describe different file types for exchange
-    on the Internet, for example, images, audio, and documents.
-
-operating system
-:   Software that manages interactions between users, hardware, and software [processes](#process).
-    Common examples are Linux, macOS, and Windows.
-
-option
-:   A way to specify an argument or setting to a command-line program.
-    By convention Unix applications use a dash followed by a single letter,
-    such as `-v`, or two dashes followed by a word, such as `--verbose`,
-    while DOS applications use a slash, such as `/V`.
-    Depending on the application, an option may be followed by a single argument,
-    as in `-o /tmp/output.txt`.
-
-parameter
-:   A variable named in a function's declaration that is used to hold a value passed into the call.
-    The term is often used interchangeably (and inconsistently) with [argument](#argument).
-
-parent directory
-:   The directory that "contains" the one in question.
-    Every directory in a file system except the [root directory](#root-directory) has a parent.
-    A directory's parent is usually referred to using the shorthand notation `..`
-    (pronounced "dot dot").
-
-path
-:   A description that specifies the location of a file or directory within a
-    [file system](#file-system).
-    See also: [absolute path](#absolute-path), [relative path](#relative-path).
+注释comment
+:   旨在帮助人类读者理解正在发生的事情的程序中的注释，
+    但被计算机忽略。
+    Python、R 和 Unix shell 中的注释以 `#` 字符开头
+    并跑到行尾；
+    SQL 中的注释以 `--` 开头，
+    其他语言有其他约定。
 
 
-pipe
-:   A connection from the output of one program to the input of another.
-    When two or more programs are connected in this way, they are called a "pipeline".
+当前工作目录current working directory
+:   [相对路径](#relative-path) 计算的目录；
+    等效地，
+    仅搜索按名称引用的文件的位置。
+    每个 [process](#process) 都有一个当前工作目录。
+    当前工作目录通常使用简写符号 `.` 来表示。
+    （发音为“点”）。
 
-process
-:   A running instance of a program, containing code, variable values,
-    open files and network connections, and so on.
-    Processes are the "actors" that the [operating system](#operating-system) manages;
-    it typically runs each process for a few milliseconds at a time
-    to give the impression that they are executing simultaneously.
+文件系统file system
+:   一组文件、目录和 I/O 设备（例如键盘和屏幕）。
+    一个文件系统可能分布在许多物理设备上，
+    或者许多文件系统可以存储在单个物理设备上；
+    [操作系统](#operating-system) 管理访问。
 
+文件后缀file extension
+:   文件名中最后一个“.”之后的部分。
+    按照惯例，这标识了文件的类型：
+    `.txt` 表示“文本文件”，`.png` 表示“便携式网络图形文件”，
+    等等。 大多数操作系统不强制执行这些约定：
+    将 MP3 声音文件命名为“homepage.html”是完全可能的（但令人困惑！）。
+    由于许多应用程序使用文件扩展名来识别
+    [MIME 类型](#mime-type) 文件，
+    错误命名的文件可能会导致这些应用程序失败。
 
-prompt
-:   A character or characters display by a [REPL](#read-evaluate-print-loop) to show that
-    it is waiting for its next command.
+过滤filter
+:   转换数据流的程序。
+    许多Linux命令行工具被编写为过滤器：
+    他们从 [标准输入](#standard-input) 读取数据，
+    处理它，并将结果写入[标准输出](#standard-output)。
 
-quoting
-:   (in the shell):
-    Using quotation marks of various kinds to prevent the shell from interpreting special
-    characters.
-    For example, to pass the string `*.txt` to a program,
-    it is usually necessary to write it as `'*.txt'` (with single quotes)
-    so that the shell will not try to expand the `*` wildcard.
+for loop循环
+:   对某种集合、列表或范围中的每个值执行一次的循环。
+    另请参阅：[while 循环](#while-loop)。
 
-read-evaluate-print loop
-:   (REPL): A [command-line interface](#command-line-interface) that reads a command from the user,
-    executes it, prints the result, and waits for another command.
+图形用户接口graphical user interface
+:   基于从图形显示中选择项目和操作的用户界面，
+    通常使用鼠标控制。
+    另请参阅：[命令行界面](#command-line-interface)。
 
-redirect
-:   To send a command's output to a file rather than to the screen or another command,
-    or equivalently to read a command's input from a file.
+家目录home directory
+:   与计算机系统上的帐户关联的默认目录。
+    按照惯例，用户的所有文件都存储在她的主目录中或之下。
 
-regular expression
-:   A pattern that specifies a set of character strings.
-    REs are most often used to find sequences of characters in strings.
+循环loop
+:   一组要执行多次的指令。
+    由一个 [循环体](#loop-body) 和（通常）一个
+    退出循环的条件。 另见 [for 循环](#for-loop) 和 [while 循环](#while-loop)。
 
-relative path
-:   A [path](#path) that specifies the location of a file or directory
-    with respect to the [current working directory](#current-working-directory).
-    Any path that does not begin with a separator character ("/" or "\\") is a relative path.
-    See also: [absolute path](#absolute-path).
+循环体loop body
+:   在 [for 循环](#for-loop) 内重复的一组语句或命令
+    或 [while 循环](#while-loop)。
 
-root directory
-:   The top-most directory in a [file system](#file-system).
-    Its name is "/" on Unix (including Linux and macOS) and "\\" on Microsoft Windows.
+MIME type类型
+:   MIME（多用途 Internet 邮件扩展）类型描述用于交换的不同文件类型
+    例如，图像、音频和文档。
+
+操作系统operating system
+:   管理用户、硬件和软件 [进程](#process) 之间交互的软件。
+    常见的例子是 Linux、macOS 和 Windows。
+
+选项option
+:   一种为命令行程序指定参数或设置的方法。
+    按照惯例，Unix 应用程序使用破折号后跟一个字母，
+    例如 `-v`，或两个破折号后跟一个单词，例如 `--verbose`，
+    而 DOS 应用程序使用斜杠，例如 `/V`。
+    根据应用程序，一个选项后面可能跟一个参数，
+    如`-o /tmp/output.txt`。
+
+参数parameter
+:   在函数声明中命名的变量，用于保存传递给调用的值。
+    该术语经常与 [argument](#argument) 互换使用（且不一致）。
+
+父目录parent directory
+:   “包含”有问题的目录。
+    除了[根目录](#root-directory)，文件系统中的每个目录都有一个父目录。
+    目录的父级通常使用简写符号“..”来表示
+    （发音为“点点”）。
+
+路径path
+:   指定文件或目录在一个文件或目录中的位置的描述
+    [文件系统](#file-system)。
+    另请参阅：[绝对路径](#absolute-path)、[相对路径](#relative-path)。
+
+管道pipe
+:   从一个程序的输出到另一个程序的输入的连接。
+    当两个或多个程序以这种方式连接时，它们被称为“管道”。
+
+进程process
+:   程序的运行实例，包含代码、变量值、
+    打开文件和网络连接等等。
+    进程是[操作系统](#operating-system) 管理的“参与者”；
+    它通常一次运行每个进程几毫秒
+    给人一种他们同时执行的印象。
+
+提示prompt
+:   一个或多个字符由 [REPL](#read-evaluate-print-loop) 显示以表明
+    它正在等待下一个命令。
+
+引号quoting
+:   （在shell中）：
+     使用各种引号来防止shell解释特殊
+     人物。
+     例如，要将字符串 `*.txt` 传递给程序，
+     通常需要写成`'*.txt'`（带单引号）
+     这样 shell 就不会尝试扩展 `*` 通配符。
+
+读-验证-打印循环read-evaluate-print loop
+:   (REPL)：从用户那里读取命令的[命令行接口](#命-令-行-接-口)，
+    执行它，打印结果，然后等待另一个命令。
+
+重定向redirect
+:   要将命令的输出发送到文件而不是屏幕或其他命令，
+    或等效地从文件中读取命令的输入。
+
+正则表达式regular expression
+:   指定一组字符串的模式。
+    RE最常用于查找字符串中的字符序列。
+
+相对路径relative path
+:   [path](#path) 指定文件或目录的位置
+    关于[当前工作目录]（#current-working-directory）。
+    任何不以分隔符（“/”或“\\”）开头的路径都是相对路径。
+    另请参阅：[绝对路径](#absolute-path)。
+
+根目录root directory
+:   [文件系统](#file-system) 中最顶层的目录。
+    它的名称在 Unix（包括 Linux 和 macOS）上是“/”，在 Microsoft Windows 上是“\\”。
 
 shell
-:   A [command-line interface](#cli) such as Bash (the Bourne-Again Shell)
-    or the Microsoft Windows DOS shell
-    that allows a user to interact with the [operating system](#operating-system).
+:   [命令行界面](#cli)，例如 Bash（Bourne-Again Shell）
+    或 Microsoft Windows DOS shell
+    允许用户与[操作系统]（#operating-system）交互。
 
 shell script
-:   A set of [shell](#shell) commands stored in a file for re-use.
-    A shell script is a program executed by the shell;
-    the name "script" is used for historical reasons.
+:   存储在文件中以供重复使用的一组 [shell](#shell) 命令。
+    shell脚本是由shell执行的程序；
+    出于历史原因，使用“脚本”这个名称。
 
+标准输入standard input
+:   进程的默认输入流。
+    在交互式命令行应用程序中，
+    它通常连接到键盘；
+    在 [管道](#pipe) 中，
+    它从前面进程的 [标准输出](#standard-output) 接收数据。
 
-standard input
-:   A process's default input stream.
-    In interactive command-line applications,
-    it is typically connected to the keyboard;
-    in a [pipe](#pipe),
-    it receives data from the [standard output](#standard-output) of the preceding process.
+标准输出standard output
+:   进程的默认输出流。
+    在交互式命令行应用程序中，
+    发送到标准输出的数据显示在屏幕上；
+    在 [管道](#pipe) 中，
+    它被传递到下一个进程的 [标准输入](#standard-input)。
 
+子目录sub-directory
+:   包含在另一个目录中的目录。
 
-standard output
-:   A process's default output stream.
-    In interactive command-line applications,
-    data sent to standard output is displayed on the screen;
-    in a [pipe](#pipe),
-    it is passed to the [standard input](#standard-input) of the next process.
+tab completion补全
+:   许多交互式系统提供的一项功能，其中
+    按Tab键会触发当前单词或命令的自动完成。
 
+变量variable
+:   程序中与一个值或一组值相关联的名称。
 
-sub-directory
-:   A directory contained within another directory.
+while loop循环
+:   只要某些条件为真，循环就会一直执行。
+    另请参阅：[for 循环](#for-loop)。
 
-tab completion
-:   A feature provided by many interactive systems in which
-    pressing the Tab key triggers automatic completion of the current word or command.
+通配符wildcard
+:   用于模式匹配的字符。
+    在Linux shell中，
+    通配符 `*` 匹配零个或多个字符，
+    这样 `*.txt` 匹配所有名称以 `.txt` 结尾的文件。
 
-variable
-:   A name in a program that is associated with a value or a collection of values.
+## 外部参考
 
-while loop
-:   A loop that keeps executing as long as some condition is true.
-    See also: [for loop](#for-loop).
-
-wildcard
-:   A character used in pattern matching.
-    In the Unix shell,
-    the wildcard `*` matches zero or more characters,
-    so that `*.txt` matches all files whose names end in `.txt`.
-
-## External references
-
-### Opening a terminal
-* [How to Use Terminal on a Mac](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/)
+### 打开一个终端
+* [如何在 Mac 上使用终端](http://www.macworld.co.uk/feature/mac-software/how-use-terminal-on-mac-3608274/)
 * [Git for Windows](https://git-for-windows.github.io/)
-* [How to Install Bash shell command-line tool on Windows 10](https://www.windowscentral.com/how-install-bash-shell-command-line-windows-10)
-* [Install and Use the Linux Bash Shell on Windows 10](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/)
-* [Using the Windows 10 Bash Shell](https://www.howtogeek.com/265900/everything-you-can-do-with-windows-10s-new-bash-shell/)
-* [Using a UNIX/Linux emulator (Cygwin) or Secure Shell (SSH) client (Putty)](http://faculty.smu.edu/reynolds/unixtut/windows.html)
+* [如何在 Windows 10 上安装 Bash shell 命令行工具](https://www.windowscentral.com/how-install-bash-shell-command-line-windows-10)
+* [在 Windows 10 上安装和使用 Linux Bash Shell](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/ )
+* [使用 Windows 10 Bash Shell](https://www.howtogeek.com/265900/everything-you-can-do-with-windows-10s-new-bash-shell/)
+* [使用 UNIX/Linux 模拟器 (Cygwin) 或 Secure Shell (SSH) 客户端 (Putty)](http://faculty.smu.edu/reynolds/unixtut/windows.html)
 
-### Manuals
-* [GNU manuals](http://www.gnu.org/manual/manual.html)
-* [Core GNU utilities](http://www.gnu.org/software/coreutils/manual/coreutils.html)
+### 用户手册
+* [GNU 手册](http://www.gnu.org/manual/manual.html)
+* [核心 GNU 实用程序](http://www.gnu.org/software/coreutils/manual/coreutils.html)
 
-### Miscellaneous
-* [North Pacific Gyre](http://en.wikipedia.org/wiki/North_Pacific_Gyre)
-* [Great Pacific Garbage Patch](http://en.wikipedia.org/wiki/Great_Pacific_Garbage_Patch)
-* ['Ensuring the longevity of digital information' by Jeff Rothenberg](http://www.clir.org/pubs/archives/ensuring.pdf)
-* [Computer error haikus](http://wiki.c2.com/?ComputerErrorHaiku)
-* [How to name files nicely, by Jenny Bryan](https://speakerdeck.com/jennybc/how-to-name-files)
+### 各种文章资源
+* [北太平洋环流](http://en.wikipedia.org/wiki/North_Pacific_Gyre)
+* [大太平洋垃圾补丁](http://en.wikipedia.org/wiki/Great_Pacific_Garbage_Patch)
+* [杰夫·罗森伯格的“确保数字信息的寿命”](http://www.clir.org/pubs/archives/ensuring.pdf)
+* [计算机错误Haiku](http://wiki.c2.com/?ComputerErrorHaiku)
+* [如何很好地命名文件，作者 Jenny Bryan](https://speakerdeck.com/jennybc/how-to-name-files)

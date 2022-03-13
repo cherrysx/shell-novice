@@ -1,218 +1,185 @@
 ---
 layout: page
-title: "Instructor Notes"
+title: "教学指导笔记"
 ---
-*   Why do we learn to use the shell?
-    *   Allows users to automate repetitive tasks
-    *   And capture small data manipulation steps that are normally not recorded
-        to make research reproducible
-*   The Problem
-    *   Running the same workflow on several samples can be unnecessarily labour intensive
-    *   Manual manipulation of data files:
-        *   is often not captured in documentation
-        *   is hard to reproduce
-        *   is hard to troubleshoot, review, or improve
-*   The Shell
-    *   Workflows can be automated through the use of shell scripts
-    *   Built-in commands allow for easy data manipulation (e.g. sort, grep, etc.)
-    *   Every step can be captured in the shell script and allow reproducibility and
-        easy troubleshooting
+*   为什么我们要学习使用shell？
+    *   允许用户自动执行重复性任务
+    *   捕获通常不记录的小数据操作步骤，使研究可重复
+*   问题
+    *   在多个样本上运行相同的工作流程，可能会不必要地耗费大量人力
+    *   手动操作数据文件：
+        *   通常不会在文档中记录
+        *   难以复制
+        *   难以排除、审查或改进
+*   Shell优点
+    *   工作流程可以通过使用shell脚本实现自动化
+    *   内置命令可以轻松进行数据操作（例如`sort`、`grep`等）
+    *   每个步骤都可以在shell脚本中执行，并允许重现性和简单的故障排除
 
-## Overall
+## 整体概览
 
-Many people have questioned whether we should still teach the shell.
-After all,
-anyone who wants to rename several thousand data files
-can easily do so interactively in the Python interpreter,
-and anyone who's doing serious data analysis
-is probably going to do most of their work inside the IPython Notebook or R Studio.
-So why teach the shell?
+许多人质疑我们是否还应该教shell。毕竟，任何想要重命名数千个数据文件的人都可以轻松地在Python解释器中以交互方式完成，
+而任何认真进行数据分析的人都可能会在IPython Notebook或 R Studio中完成大部分工作。那么为什么要教shell呢？
 
-The first answer is,
-"Because so much else depends on it."
-Installing software,
-configuring your default editor,
-and controlling remote machines frequently assume a basic familiarity with the shell,
-and with related ideas like standard input and output.
-Many tools also use its terminology
-(for example, the `%ls` and `%cd` magic commands in IPython).
+第一个答案是，“因为还有很多其他事情取决于它。”。安装软件、配置您的默认编辑器和控制远程机器通常假设你对shell以及相关的想法，
+如标准输入和输出有基本的了解。许多工具也使用它的术语（例如，IPython 中的 `%ls` 和 `%cd` 魔术命令）。
 
-The second answer is,
-"Because it's an easy way to introduce some fundamental ideas about how to use computers."
-As we teach people how to use the Unix shell,
-we teach them that they should get the computer to repeat things
-(via tab completion,
-`!` followed by a command number,
-and `for` loops)
-rather than repeating things themselves.
-We also teach them to take things they've discovered they do frequently
-and save them for later re-use
-(via shell scripts),
-to give things sensible names,
-and to write a little bit of documentation
-(like comment at the top of shell scripts)
-to make their future selves' lives better.
+第二个答案是，
+“因为这是介绍一些关于如何使用计算机的基本思想的简单方法。”
+当我们教人们如何使用shell时，
+我们教他们应该让计算机重复一些事情
+（通过制表符完成，
+`!` 后跟一个命令号，
+和 `for` 循环）
+而不是自己重复事情。
+我们还教他们接受他们经常做的事情
+并保存它们以供以后重复使用
+（通过shell脚本），
+给事物起合理的名字，
+并写一点文档
+（如 shell 脚本顶部的注释）
+让未来的自己过上更好的生活。
 
-The third answer is,
-"Because it enables use of many domain-specific tools and compute resources researchers
-cannot access otherwise."
-Familiarity with the shell is very useful for remote accessing machines,
-using high-performance computing infrastructure,
-and running new specialist tools in many disciplines.
-We do not teach HPC or domain-specific skills here
-but lay the groundwork for further development of these skills.
-In particular,
-understanding the syntax of commands, flags, and help systems is useful for domain specific tools
-and understanding the file system (and how to navigate it) is useful for remote access.
+第三个答案是，
+“因为它可以让研究人员使用许多特定领域的工具和计算资源
+否则无法访问。”
+熟悉shell对于远程访问机器非常有用，
+使用高性能计算基础设施，
+并在许多学科中运行新的专业工具。
+我们不在这里教授高性能计算HPC或特定领域的技能
+但为这些技能的进一步发展奠定基础。
+特别是，
+理解命令、标志和帮助系统的语法对于特定领域的工具很有用
+了解文件系统（以及如何导航）对于远程访问很有用。
 
-Finally,
-and perhaps most importantly,
-teaching people the shell lets us teach them
-to think about programming in terms of function composition.
-In the case of the shell,
-this takes the form of pipelines rather than nested function calls,
-but the core idea of "small pieces, loosely joined" is the same.
+最后，也许最重要的是，教人shell让我们教他们从功能组合的角度考虑编程。
+在shell的情况下，采用管道而不是嵌套函数调用的形式，但“小块，松散连接”的核心理念是相同的。
 
-All of this material can be covered in three hours
-as long as learners using Windows do not run into roadblocks such as:
+所有这些材料可以在三个小时内完成。使用Windows的学习者不会遇到以下障碍：
 
-*   not being able to figure out where their home directory is
-    (particularly if they're using Cygwin);
-*   not being able to run a plain text editor;
-    and
-*   the shell refusing to run scripts that include DOS line endings.
+*   无法弄清楚他们的主目录在哪里（特别是如果他们使用 Cygwin）；
+*   无法运行纯文本编辑器；
+*   Shell拒绝运行包含 DOS 行尾的脚本。
 
-## Preparing to Teach
+## 准备教学
 
-*   Use the `data` directory for in-workshop exercises and live coding examples.
-    You can clone the shell-novice directory or use the *Download ZIP*
-    button on the right to get the entire
-    [Git repository](https://github.com/swcarpentry/shell-novice). We also now provide
-    a zip file of the `data` directory
-    at the [Setup page]({{ page.root }}{% link setup.md %}).
+*   在 [设置页面]({{ page.root }}{% link setup.md %})，我们现在提供了练习用的数据zip 文件。
 
-*   Website: various practices have been used.
-    *   Option 1: Can give links to learners before the lesson so they can follow along,
-        catch up,
-	and see exercises (particularly if you're following the lesson content without many changes).
-    *   Option 2: Don't show the website to the learners during the lesson,
-        as it can be distracting:
-        students may read instead of listen, and having another window open is an additional
-        cognitive load.
-	*   In any case, make sure to point to website as a post-workshop reference.
+*   包含了各种练习。
+    *   选项 1：可以在课前为学习者提供链接，以便他们继续学习，
+        跟上来，并查看练习（特别是如果您遵循课程内容而没有进行很多更改）。
+    *   选项 2：在课程期间不要向学习者展示网站，因为它可能会分散注意力：
+        学生可以阅读而不是听，并且打开另一个窗口是额外的认知负荷。
+	*   在任何情况下，请务必将网站作为研讨会后的参考。
 
-*   Content:
-    Unless you have a truly generous amount of time (4+ hours),
-    it is likely that you will not cover ALL the material in this lesson in a single half-day
-    session.
-    Plan ahead on what you might skip, what you really want to emphasize, etc.
+*   内容：
+     除非你有大量的时间（4 小时以上），
+     你很可能不会在半天时间里学完本课的所有材料。
+     提前计划好你可能会跳过的内容、你真正想要强调的内容等。
 
-*   Exercises:
-    Think in advance about how you might want to handle exercises during the lesson.
-    How are you assigning them (website, slide, handout)?
-    Do you want everyone to try it and then you show the solution?
-    Have a learner show the solution?
-    Have groups each do a different exercise and present their solutions?
+*   练习:
+    提前考虑在课程中您可能希望如何处理练习。
+    你如何分配它们（网站、幻灯片、讲义）？
+    你想让每个人都尝试一下，然后你展示解决方案吗？
+    有学习者展示解决方案吗？
+    是否每个小组都做不同的练习并提出他们的解决方案？
 
-*   The [Reference page]({{ page.root }}{% link reference.md %}) can be printed out
-    and given to students as a reference, your choice.
+*   [参考资料]({{ page.root }}{% link reference.md %})可以打印出来
+    并给学生作为参考，这是你的选择。
 
-*   Other preparation:
-    Feel free to add your own examples or side comments,
-    but know that it shouldn't be necessary:
-    the topics and commands can be taught as given on the lesson pages.
-    If you think there is a place where the lesson is lacking,
-    feel free to file an issue or submit a pull request.
+*   其它准备:
+    随意添加您自己的示例或旁注，
+    但知道它不应该是必要的：
+    可以按照课程页面上的说明教授主题和命令。
+    如果你觉得课程有欠缺的地方，
+    随时提出问题给我。
 
-## Teaching Notes
+## 教学笔记
 
-*   Super cool online resource!
-    <http://explainshell.com/> will dissect any shell command you type in
-    and display help text for each piece.
-    Additional nice manual tool could be <http://tldr-pages.github.io/>
-    with short very descriptive manuals for shell commands,
-    useful especially on Windows while using Git BASH where `man` could not work.
+*   超酷的在线资源！
+    <http://explainshell.com/> 将剖析您输入的任何shell命令
+    并显示每个片段的帮助文本。
+    其他不错的手动工具可能是 <http://tldr-pages.github.io/>
+    带有简短的非常描述性的shell命令手册，
+    在使用“man”无法工作的 Git BASH 时在 Windows 上尤其有用。
 
-*   Another super cool online resource is <http://www.shellcheck.net>,
-    which will check shell scripts (both uploaded and typed in) for common errors.
+*   另一个超酷的在线资源是<http://www.shellcheck.net>，
+    这将检查 shell 脚本（上传和输入）是否存在常见错误。
 
-*   Resources for "splitting" your shell so that recent commands
-    remain in view: <https://github.com/rgaiacs/swc-shell-split-window>.
+*   用于“拆分”你的shell的资源，以便最近的命令
+    保持在视图中：<https://github.com/rgaiacs/swc-shell-split-window>。
 
-*   Learners can sometimes get trapped within command-line text editors such as
-    Vim, Emacs, or Nano.
-    Closing the terminal emulator and opening a new one can be frustrating
-    as learners will have to navigate to the correct folder again.
-    Our recommendation to mitigate this problem is that instructors should use
-    the same text editor as the learners during workshops (in most cases Nano).
+*   学习者有时会被困在命令行文本编辑器中，例如
+    Vim、Emacs 或 Nano。
+    关闭终端仿真器并打开一个新的可能会令人沮丧
+    因为学习者必须再次导航到正确的文件夹。
+    我们为缓解这个问题的建议是教师应该使用
+    与课程期间的学习者使用相同的文本编辑器（大多数情况下是 Nano）。
 
-*   Introducing and navigating the filesystem in the shell (covered in
-    [Navigating Files and Directories]({{ page.root }}{% link _episodes/02-filedir.md %}) section)
-    can be confusing.
-    You may have both terminal and GUI file explorer open side by side so learners can see the
-    content and file structure while they're using terminal to navigate the system.
+*   在shell中介绍和导航文件系统（在
+    [导航文件和目录]({{ page.root }}{% link _episodes/02-filedir.md %}) 部分）
+    可能会令人困惑。
+    您可以同时打开终端和 GUI 文件资源管理器，以便学习者可以看到
+    他们使用终端导航系统时的内容和文件结构。
 
-*   Tab completion sounds like a small thing: it isn't.
-    Re-running old commands using `!123` or `!wc`
-    isn't a small thing either,
-    and neither are wildcard expansion and `for` loops.
-    Each one is an opportunity to repeat one of the big ideas of Software Carpentry:
-    if the computer *can* repeat it,
-    some programmer somewhere will almost certainly have built
-    some way for the computer *to* repeat it.
+*   Tab补全听起来像是一件小事：它不是。
+    使用 `!123` 或 `!wc` 重新运行旧命令
+    也不是小事，
+    通配符扩展和“for”循环也不是。
+    每一个都是重复软件木工的一个重要想法的机会：
+    如果计算机*可以*重复它，
+    某个地方的一些程序员几乎肯定会建造
+    计算机*以*重复它的某种方式。
 
-*   Building up a pipeline with four or five stages,
-    then putting it in a shell script for re-use
-    and calling that script inside a `for` loop,
-    is a great opportunity to show how
-    "seven plus or minus two"
-    connects to programming.
-    Once we have figured out how to do something moderately complicated,
-    we make it re-usable and give it a name
-    so that it only takes up one slot in working memory
-    rather than several.
-    It is also a good opportunity to talk about exploratory programming:
-    rather than designing a program up front,
-    we can do a few useful things
-    and then retroactively decide which are worth encapsulating
-    for future re-use.
+*   建立一个有四个或五个阶段的管道，
+    然后将其放入shell脚本中以供重复使用
+    并在“for”循环中调用该脚本。
+    一旦我们弄清楚如何做一些适度复杂的事情，
+    我们使其可重复使用并为其命名
+    所以它只占用工作记忆中的一个插槽
+    而不是几个。
+    这也是一个讨论探索性编程的好机会：
+    而不是预先设计一个程序，
+    我们可以做一些有用的事情
+    然后追溯决定哪些值得封装
+    以备将来重复使用。
 
-*   If everything is going well, you can drive home the point that file
-    extensions are essentially there to help computers (and human
-    readers) understand file content and are not a requirement of files
-    (covered briefly in
-    [Navigating Files and Directories]({{ page.root }}{% link _episodes/02-filedir.md %})).
-    This can be done in the
-    [Pipes and Filters]({{ page.root }}{% link _episodes/04-pipefilter.md %}) section by showing
-    that you can redirect standard output to a file without the .txt extension
-    (e.g., lengths), and that the resulting file is still a perfectly usable text file.
-    Make the point that if double-clicked in the GUI, the computer will
-    probably ask you what you want to do.
+*   如果一切顺利，你可以开车回家点那个文件
+    扩展本质上是为了帮助计算机（和人类
+    读者）了解文件内容，而不是文件的要求
+    （简要介绍
+    [导航文件和目录]({{ page.root }}{% link _episodes/02-filedir.md %}))。
+    这可以在
+    [管道和过滤器]({{ page.root }}{% link _episodes/04-pipefilter.md %}) 部分通过显示
+    您可以将标准输出重定向到没有 .txt 扩展名的文件
+    （例如，长度），并且生成的文件仍然是一个完全可用的文本文件。
+    指出如果在GUI中双击，计算机将
+    可能会问你想做什么。
 
-*   We have to leave out many important things because of time constraints,
-    including file permissions, job control, and SSH.
-    If learners already understand the basic material,
-    this can be covered instead using the online lessons as guidelines.
-    These limitations also have follow-on consequences:
+*   由于时间限制，我们不得不遗漏很多重要的事情，
+    包括文件权限、作业控制和SSH。
+    如果学习者已经理解了基本材料，
+    可以使用在线课程作为指导来涵盖这一点。
+    这些限制也有后续后果：
 
-*   It's hard to discuss `#!` (shebang) without first discussing
-    permissions, which we don't do.  `#!` is also [pretty
-    complicated][shebang], so even if we did discuss permissions, we
-    probably still wouldn't want to discuss `#!`.
+*   不先讨论就很难讨论 `#!` (shebang)
+    权限，我们不这样做。 `#!` 也是 [漂亮
+    复杂][shebang]，所以即使我们确实讨论了权限，我们
+    可能仍然不想讨论`#!`。
 
-*   Installing Bash and a reasonable set of Unix commands on Windows
-    always involves some fiddling and frustration.
-    Please see the latest set of installation guidelines for advice,
-    and try it out yourself *before* teaching a class.
+*   在 Windows 上安装 Bash 和一组合理的Linux命令
+    总是涉及一些挫折。
+    请参阅最新的安装指南以获取建议，
+    并在*上课之前*自己尝试一下。
 
-*   On Windows machines
-    if `nano` hasn't been properly installed with the
-    [Software Carpentry Windows Installer][windows-installer]
-    it is possible to use `notepad` as an alternative.  There will be a GUI
-    interface and line endings are treated differently, but otherwise, for
-    the purposes of this lesson, `notepad` and `nano` can be used almost interchangeably.
+*   在 Windows 机器上
+    如果 `nano` 没有正确安装
+    [软件木工 Windows 安装程序][windows-installer]
+    可以使用“记事本”作为替代。 会有一个GUI
+    接口和行结尾的处理方式不同，但除此之外，对于
+    本课的目的是，`notepad` 和 `nano` 几乎可以互换使用。
 
-*   On Windows, it appears that:
+*   在 Windows 上：
 
     ~~~
     $ cd
@@ -220,49 +187,33 @@ as long as learners using Windows do not run into roadblocks such as:
     ~~~
     {: .language-bash}
 
-    will always put someone on their desktop.
-    Have them create the example directory for the shell exercises there
-    so that they can find it easily
-    and watch it evolve.
+    总是会把某人放在他们的桌面上。
+    让他们在那里为shell练习创建示例目录
+    这样他们就可以很容易地找到它
+    并观察它的演变。
 
-*  Stay within POSIX-compliant commands, as all the teaching materials do.
-   Your particular shell may have extensions beyond POSIX that are not available
-   on other machines, especially the default macOS bash and Windows bash emulators.
-   For example, POSIX `ls` does not have an `--ignore=` or `-I` option, and POSIX
-   `head` takes `-n 10` or `-10`, but not the long form of `--lines=10`.
+*  像所有教材一样，使用符合POSIX的命令。
+   您的特定shell可能具有超出POSIX的扩展，这些扩展不可用
+   在其他机器上，尤其是默认的macOS bash和Windows bash 模拟器。
+   例如，POSIX `ls` 没有 `--ignore=` 或 `-I` 选项，而 POSIX
+   `head` 采用 `-n 10` 或 `-10`，但不是 `--lines=10` 的长形式。
 
 ## Windows
 
-Installing Bash and a reasonable set of Unix commands on Windows
-always involves some fiddling and frustration.
-Please see the latest set of installation guidelines for advice,
-and try it out yourself *before* teaching a class.
-Options we have explored include:
+在 Windows 上安装Bash和一组合理的Linux命令
+总是涉及一些挫折。
+请参阅最新的安装指南以获取建议，
+并在*上课之前*自己尝试一下。
+我们探索的选项包括：
 
-1.  [msysGit](http://msysgit.github.io/) (also called "Git Bash"),
-2.  [Cygwin](http://www.cygwin.com/),
-3.  using a desktop virtual machine, and
-4.  having learners connect to a remote Unix machine (typically a VM in the cloud).
+1. [msysGit](http://msysgit.github.io/)（也称为“Git Bash”），
+2. [Cygwin](http://www.cygwin.com/),
+3. 使用桌面虚拟机
+4. 让学习者连接到远程Linux机器（通常是云中的VM）。
 
-Cygwin was the preferred option until mid-2013,
-but once we started teaching Git,
-msysGit proved to work better.
-Desktop virtual machines and cloud-based VMs work well for technically sophisticated learners,
-and can reduce installation and configuration at the start of the workshop,
-but:
-
-1.  they don't work well on underpowered machines,
-2.  they're confusing for novices (because simple things like copy and paste work differently),
-3.  learners leave the workshop without a working environment on their operating system of choice,
-    and
-4.  learners may show up without having downloaded the VM or the wireless will go down
-    (or become congested) during the lesson.
-
-Whatever you use,
-please *test it yourself* on a Windows machine *before* your workshop:
-things may always have changed behind your back since your last workshop.
-And please also make use of our
-[Software Carpentry Windows Installer][windows-installer].
+Cygwin 在 2013 年年中之前一直是首选，
+但是一旦我们开始教Git，
+msysGit被证明工作得更好。
+桌面虚拟机和基于云的虚拟机非常适合技术成熟的学习者。
 
 [shebang]: http://www.in-ulm.de/~mascheck/various/shebang/
-[windows-installer]: {{ site.swc_github }}/windows-installer

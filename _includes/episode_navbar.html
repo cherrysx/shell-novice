@@ -19,9 +19,9 @@ need to re-assign it here
   <div class="col-xs-1">
     <h3 class="text-left">
       {% if previous_episode %}
-      <a href="{{ relative_root_path }}{{ previous_episode.url }}"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">previous episode</span></a>
+      <a href="{{ relative_root_path }}{{ previous_episode.url }}"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span><span class="sr-only">上一节</span></a>
       {% else %}
-      <a href="{{ relative_root_path }}/"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span><span class="sr-only">lesson home</span></a>
+      <a href="{{ relative_root_path }}/"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span><span class="sr-only">主页</span></a>
       {% endif %}
     </h3>
   </div>
@@ -33,9 +33,9 @@ need to re-assign it here
   <div class="col-xs-1">
     <h3 class="text-right">
       {% if next_episode %}
-      <a href="{{ relative_root_path }}{{ next_episode.url }}"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">next episode</span></a>
+      <a href="{{ relative_root_path }}{{ next_episode.url }}"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span><span class="sr-only">下一节</span></a>
       {% else %}
-      <a href="{{ relative_root_path }}/"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span><span class="sr-only">lesson home</span></a>
+      <a href="{{ relative_root_path }}/"><span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span><span class="sr-only">主页</span></a>
       {% endif %}
     </h3>
   </div>

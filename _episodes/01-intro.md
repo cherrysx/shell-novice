@@ -1,99 +1,97 @@
 ---
-title: "Introducing the Shell"
+title: "介绍Linux Shell，免费入门教程"
 teaching: 5
 exercises: 0
 questions:
-- "What is a command shell and why would I use one?"
+- "Shell是什么？为什么我需要用到它？"
 objectives:
-- "Explain how the shell relates to the keyboard, the screen, the operating system, and users' programs."
-- "Explain when and why command-line interfaces should be used instead of graphical interfaces."
+- "解释shell如何与键盘、屏幕、操作系统和用户程序一起配合使用。"
+- "解释何时以及为什么应该使用命令行界面而不是图形界面。"
 keypoints:
-- "A shell is a program whose primary purpose is to read commands and run other programs."
--  "This lesson uses Bash, the default shell in many implementations of Unix."
--  "Programs can be run in Bash by entering commands at the command-line prompt."
-- "The shell's main advantages are its high action-to-keystroke ratio, its support for
-automating repetitive tasks, and its capacity to access networked machines."
-- "The shell's main disadvantages are its primarily textual nature and how
-cryptic its commands and operation can be."
+- "Shell是一个应用程序，其主要目的是读取命令和运行其他程序。"
+-  "本课使用Bash，这是许多Unix实现中的默认shell。"
+-  "通过在命令行提示符下输入命令，可以在Bash中运行程序。"
+- "Shell的主要优点是它的高效性，它支持自动化重复性任务，以及访问联网服务的能力。"
+- "Shell的主要缺点是它的文本性以及其命令和操作都非常隐晦神秘。"
 ---
-### Background
+### 背景
 
-Humans and computers commonly interact in many different ways, such as through a keyboard and mouse,
-touch screen interfaces, or using speech recognition systems.
-The most widely used way to interact with personal computers is called a
-**graphical user interface** (GUI).
-With a GUI, we give instructions by clicking a mouse and using menu-driven interactions.
+人类和计算机通常以许多不同的方式进行交互，例如通过键盘和鼠标，
+触摸屏界面，或使用语音识别系统。
+与个人计算机交互使用最广泛的方式称为
+**图形用户界面** (GUI)。
+使用 GUI，我们通过单击鼠标和使用菜单驱动的交互来给出指令。
 
-While the visual aid of a GUI makes it intuitive to learn,
-this way of delivering instructions to a computer scales very poorly.
-Imagine the following task:
-for a literature search, you have to copy the third line of one thousand text files in one thousand
-different directories and paste it into a single file.
-Using a GUI, you would not only be clicking at your desk for several hours,
-but you could potentially also commit an error in the process of completing this repetitive task.
-This is where we take advantage of the Unix shell.
-The Unix shell is both a **command-line interface** (CLI) and a scripting language,
-allowing such repetitive tasks to be done automatically and fast.
-With the proper commands, the shell can repeat tasks with or without some modification
-as many times as we want.
-Using the shell, the task in the literature example can be accomplished in seconds.
-
-
-### The Shell
+虽然GUI的视觉帮助使学习变得直观，
+这种向计算机传递指令的方式非常糟糕。
+想象以下任务：
+对于文献检索，您必须将一千个文本文件的第三行复制一千个
+不同的目录并将其粘贴到单个文件中。
+使用GUI，您不仅会在办公桌前点击几个小时，
+但您也可能在完成此重复性任务的过程中犯错误。
+这是我们利用 Linux shell 的地方。
+Linux shell既是一种**命令行界面**（CLI）又是一种脚本语言，
+允许自动快速地完成此类重复性任务。
+使用正确的命令，shell可以在有或没有一些修改的情况下重复任务
+我们想要多少次。
+使用shell，文献示例中的任务可以在几秒钟内完成。
 
 
-The shell is a program where users can type commands.
-With the shell, it's possible to invoke complicated programs like climate modeling software
-or simple commands that create an empty directory with only one line of code.
-The most popular Unix shell is Bash (the Bourne Again SHell ---
-so-called because it's derived from a shell written by Stephen Bourne).
-Bash is the default shell on most modern implementations of Unix and in most packages that provide
-Unix-like tools for Windows.
+### Shell
 
-Using the shell will take some effort and some time to learn.
-While a GUI presents you with choices to select, CLI choices are not automatically presented to you,
-so you must learn a few commands like new vocabulary in a language you're studying.
-However, unlike a spoken language, a small number of "words" (i.e. commands) gets you a long way,
-and we'll cover those essential few today.
 
-The grammar of a shell allows you to combine existing tools into powerful
-pipelines and handle large volumes of data automatically. Sequences of
-commands can be written into a *script*, improving the reproducibility of
-workflows.
+Shell是一个程序，用户可以在其中键入命令。
+使用shell，可以调用复杂的程序，如气候建模软件
+或者只用一行代码创建一个空目录的简单命令。
+最流行的shell是Bash（Bourne Again SHell ---
+之所以这么称呼，是因为它源自Stephen Bourne 编写的 shell）。
+Bash是大多数现代Linux实现和大多数提供
+适用于Windows的类Linux工具。
 
-In addition, the command line is often the easiest way to interact with remote machines
-and supercomputers.
-Familiarity with the shell is near essential to run a variety of specialized tools and resources
-including high-performance computing systems.
-As clusters and cloud computing systems become more popular for scientific data crunching,
-being able to interact with the shell is becoming a necessary skill.
-We can build on the command-line skills covered here
-to tackle a wide range of scientific questions and computational challenges.
+使用shell需要一些努力和一些时间来学习。
+虽然GUI会为您提供可供选择的选项，但CLI选项不会自动呈现给您，
+所以你必须学习一些命令，比如你正在学习的语言中的新词汇。
+然而，与口语不同，少量的“单词”（即命令）会让你走得很远，
+今天我们将介绍那些必不可少的几个。
 
-Let's get started.
+Shell的语法允许您将现有的工具组合成强大的
+管道并自动处理大量数据。序列
+命令可以写成*脚本*，提高可重复性
+工作流程。
 
-When the shell is first opened, you are presented with a **prompt**,
-indicating that the shell is waiting for input.
+此外，命令行通常是与远程机器交互的最简单方式
+和超级计算机。
+熟悉shell对于运行各种专用工具和资源几乎是必不可少的
+包括高性能计算系统。
+随着集群和云计算系统在科学数据处理方面变得越来越流行，
+能够与shell交互正在成为一项必要的技能。
+我们可以建立在此处介绍的命令行技能之上
+解决广泛的科学问题和计算挑战。
+
+让我们开始吧。
+
+首次打开shell时，您会看到一个**提示**，
+表示shell正在等待输入。
 
 ~~~
 $
 ~~~
 {: .language-bash}
 
-The shell typically uses `$ ` as the prompt, but may use a different symbol.
-In the examples for this lesson, we'll show the prompt as `$ `.
-Most importantly:
-when typing commands, either from these lessons or from other sources,
-*do not type the prompt*, only the commands that follow it.
-Also note that after you type a command, you have to press the <kbd>Enter</kbd> key to execute it.
+Shell通常使用 `$ ` 作为提示符，但可以使用不同的符号。
+在本课的示例中，我们将提示符显示为 `$ `。
+最重要的是：
+输入命令时，无论是从这些课程还是从其他来源，
+*不要输入提示符*，只输入它后面的命令。
+另请注意，键入命令后，您必须按 <kbd>Enter</kbd> 键才能执行它。
 
-The prompt is followed by a **text cursor**, a character that indicates the position where your
-typing will appear.
-The cursor is usually a flashing or solid block, but it can also be an underscore or a pipe.
-You may have seen it in a text editor program, for example.
+提示后跟一个**文本光标**，一个字符，指示您的位置
+会出现打字。
+光标通常是闪烁或实心块，但也可以是下划线或竖线。
+例如，您可能已经在文本编辑器程序中看到过它。
 
-So let's try our first command, `ls` which is short for listing.
-This command will list the contents of the current directory:
+所以让我们尝试我们的第一个命令，`ls`，它是列表的缩写。
+此命令将列出当前目录的内容：
 
 ~~~
 $ ls
@@ -106,9 +104,9 @@ Documents   Library     Music       Public
 ~~~
 {: .output}
 
-> ## Command not found
-> If the shell can't find a program whose name is the command you typed, it
-> will print an error message such as:
+> ## 找不到命令
+> 如果shell找不到名称为您键入的命令的程序，它
+> 将打印一条错误消息，例如：
 >
 > ~~~
 > $ ks
@@ -119,48 +117,47 @@ Documents   Library     Music       Public
 > ~~~
 > {: .output}
 >
-> This might happen if the command was mis-typed or if the program corresponding to that command
-> is not installed.
+> 如果命令输入错误或与该命令对应的程序可能会发生这种情况
+> 未安装。
 {: .callout}
 
 
-## Nelle's Pipeline: A Typical Problem
+## 管道：一个典型的问题
 
-Nelle Nemo, a marine biologist,
-has just returned from a six-month survey of the
-[North Pacific Gyre](http://en.wikipedia.org/wiki/North_Pacific_Gyre),
-where she has been sampling gelatinous marine life in the
-[Great Pacific Garbage Patch](http://en.wikipedia.org/wiki/Great_Pacific_Garbage_Patch).
-She has 1520 samples that she's run through an assay machine to measure the relative abundance
-of 300 proteins.
-She needs to run these 1520 files through an imaginary program called `goostats.sh` she inherited.
-On top of this huge task, she has to write up results by the end of the month so her paper
-can appear in a special issue of *Aquatic Goo Letters*.
+海洋生物学家Nelle Nemo
+刚刚采集
+[北太平洋环流](http://en.wikipedia.org/wiki/North_Pacific_Gyre)的数据,
+她一直在那儿采集凝胶状的海洋生物。
+她有 1520 个样本，她通过分析机器运行以测量相对丰度
+300种蛋白质。
+她需要通过她继承的一个名为“goostats.sh”的虚构程序运行这 1520 个文件。
+除了这项艰巨的任务，她还必须在月底之前写出结果，所以她的论文
+可以出现在*Aquatic Goo Letters* 的特刊中。
 
-The bad news is that if she has to run `goostats.sh` by hand using a GUI,
-she'll have to select and open a file 1520 times.
-If `goostats.sh` takes 30 seconds to run each file, the whole process will take more than 12 hours
-of Nelle's attention.
-With the shell, Nelle can instead assign her computer this mundane task while she focuses
-her attention on writing her paper.
+坏消息是，如果她必须使用GUI手动运行“goostats.sh”，
+她必须选择并打开一个文件 1520 次。
+如果 `goostats.sh` 运行每个文件需要 30 秒，那么整个过程将需要 12 多个小时
+内尔的注意力。
+有了shell，Nelle可以在她专注的时候给她的电脑分配这个平凡的任务
+她专注于写论文。
 
-The next few lessons will explore the ways Nelle can achieve this.
-More specifically,
-they explain how she can use a command shell to run the `goostats.sh` program,
-using loops to automate the repetitive steps of entering file names,
-so that her computer can work while she writes her paper.
+接下来的几节课将探讨 Nelle 实现这一目标的方法。
+进一步来说，
+他们解释了她如何使用命令shell来运行“goostats.sh”程序，
+使用循环来自动化输入文件名的重复步骤，
+这样她的电脑就可以在她写论文的时候工作。
 
-As a bonus,
-once she has put a processing pipeline together,
-she will be able to use it again whenever she collects more data.
+作为奖励，
+一旦她把一个处理管道放在一起，
+每当她收集更多数据时，她将能够再次使用它。
 
-In order to achieve her task, Nelle needs to know how to:
-- navigate to a file/directory
-- create a file/directory
-- check the length of a file
-- chain commands together
-- retrieve a set of files
-- iterate over files
-- run a shell script containing her pipeline
+为了完成她的任务，Nelle 需要知道如何：
+- 导航到文件/目录
+- 创建文件/目录
+- 检查文件的长度
+- 将命令链接在一起
+- 检索一组文件
+- 遍历文件
+- 运行一个包含她的管道的shell脚本
 
 {% include links.md %}

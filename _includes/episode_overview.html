@@ -42,16 +42,16 @@
 
 
 <blockquote class="objectives">
-  <h2>Overview</h2>
+  <h2>概述</h2>
 
   <div class="row">
     <div class="col-md-3">
-      <strong>Teaching:</strong> {{ teaching_time }} min
+      <strong>学习时间:</strong> {{ teaching_time }} min
       <br/>
-      <strong>Exercises:</strong> {{ exercise_time }} min
+      <strong>练习时间:</strong> {{ exercise_time }} min
     </div>
     <div class="col-md-9">
-      <strong>Questions</strong>
+      <strong>问题</strong>
       <ul>
 	{% for question in episode_questions %}
 	<li>{{ question|markdownify }}</li>
@@ -64,7 +64,7 @@
     <div class="col-md-3">
     </div>
     <div class="col-md-9">
-      <strong>Objectives</strong>
+      <strong>目标</strong>
       <ul>
 	{% for objective in episode_objectives %}
 	<li>{{ objective|markdownify }}</li>

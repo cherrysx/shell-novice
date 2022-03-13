@@ -1,35 +1,35 @@
 ---
-title: "Finding Things"
+title: "查找"
 teaching: 25
 exercises: 20
 questions:
-- "How can I find files?"
-- "How can I find things in files?"
+- "我怎样才能找到文件？"
+- "如何在文件中查找内容？"
 objectives:
-- "Use `grep` to select lines from text files that match simple patterns."
-- "Use `find` to find files and directories whose names match simple patterns."
-- "Use the output of one command as the command-line argument(s) to another command."
-- "Explain what is meant by 'text' and 'binary' files, and why many common tools don't handle the latter well."
+- "使用 `grep` 从文本文件中选择与简单模式匹配的行。"
+- "使用 `find` 查找名称与简单模式匹配的文件和目录。"
+- "使用一个命令的输出作为另一个命令的命令行参数。"
+- "解释“文本”和“二进制”文件的含义，以及为什么许多常用工具不能很好地处理后者。"
 keypoints:
-- "`find` finds files with specific properties that match patterns."
-- "`grep` selects lines in files that match patterns."
-- "`--help` is an option supported by many bash commands, and programs that can be run from within Bash, to display more information on how to use these commands or programs."
-- "`man [command]` displays the manual page for a given command."
-- "`$([command])` inserts a command's output in place."
+- "`find` 查找具有匹配模式的特定属性的文件。"
+- "`grep` 选择文件中匹配模式的行。"
+- "`--help` 是许多 bash 命令支持的选项，以及可以在 Bash 中运行的程序，以显示有关如何使用这些命令或程序的更多信息。"
+- "`man [command]` 显示给定命令的手册页。"
+- "`$([command])` 将命令的输出插入到位。"
 ---
 
-In the same way that many of us now use 'Google' as a
-verb meaning 'to find', Unix programmers often use the
-word 'grep'.
-'grep' is a contraction of 'global/regular expression/print',
-a common sequence of operations in early Unix text editors.
-It is also the name of a very useful command-line program.
+就像我们许多人现在使用“Google”作为
+动词意思是“找到”，Unix 程序员经常使用
+单词'grep'。
+'grep' 是 'global/regular expression/print' 的缩写，
+早期 Unix 文本编辑器中的常见操作序列。
+它也是一个非常有用的命令行程序的名称。
 
-`grep` finds and prints lines in files that match a pattern.
-For our examples,
-we will use a file that contains three haiku taken from a
-1998 competition in *Salon* magazine. For this set of examples,
-we're going to be working in the writing subdirectory:
+`grep` 查找并打印文件中与模式匹配的行。
+对于我们的示例，
+我们将使用一个包含三个俳句的文件，取自
+1998 年在 *Salon* 杂志上的比赛。 对于这组示例，
+我们将在写作子目录中工作：
 
 ~~~
 $ cd
@@ -53,16 +53,16 @@ Software is like that.
 ~~~
 {: .output}
 
-> ## Forever, or Five Years
+> ## 永远，或五年
 >
-> We haven't linked to the original haiku because
-> they don't appear to be on *Salon*'s site any longer.
-> As [Jeff Rothenberg said](https://www.clir.org/wp-content/uploads/sites/6/ensuring.pdf),
-> 'Digital information lasts forever --- or five years, whichever comes first.'
-> Luckily, popular content often [has backups](http://wiki.c2.com/?ComputerErrorHaiku).
+> 我们没有链接到原始的俳句，因为
+> 他们似乎不再出现在 *Salon* 的网站上。
+> 正如 [Jeff Rothenberg 所说](https://www.clir.org/wp-content/uploads/sites/6/ensuring.pdf)，
+> “数字信息永远存在——或五年，以先到者为准。”
+> 幸运的是，热门内容通常[有备份](http://wiki.c2.com/?ComputerErrorHaiku)。
 {: .callout}
 
-Let's find lines that contain the word 'not':
+让我们找到包含单词“not”的行：
 
 ~~~
 $ grep not haiku.txt
@@ -76,18 +76,18 @@ Today it is not working
 ~~~
 {: .output}
 
-Here, `not` is the pattern we're searching for.
-The grep command searches through the file, looking for matches to the pattern specified.
-To use it type `grep`, then the pattern we're searching for and finally
-the name of the file (or files) we're searching in.
+在这里，`not` 是我们要搜索的模式。
+grep 命令搜索文件，查找与指定模式匹配的内容。
+要使用它，输入 `grep`，然后是我们正在搜索的模式，最后
+我们正在搜索的文件（或多个文件）的名称。
 
-The output is the three lines in the file that contain the letters 'not'.
+输出是文件中包含字母“not”的三行。
 
-By default, grep searches for a pattern in a case-sensitive way.
-In addition, the search pattern we have selected does not have to form a complete word,
-as we will see in the next example.
+默认情况下，grep 以区分大小写的方式搜索模式。
+另外，我们选择的搜索模式不一定要组成一个完整的词，
+正如我们将在下一个示例中看到的那样。
 
-Let's search for the pattern: 'The'.
+让我们搜索模式：'The'。
 
 ~~~
 $ grep The haiku.txt
@@ -100,15 +100,15 @@ The Tao that is seen
 ~~~
 {: .output}
 
-This time, two lines that include the letters 'The' are outputted,
-one of which contained our search pattern within a larger word, 'Thesis'.
+这一次，输出包含字母“The”的两行，
+其中一个包含我们在一个更大的词“论文”中的搜索模式。
 
-To restrict matches to lines containing the word 'The' on its own,
-we can give `grep` with the `-w` option.
-This will limit matches to word boundaries.
+要将匹配限制为单独包含单词“The”的行，
+我们可以给 `grep` 加上 `-w` 选项。
+这会将匹配限制在单词边界内。
 
-Later in this lesson, we will also see how we can change the search behavior of grep
-with respect to its case sensitivity.
+在本课的后面，我们还将看到如何更改 grep 的搜索行为
+关于它的大小写敏感性。
 
 ~~~
 $ grep -w The haiku.txt
@@ -120,11 +120,11 @@ The Tao that is seen
 ~~~
 {: .output}
 
-Note that a 'word boundary' includes the start and end of a line, so not
-just letters surrounded by spaces.
-Sometimes we don't
-want to search for a single word, but a phrase. This is also easy to do with
-`grep` by putting the phrase in quotes.
+请注意，“单词边界”包括行的开头和结尾，因此不包括
+只是被空格包围的字母。
+有时我们不
+想搜索一个词，但是一个词组。 这也很容易做到
+`grep` 通过将短语放在引号中。
 
 ~~~
 $ grep -w "is not" haiku.txt
@@ -136,13 +136,13 @@ Today it is not working
 ~~~
 {: .output}
 
-We've now seen that you don't have to have quotes around single words,
-but it is useful to use quotes when searching for multiple words.
-It also helps to make it easier to distinguish between the search term or phrase
-and the file being searched.
-We will use quotes in the remaining examples.
+我们现在已经看到，您不必在单个单词周围加上引号，
+但是在搜索多个单词时使用引号很有用。
+它还有助于更容易区分搜索词或短语
+和正在搜索的文件。
+我们将在其余示例中使用引号。
 
-Another useful option is `-n`, which numbers the lines that match:
+另一个有用的选项是 `-n`，它为匹配的行编号：
 
 ~~~
 $ grep -n "it" haiku.txt
@@ -156,12 +156,12 @@ $ grep -n "it" haiku.txt
 ~~~
 {: .output}
 
-Here, we can see that lines 5, 9, and 10 contain the letters 'it'.
+在这里，我们可以看到第 5、9 和 10 行包含字母“it”。
 
-We can combine options (i.e. flags) as we do with other Unix commands.
-For example, let's find the lines that contain the word 'the'.
-We can combine the option `-w` to find the lines that contain the word 'the'
-and `-n` to number the lines that match:
+我们可以像使用其他 Unix 命令一样组合选项（即标志）。
+例如，让我们找到包含单词“the”的行。
+我们可以结合选项 `-w` 来查找包含单词 'the' 的行
+和 `-n` 对匹配的行进行编号：
 
 ~~~
 $ grep -n -w "the" haiku.txt
@@ -174,7 +174,7 @@ $ grep -n -w "the" haiku.txt
 ~~~
 {: .output}
 
-Now we want to use the option `-i` to make our search case-insensitive:
+现在我们想使用选项 `-i` 使我们的搜索不区分大小写：
 
 ~~~
 $ grep -n -w -i "the" haiku.txt
@@ -188,8 +188,8 @@ $ grep -n -w -i "the" haiku.txt
 ~~~
 {: .output}
 
-Now, we want to use the option `-v` to invert our search, i.e., we want to output
-the lines that do not contain the word 'the'.
+现在，我们想使用选项 `-v` 来反转我们的搜索，即我们想要输出
+不包含单词“the”的行。
 
 ~~~
 $ grep -n -w -v "the" haiku.txt
@@ -210,10 +210,10 @@ $ grep -n -w -v "the" haiku.txt
 {: .output}
 
 
-If we use the `-r` (recursive) option,
-`grep` can search for a pattern recursively through a set of files in subdirectories.
+如果我们使用 `-r`（递归）选项，
+`grep` 可以通过子目录中的一组文件递归地搜索模式。
 
-Let's search recursively for `Yesterday` in the `shell-lesson-data/writing` directory:
+让我们在 `shell-lesson-data/writing` 目录中递归搜索 `Yesterday`：
 
 ```
 $ grep -r Yesterday .
@@ -228,7 +228,7 @@ haiku.txt:Yesterday it worked
 ```
 {: .output}
 
-`grep` has lots of other options. To find out what they are, we can type:
+`grep` 有很多其他选项。 要找出它们是什么，我们可以输入：
 
 ~~~
 $ grep --help
@@ -258,9 +258,9 @@ Miscellaneous:
 ~~~
 {: .output}
 
-> ## Using `grep`
+> ## 使用`grep`
 >
-> Which command would result in the following output:
+> 哪个命令会产生以下输出：
 >
 > ~~~
 > and the presence of absence:
@@ -272,21 +272,21 @@ Miscellaneous:
 > 3. `grep -w "of" haiku.txt`
 > 4. `grep -i "of" haiku.txt`
 >
-> > ## Solution
-> > The correct answer is 3, because the `-w` option looks only for whole-word matches.
-> > The other options will also match 'of' when part of another word.
+> > ## 解决方案
+> > 正确答案是 3，因为 `-w` 选项只查找全字匹配。
+> > 当是另一个单词的一部分时，其他选项也将匹配“of”。
 > {: .solution}
 {: .challenge}
 
-> ## Wildcards
+> ## 通配符
 >
-> `grep`'s real power doesn't come from its options, though; it comes from
-> the fact that patterns can include wildcards. (The technical name for
-> these is **regular expressions**, which
-> is what the 're' in 'grep' stands for.) Regular expressions are both complex
-> and powerful; if you want to do complex searches, please look at the lesson
-> on [our website](http://v4.software-carpentry.org/regexp/index.html). As a taster, we can
-> find lines that have an 'o' in the second position like this:
+> 不过，`grep` 的真正威力并不来自于它的选项； 它来自
+> 模式可以包含通配符的事实。 （技术名称为
+> 这些是**正则表达式**，其中
+> 是 'grep' 中的 're' 所代表的意思。）正则表达式都很复杂
+> 并且功能强大； 如果你想做复杂的搜索，请看课程
+> 在 [我们的网站](http://v4.software-carpentry.org/regexp/index.html)。 作为品酒师，我们可以
+> 查找第二个位置有“o”的行，如下所示：
 >
 > ~~~
 > $ grep -E "^.o" haiku.txt
@@ -300,18 +300,18 @@ Miscellaneous:
 > ~~~
 > {: .output}
 >
-> We use the `-E` option and put the pattern in quotes to prevent the shell
-> from trying to interpret it. (If the pattern contained a `*`, for
-> example, the shell would try to expand it before running `grep`.) The
-> `^` in the pattern anchors the match to the start of the line. The `.`
-> matches a single character (just like `?` in the shell), while the `o`
-> matches an actual 'o'.
+> 我们使用 `-E` 选项并将模式放在引号中以防止 shell
+> 从试图解释它。 （如果模式包含一个 `*`，对于
+> 例如，shell 会在运行 `grep` 之前尝试扩展它。）
+> 模式中的 `^` 将匹配锚定到行首。 `.`
+> 匹配单个字符（就像 shell 中的 `?`），而 `o`
+> 匹配实际的“o”。
 {: .callout}
 
-> ## Tracking a Species
+> ## 追踪物种
 >
-> Leah has several hundred
-> data files saved in one directory, each of which is formatted like this:
+> Leah 有几百个
+> 数据文件保存在一个目录中，每个目录的格式如下：
 >
 > ~~~
 > 2013-11-05,deer,5
@@ -322,10 +322,10 @@ Miscellaneous:
 > ~~~
 > {: .source}
 >
-> She wants to write a shell script that takes a species as the first command-line argument
-> and a directory as the second argument. The script should return one file called `species.txt`
-> containing a list of dates and the number of that species seen on each date.
-> For example using the data shown above, `rabbit.txt` would contain:
+> 她想编写一个 shell 脚本，将物种作为第一个命令行参数
+> 和一个目录作为第二个参数。 该脚本应返回一个名为“species.txt”的文件
+> 包含日期列表和在每个日期看到的该物种的数量。
+> 例如，使用上面显示的数据，`rabbit.txt` 将包含：
 >
 > ~~~
 > 2013-11-05,22
@@ -333,7 +333,7 @@ Miscellaneous:
 > ~~~
 > {: .source}
 >
-> Put these commands and pipes in the right order to achieve this:
+> 以正确的顺序放置这些命令和管道以实现此目的：
 >
 > ~~~
 > cut -d : -f 2
@@ -346,23 +346,23 @@ Miscellaneous:
 > ~~~
 > {: .language-bash}
 >
-> Hint: use `man grep` to look for how to grep text recursively in a directory
-> and `man cut` to select more than one field in a line.
+> 提示：使用 `man grep` 查找如何在目录中递归地 grep 文本
+> 和 `man cut` 在一行中选择多个字段。
 >
-> An example of such a file is provided in `shell-lesson-data/data/animal-counts/animals.txt`
+> `shell-lesson-data/data/animal-counts/animals.txt` 中提供了此类文件的示例
 >
-> > ## Solution
+> > ## 解决方案
 > >
 > > ```
 > > grep -w $1 -r $2 | cut -d : -f 2 | cut -d , -f 1,3 > $1.txt
 > > ```
 > > {: .source}
 > >
-> > Actually, you can swap the order of the two cut commands and it still works. At the
-> > command line, try changing the order of the cut commands, and have a look at the output
-> > from each step to see why this is the case.
+> > 其实你可以把两个cut命令的顺序调换一下，还是可以的。 在
+> > 命令行，尝试更改剪切命令的顺序，并查看输出
+> > 从每一步看为什么会这样。
 > >
-> > You would call the script above like this:
+> > 你可以这样调用上面的脚本：
 > >
 > > ```
 > > $ bash count-species.sh bear .
@@ -371,25 +371,25 @@ Miscellaneous:
 > {: .solution}
 {: .challenge}
 
-> ## Little Women
+> ## 小女人
 >
-> You and your friend, having just finished reading *Little Women* by
-> Louisa May Alcott, are in an argument.  Of the four sisters in the
-> book, Jo, Meg, Beth, and Amy, your friend thinks that Jo was the
-> most mentioned.  You, however, are certain it was Amy.  Luckily, you
-> have a file `LittleWomen.txt` containing the full text of the novel
-> (`shell-lesson-data/writing/data/LittleWomen.txt`).
-> Using a `for` loop, how would you tabulate the number of times each
-> of the four sisters is mentioned?
+> 你和你的朋友，刚刚读完 *Little Women* by
+> Louisa May Alcott，正在争论中。 在四姐妹中
+> book、Jo、Meg、Beth 和 Amy，你的朋友认为 Jo 是
+> 提到最多的。 但是，您可以确定是艾米。 幸运的是，你
+> 有一个包含小说全文的文件“LittleWomen.txt”
+> (`shell-lesson-data/writing/data/LittleWomen.txt`)。
+> 使用 `for` 循环，如何将每个循环的次数制成表格
+> 提到四姐妹？
 >
-> Hint: one solution might employ
-> the commands `grep` and `wc` and a `|`, while another might utilize
-> `grep` options.
-> There is often more than one way to solve a programming task, so a
-> particular solution is usually chosen based on a combination of
-> yielding the correct result, elegance, readability, and speed.
+> 提示：一种解决方案可能会采用
+> 命令 `grep` 和 `wc` 和一个 `|`，而另一个可能会使用
+> `grep` 选项。
+> 解决编程任务的方法通常不止一种，因此
+> 特定的解决方案通常是根据以下组合选择的
+> 产生正确的结果、优雅、可读性和速度。
 >
-> > ## Solutions
+> > ## 解决方案
 > > ```
 > > for sis in Jo Meg Beth Amy
 > > do
@@ -399,7 +399,7 @@ Miscellaneous:
 > > ```
 > > {: .source}
 > >
-> > Alternative, slightly inferior solution:
+> > 替代的，略逊一筹的解决方案：
 > > ```
 > > for sis in Jo Meg Beth Amy
 > > do
@@ -409,39 +409,39 @@ Miscellaneous:
 > > ```
 > > {: .source}
 > >
-> > This solution is inferior because `grep -c` only reports the number of lines matched.
-> > The total number of matches reported by this method will be lower if there is more
-> > than one match per line.
+> > 这个解决方案比较差，因为 `grep -c` 只报告匹配的行数。
+> > 如果有更多匹配项，则此方法报告的总匹配数会更低
+> > 每行一个匹配。
 > >
-> > Perceptive observers may have noticed that character names sometimes appear in all-uppercase
-> > in chapter titles (e.g. 'MEG GOES TO VANITY FAIR').
-> > If you wanted to count these as well, you could add the `-i` option for case-insensitivity
-> > (though in this case, it doesn't affect the answer to which sister is mentioned
-> > most frequently).
+> > 敏锐的观察者可能已经注意到字符名称有时以全大写形式出现
+> > 在章节标题中（例如“MEG GOES TO VANITY FAIR”）。
+> > 如果你也想计算这些，你可以添加 `-i` 选项以不区分大小写
+> >（虽然在这种情况下，它不影响提到哪个姐姐的答案
+> > 最常见）。
 > {: .solution}
 {: .challenge}
 
-While `grep` finds lines in files,
-the `find` command finds files themselves.
-Again,
-it has a lot of options;
-to show how the simplest ones work, we'll use the directory tree shown below.
+当 `grep` 在文件中查找行时，
+`find` 命令自己查找文件。
+再次，
+它有很多选择；
+为了展示最简单的如何工作，我们将使用下面显示的目录树。
 
-![A file tree under the directory "writing" contians several sub-directories and
-files such that "writing" contains directories "data", "thesis", "tools" and a
-file "haiku.txt"; "writing/data" contains the files "Little Women.txt",
-"one.txt" and "two.txt"; "writing/thesis" contains the file "empty-draft.md";
-"writing/tools" contains the directory "old" and the files "format" and "stats";
-and "writing/tools/old" contains a file "oldtool"](../fig/find-file-tree.svg)
+![“writing”目录下的文件树包含几个子目录和
+文件，例如“writing”包含目录“data”、“thesis”、“tools”和
+文件“haiku.txt”； “writing/data”包含文件“Little Women.txt”，
+“one.txt”和“two.txt”； “写作/论文”包含文件“empty-draft.md”；
+“writing/tools”包含目录“old”和文件“format”和“stats”；
+并且“writing/tools/old”包含一个文件“oldtool”](../fig/find-file-tree.svg)
 
-Nelle's `writing` directory contains one file called `haiku.txt` and three subdirectories:
-`thesis` (which contains a sadly empty file, `empty-draft.md`);
-`data` (which contains three files `LittleWomen.txt`, `one.txt` and `two.txt`);
-and a `tools` directory that contains the programs `format` and `stats`,
-and a subdirectory called `old`, with a file `oldtool`.
+Nelle 的 `writing` 目录包含一个名为 `haiku.txt` 的文件和三个子目录：
+`thesis`（其中包含一个可悲的空文件，`empty-draft.md`）；
+`data`（包含三个文件`LittleWomen.txt`、`one.txt`和`two.txt`）；
+以及一个包含程序“format”和“stats”的“tools”目录，
+和一个名为“old”的子目录，其中包含一个文件“oldtool”。
 
-For our first command,
-let's run `find .` (remember to run this command from the `shell-lesson-data/writing` folder).
+对于我们的第一个命令，
+让我们运行 `find .`（记得从 `shell-lesson-data/writing` 文件夹运行此命令）。
 
 ~~~
 $ find .
@@ -465,20 +465,20 @@ $ find .
 ~~~
 {: .output}
 
-As always,
-the `.` on its own means the current working directory,
-which is where we want our search to start.
-`find`'s output is the names of every file **and** directory
-under the current working directory.
-This can seem useless at first but `find` has many options
-to filter the output and in this lesson we will discover some
-of them.
+一如既往，
+`.` 本身表示当前工作目录，
+这是我们希望搜索开始的地方。
+`find` 的输出是每个文件的名称**和**目录
+在当前工作目录下。
+起初这似乎没用，但 `find` 有很多选项
+过滤输出，在本课中我们将发现一些
+其中。
 
-The first option in our list is
-`-type d` that means 'things that are directories'.
-Sure enough,
-`find`'s output is the names of the five directories in our little tree
-(including `.`):
+我们列表中的第一个选项是
+`-type d` 表示“目录的东西”。
+果然，
+`find` 的输出是我们的小树中五个目录的名称
+（包括`.`）：
 
 ~~~
 $ find . -type d
@@ -494,9 +494,9 @@ $ find . -type d
 ~~~
 {: .output}
 
-Notice that the objects `find` finds are not listed in any particular order.
-If we change `-type d` to `-type f`,
-we get a listing of all the files instead:
+请注意，“find”找到的对象没有按任何特定顺序列出。
+如果我们将 `-type d` 更改为 `-type f`，
+我们得到了所有文件的列表：
 
 ~~~
 $ find . -type f
@@ -515,7 +515,7 @@ $ find . -type f
 ~~~
 {: .output}
 
-Now let's try matching by name:
+现在让我们尝试按名称匹配：
 
 ~~~
 $ find . -name *.txt
@@ -527,24 +527,24 @@ $ find . -name *.txt
 ~~~
 {: .output}
 
-We expected it to find all the text files,
-but it only prints out `./haiku.txt`.
-The problem is that the shell expands wildcard characters like `*` *before* commands run.
-Since `*.txt` in the current directory expands to `haiku.txt`,
-the command we actually ran was:
+我们希望它能找到所有的文本文件，
+但它只打印出`./haiku.txt`。
+问题是 shell 扩展了通配符，例如 `*` *before* 命令运行。
+由于当前目录中的 `*.txt` 扩展为 `haiku.txt`，
+我们实际运行的命令是：
 
 ~~~
 $ find . -name haiku.txt
 ~~~
 {: .language-bash}
 
-`find` did what we asked; we just asked for the wrong thing.
+`find` 完成了我们的要求； 我们只是要求错误的东西。
 
-To get what we want,
-let's do what we did with `grep`:
-put `*.txt` in quotes to prevent the shell from expanding the `*` wildcard.
-This way,
-`find` actually gets the pattern `*.txt`, not the expanded filename `haiku.txt`:
+为了得到我们想要的，
+让我们做我们对 `grep` 所做的事情：
+将 `*.txt` 放在引号中以防止 shell 扩展 `*` 通配符。
+这边走，
+`find` 实际上得到的是 `*.txt` 模式，而不是扩展的文件名 `haiku.txt`：
 
 ~~~
 $ find . -name "*.txt"
@@ -559,23 +559,23 @@ $ find . -name "*.txt"
 ~~~
 {: .output}
 
-> ## Listing vs. Finding
+> ## 列出与查找
 >
-> `ls` and `find` can be made to do similar things given the right options,
-> but under normal circumstances,
-> `ls` lists everything it can,
-> while `find` searches for things with certain properties and shows them.
+> `ls` 和 `find` 可以做类似的事情给定正确的选项，
+> 但在正常情况下，
+> `ls` 列出了它可以列出的所有内容，
+> 而 `find` 搜索具有某些属性的事物并显示它们。
 {: .callout}
 
-As we said earlier,
-the command line's power lies in combining tools.
-We've seen how to do that with pipes;
-let's look at another technique.
-As we just saw,
-`find . -name "*.txt"` gives us a list of all text files in or below the current directory.
-How can we combine that with `wc -l` to count the lines in all those files?
+正如我们之前所说，
+命令行的力量在于组合工具。
+我们已经看到了如何用管道做到这一点；
+让我们看看另一种技术。
+正如我们刚刚看到的，
+`寻找。 -name "*.txt"` 为我们提供了当前目录中或之下的所有文本文件的列表。
+我们如何将它与 `wc -l` 结合起来计算所有这些文件中的行数？
 
-The simplest way is to put the `find` command inside `$()`:
+最简单的方法是将 `find` 命令放在 `$()` 中：
 
 ~~~
 $ wc -l $(find . -name "*.txt")
@@ -591,26 +591,26 @@ $ wc -l $(find . -name "*.txt")
 ~~~
 {: .output}
 
-When the shell executes this command,
-the first thing it does is run whatever is inside the `$()`.
-It then replaces the `$()` expression with that command's output.
-Since the output of `find` is the four filenames `./data/one.txt`, `./data/LittleWomen.txt`,
-`./data/two.txt`, and `./haiku.txt`, the shell constructs the command:
+当 shell 执行这个命令时，
+它做的第一件事就是运行`$()`里面的任何东西。
+然后它用该命令的输出替换 `$()` 表达式。
+由于`find`的输出是四个文件名`./data/one.txt`, `./data/LittleWomen.txt`,
+`./data/two.txt` 和 `./haiku.txt`，shell 构造命令：
 
 ~~~
 $ wc -l ./data/one.txt ./data/LittleWomen.txt ./data/two.txt ./haiku.txt
 ~~~
 {: .language-bash}
 
-which is what we wanted.
-This expansion is exactly what the shell does when it expands wildcards like `*` and `?`,
-but lets us use any command we want as our own 'wildcard'.
+这就是我们想要的。
+这种扩展正是 shell 在扩展像 `*` 和 `?` 这样的通配符时所做的，
+但是让我们使用我们想要的任何命令作为我们自己的“通配符”。
 
-It's very common to use `find` and `grep` together.
-The first finds files that match a pattern;
-the second looks for lines inside those files that match another pattern.
-Here, for example, we can find PDB files that contain iron atoms
-by looking for the string 'FE' in all the `.pdb` files above the current directory:
+`find` 和 `grep` 一起使用是很常见的。
+第一个查找匹配模式的文件；
+第二个在那些文件中查找与另一个模式匹配的行。
+例如，在这里，我们可以找到包含铁原子的 PDB 文件
+通过在当前目录上方的所有“.pdb”文件中查找字符串“FE”：
 
 ~~~
 $ grep "FE" $(find .. -name "*.pdb")
@@ -622,78 +622,75 @@ $ grep "FE" $(find .. -name "*.pdb")
 ~~~
 {: .output}
 
-> ## Matching and Subtracting
+> ## 匹配和减法
 >
-> The `-v` option to `grep` inverts pattern matching, so that only lines
-> which do *not* match the pattern are printed. Given that, which of
-> the following commands will find all files in `/data` whose names
-> end in `s.txt` but whose names also do *not* contain the string `net`?
-> (For example, `animals.txt` or `amino-acids.txt` but not `planets.txt`.)
-> Once you have thought about your answer, you can test the commands in the `shell-lesson-data`
-> directory.
+> `grep` 的 `-v` 选项反转模式匹配，因此只有行
+> 不匹配模式的将被打印。 鉴于此，哪一个
+> 以下命令将在 `/data` 中查找所有文件名
+> 以 `s.txt` 结尾，但谁的名字*不*包含字符串 `net`？
+> （例如，`animals.txt` 或 `amino-acids.txt` 但不是 `planets.txt`。）
+> 一旦你想好了你的答案，你就可以测试 `shell-lesson-data` 中的命令了
+> 目录。
 >
-> 1.  `find data -name "*s.txt" | grep -v net`
-> 2.  `find data -name *s.txt | grep -v net`
-> 3.  `grep -v "net" $(find data -name "*s.txt")`
-> 4.  None of the above.
+> 1.`查找数据-名称“*s.txt” | grep -v 网络`
+> 2.`查找数据-name *s.txt | grep -v 网络`
+> 3. `grep -v "net" $(find data -name "*s.txt")`
+> 4. 以上都不是。
 >
-> > ## Solution
-> > The correct answer is 1. Putting the match expression in quotes prevents the shell
-> > expanding it, so it gets passed to the `find` command.
+> > ## 解决方案
+> > 正确答案是 1. 将匹配表达式放在引号中可以防止shell
+> > 扩展它，所以它被传递给`find` 命令。
 > >
-> > Option 2 is incorrect because the shell expands `*s.txt` instead of passing the wildcard
-> > expression to `find`.
+> > 选项 2 不正确，因为 shell 扩展了 `*s.txt` 而不是传递通配符
+> > 表达式到`find`。
 > >
-> > Option 3 is incorrect because it searches the contents of the files for lines which
-> > do not match 'net', rather than searching the file names.
+> > 选项 3 不正确，因为它在文件内容中搜索
+> > 不匹配'net'，而不是搜索文件名。
 > {: .solution}
 {: .challenge}
 
-> ## Binary Files
+> ## 二进制文件
 >
-> We have focused exclusively on finding patterns in text files. What if
-> your data is stored as images, in databases, or in some other format?
+> 我们专注于在文本文件中寻找模式。如果
+> 您的数据是以图像、数据库或其他格式存储的？
 >
-> A handful of tools extend `grep` to handle a few non text formats. But a
-> more generalizable approach is to convert the data to text, or
-> extract the text-like elements from the data. On the one hand, it makes simple
-> things easy to do. On the other hand, complex things are usually impossible. For
-> example, it's easy enough to write a program that will extract X and Y
-> dimensions from image files for `grep` to play with, but how would you
-> write something to find values in a spreadsheet whose cells contained
-> formulas?
+> 一些工具扩展了 `grep` 来处理一些非文本格式。但是一个
+> 更通用的方法是将数据转换为文本，或者
+> 从数据中提取类似文本的元素。一方面，它变得简单
+> 事情容易做。另一方面，复杂的事情通常是不可能的。为了
+> 例如，编写一个提取 X 和 Y 的程序很容易
+> 来自图像文件的尺寸供 `grep` 使用，但你会怎么做
+> 写一些东西来查找电子表格中的值，其单元格包含
+> 公式？
 >
-> A last option is to recognize that the shell and text processing have
-> their limits, and to use another programming language.
-> When the time comes to do this, don't be too hard on the shell: many
-> modern programming languages have borrowed a lot of
-> ideas from it, and imitation is also the sincerest form of praise.
+> 最后一个选择是认识到 shell 和文本处理具有
+> 他们的限制，并使用另一种编程语言。
+> 到了做这件事的时候，不要对外壳太苛刻：很多
+> 现代编程语言借鉴了很多
+> 创意来源于它，模仿也是最真诚的赞美。
 {: .callout}
 
-The Unix shell is older than most of the people who use it. It has
-survived so long because it is one of the most productive programming
-environments ever created --- maybe even *the* most productive. Its syntax
-may be cryptic, but people who have mastered it can experiment with
-different commands interactively, then use what they have learned to
-automate their work. Graphical user interfaces may be easier to use at
-first, but once learned, the productivity in the shell is unbeatable.
-And as Alfred North Whitehead wrote in 1911, 'Civilization advances by
-extending the number of important operations which we can perform
-without thinking about them.'
+Linux shell比大多数使用它的人都要老。 它有
+幸存了这么久，因为它是最高效的编程之一
+曾经创造的环境——甚至可能是*最有生产力的。 它的语法
+可能很神秘，但掌握它的人可以尝试
+以交互方式使用不同的命令，然后使用他们所学的
+自动化他们的工作。 图形用户界面可能更易于使用
+首先，但一旦学会，shell中的生产力是无与伦比的。
 
-> ## `find` Pipeline Reading Comprehension
+> ## `find` 流水线阅读理解
 >
-> Write a short explanatory comment for the following shell script:
+> 为以下 shell 脚本写一个简短的解释性注释：
 >
 > ~~~
 > wc -l $(find . -name "*.dat") | sort -n
 > ~~~
 > {: .language-bash}
 >
-> > ## Solution
-> > 1. Find all files with a `.dat` extension recursively from the current directory
-> > 2. Count the number of lines each of these files contains
-> > 3. Sort the output from step 2. numerically
+> > ## 解决方案
+> > 1. 从当前目录递归查找所有带有`.dat`扩展名的文件
+> > 2. 计算每个文件包含的行数
+> > 3. 对步骤 2 的输出进行数字排序
 > {: .solution}
 {: .challenge}
 

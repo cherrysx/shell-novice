@@ -1,5 +1,5 @@
 ---
-title: Figures
+title: 课程中的图
 ---
 <script>
   window.onload = function() {

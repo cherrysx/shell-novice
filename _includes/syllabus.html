@@ -8,7 +8,7 @@
 {% include manual_episode_order.html %}
 
 <div class="syllabus">
-  <h2 id="schedule">Schedule</h2>
+  <h2 id="schedule">时间表</h2>
 
   {% assign lesson_number = 0 %}
   {% assign day = 0 %}
@@ -28,14 +28,14 @@
     {% if multiday %}<td class="col-md-1"></td>{% endif %}
     <td class="{% if multiday %}col-md-1{% else %}col-md-2{% endif %}"></td>
     <td class="col-md-3"><a href="{{ relative_root_path }}{% link setup.md %}">Setup</a></td>
-    <td class="col-md-7">Download files required for the lesson</td>
+    <td class="col-md-7">下载课程需要的文件</td>
   </tr>
   {% if site.instructor_training %}
   <tr>
     {% if multiday %}<td class="col-md-1"></td>{% endif %}
   <td class="{% if multiday %}col-md-1{% else %}col-md-2{% endif %}"></td>
-  <td class="col-md-3"><a href="{{ site.instructor_pre_survey }}{{ site.github.project_title }}">Pre-training survey</a></td>
-  <td class="col-md-7">Please fill out our pre-training survey before the start of the course.</td>
+  <td class="col-md-3"><a href="{{ site.instructor_pre_survey }}{{ site.github.project_title }}">培训前调查</a></td>
+  <td class="col-md-7">请在课程开始前填写我们的培训前调查。</td>
   </tr>
   {% endif %}
   {% for lesson_episode in lesson_episodes %}
@@ -90,8 +90,8 @@
   <tr>
     {% if multiday %}<td class="col-md-1"></td>{% endif %}
     <td class="{% if multiday %}col-md-1{% else %}col-md-2{% endif %}">{% if hours < 10 %}0{% endif %}{{ hours }}:{% if minutes < 10 %}0{% endif +++ %}{{ minutes }}</td>
-    <td class="col-md-3"><a href="{{ site.instructor_post_survey }}{{ site.github.project_title }}">Post-training survey</a></td>
-    <td class="col-md-7">Please fill out our post-training survey after the course.</td>
+    <td class="col-md-3"><a href="{{ site.instructor_post_survey }}{{ site.github.project_title }}">培训后调查</a></td>
+    <td class="col-md-7">请在课程结束后填写我们的培训后调查。</td>
   </tr>
   {% assign current = current | plus: 15 %}
   {% assign hours = current | divided_by: 60 %}
@@ -100,13 +100,13 @@
   <tr>
     {% if multiday %}<td class="col-md-1"></td>{% endif %}
     <td class="{% if multiday %}col-md-1{% else %}col-md-2{% endif %}">{% if hours < 10 %}0{% endif %}{{ hours }}:{% if minutes < 10 %}0{% endif %}{{ minutes }}</td>
-    <td class="col-md-3">Finish</td>
+    <td class="col-md-3">完成&nbsp;✅</td>
     <td class="col-md-7"></td>
   </tr>
   </table>
 
   <p>
-    The actual schedule may vary slightly depending on the topics and exercises chosen by the instructor.
+    实际时间表可能会因自己学习选择的主题和练习而略有不同。
   </p>
 
 </div>

@@ -3,25 +3,17 @@ layout: lesson
 root: .
 ---
 
-The Unix shell has been around longer than most of its users
-have been alive. It has survived because it's a powerful tool that
-allows users to perform complex and powerful tasks, often with just
- a few keystrokes or lines of code. It helps users automate repetitive
- tasks and easily combine smaller tasks into larger, more powerful workflows.
+Linux shell的存在时间比大多数用户的存在时间都要长。它之所以幸存下来，是因为它是一个强大的工具，通常只需几个按键或几行代码，就可以让用户执行复杂而强大的任务。它可以帮助用户自动执行重复性任务，并轻松地将较小的任务组合成更大、更强大的工作流程。
 
-Use of the shell is fundamental to a wide range of advanced computing
-tasks, including high-performance computing. These lessons will introduce
-you to this powerful tool.
+使用shell是各种高级计算任务的基础，包括**高性能计算**。 这些课程将向您介绍这个强大的工具。
 
-> ## Prerequisites
+> ## 前提条件
 >
-> This lesson guides you through the basics of file systems and the
-> shell. If you have stored files on a computer at all and recognize
-> the word "file" and either "directory" or "folder" (two common words
-> for the same thing), you're ready for this lesson.
+> 本课将指导您了解Linux文件系统的基础知识和
+> shell。如果您已经将文件存储在计算机上并理解了
+> “文件”一词和“目录”或“文件夹”（两个常用词是同样的意思），你已经为这节课做好了准备。
 >
-> If you're already comfortable manipulating files and directories,
-> searching for files with `grep` and `find`, and writing simple loops
-> and scripts, you probably want to explore the next lesson:
-> [shell-extras](https://carpentries-incubator.github.io/shell-extras/).
+> 如果您已经习惯于操作文件和目录，
+> 使用 `grep` 和 `find` 搜索文件，并编写简单的循环
+> 和脚本，那么可以尝试学习Shell进阶的课程（正在开发中...）
 {: .prereq}

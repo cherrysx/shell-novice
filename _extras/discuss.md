@@ -1,71 +1,48 @@
 ---
 layout: page
-title: "Discussion"
+title: "有趣论述"
 ---
-## Alphabet Soup
+## 字母汤
 
-If the command to find out who we are is `whoami`, the command to find
-out where we are ought to be called `whereami`, so why is it `pwd`
-instead? The usual answer is that in the early 1970s, when Unix was
-first being developed, every keystroke counted: the devices of the day
-were slow, and backspacing on a teletype was so painful that cutting the
-number of keystrokes in order to cut the number of typing mistakes was
-actually a win for usability. The reality is that commands were added to
-Unix one by one, without any master plan, by people who were immersed in
-its jargon. The result is as inconsistent as the roolz uv Inglish
-speling, but we're stuck with it now.
+如果查找我是谁的命令是`whoami`，则查找我在哪里的命令应该被称为“whereami”，为什么它是“pwd”呢？
+通常的答案是，在20世纪70年代初期，当Unix首次发行的时候，键盘上的每次按键都很重要：当时的设备速度很慢，
+而且在打字机上退格非常痛苦，以至于为了减少打字错误的数量，而减少击键的次数，这实际上是软件可用性的胜利。
+现实情况是命令被添加到Unix一一，没有任何总体规划，由沉浸在其中的人行内人定义。但我们现在在坚持使用它。
 
-## Job Control Codes
+## 作业控制代码
 
-The shell accepts a few special commands that allow users to interact
-with running processes or programs. You can enter each of these
-"control codes" by holding down the `Ctrl` key and then pressing one
-of the control characters. In other tutorials, you may see the term
-`Control` or the `^` used to represent the `Ctrl` key (e.g. the
-following are all equivalent `Ctrl-C`, `Ctrl+C`, `Control-C`, `Control+C`, `^C`).
+Shell允许接受一些特殊命令与正在运行的用户进程或程序交互。通过按住 `Ctrl` 键，然后按一个
+的控制字符，您可以输入其中的每一个“控制代码”。在其他教程中，您可能会看到该术语
+`Control` 或 `^` 用于表示 `Ctrl` 键（例如以下都是等效的 `Ctrl-C`、`Ctrl+C`、`Control-C`、`Control+C`、`^C`）。
 
 *   `Ctrl-C`:
-    interrupts and cancels a running program.
-    This is useful if you want to cancel a command that is taking too long to execute.
+    中断并取消正在运行的程序。
+    如果您想取消执行时间过长的命令，这很有用。
 
 *   `Ctrl-D`:
-    indicates the end of a file or stream of characters that you are entering on the command line.
-    For example, we saw earlier that the `wc` command counts lines, words, and characters in a file.
-    If we just type `wc` and hit the Enter key without providing a file name,
-    then `wc` will assume we want it to analyze all the stuff we type next.
-    After typing our magnum opus directly into the shell prompt,
-    we can then type Ctrl-D to tell `wc` that we're done
-    and we'd like to see the results of the word count.
+    表示您在命令行上输入的文件或字符流的结尾。
+    例如，我们之前看到 `wc` 命令计算文件中的行数、单词数和字符数。
+    如果我们只输入 `wc` 并按 Enter 键而不提供文件名，然后 `wc` 将假设我们希望它分析我们接下来输入的所有内容。
+    直接在shell提示符中输入我们的字符后，然后我们可以输入 Ctrl-D 告诉 `wc` 我们完成了，我们想看看字数统计的结果。
 
 *   `Ctrl-Z`:
-    Suspends a process but does not terminate it.
-    You can then use the command `fg` to restart the job in the foreground.
+    暂停进程但不终止它。
+    然后，您可以使用命令 `fg` 在前台重新启动作业。
 
-For new shell users, these control codes can all appear to have
-the same effect: they make things "go away." But it is helpful to
-understand the differences. In general, if something went wrong and
-you just want to get your shell prompt back, it is better to use
-`Ctrl-C`.
+对于新的shell用户来说，这些控制代码似乎都有同样的效果：它们让任务“消失”。但这不同的控制代码有助于
+了解它们之间差异。 一般来说，如果出现问题并且你只想让你的shell提示回来，最好使用`Ctrl-C`。
 
-## Other Shells
+## 其它Shell
 
-Before Bash became popular in the end of nineties, scientists widely
-used (and some still use) another shell, C-shell, or Csh. Bash and Csh
-have similar feature sets, but their syntax rules are different and
-this makes them incompatible with each other. A few other shells have
-appeared since, including ksh, zsh, and a number of others; they are
-mostly compatible with Bash, and Bash is the default shell on most
-modern implementations of Unix (including most packages that provide
-Unix-like tools for Windows) but if you get strange errors in shell
-scripts written by colleagues, check to see which shell they were
-written for.
+在20世纪90年代末Bash流行之前，科学家们广泛使用（并且有些人仍在使用）另一个 shell：C-shell 或 Csh。Bash 和 csh
+具有相似的功能集，但它们的语法规则不同并且这使它们彼此不兼容。其他一些shell此后出现，包括 ksh、zsh和其他一些；他们是
+大部分与Bash兼容，而Bash是大多数的默认shell，Linux 的现代实现（包括大多数提供适用于Windows的类Linux工具），
+但如果你在同事写的shell脚本中遇到奇怪的错误，首先需要看看是哪个shell写的。
 
-## Bash Configurations
+## Bash Shell配置
 
-Want to customize paths, environment variables, aliases,
-and other behaviors of your shell?
-This excellent blog post "[Bash Configurations Demystified][bash-demystified]"
-from Dalton Hubble
-covers tips, tricks, and how to avoid dangers.
+想要自定义路径、环境变量、别名，和你的shell的其他行为？
+这篇来自**源码设计师**的优秀博文"[Bash配置揭秘][bash-demystified]"
+涵盖提示、技巧以及如何避免危险。
 
-[bash-demystified]: https://blog.dghubble.io/posts/.bashprofile-.profile-and-.bashrc-conventions/
+[bash-demystified]: https://www.yuanmadesign.com/ymdesign/linux-shell-bash

@@ -1,33 +1,33 @@
 ---
-title: "Pipes and Filters"
+title: "管道和过滤器"
 teaching: 25
 exercises: 10
 questions:
-- "How can I combine existing commands to do new things?"
+- "我如何结合现有的命令来做新的事情？"
 objectives:
-- "Redirect a command's output to a file."
-- "Construct command pipelines with two or more stages."
-- "Explain what usually happens if a program or pipeline isn't given any input to process."
-- "Explain the advantage of linking commands with pipes and filters."
+- "将命令的输出重定向到文件。"
+- "构建具有两个或更多阶段的命令管道。"
+- "解释如果程序或管道没有任何输入来处理通常会发生什么。"
+- "解释将命令与管道和过滤器链接的优势。"
 keypoints:
-- "`wc` counts lines, words, and characters in its inputs."
-- "`cat` displays the contents of its inputs."
-- "`sort` sorts its inputs."
-- "`head` displays the first 10 lines of its input."
-- "`tail` displays the last 10 lines of its input."
-- "`command > [file]` redirects a command's output to a file (overwriting any existing content)."
-- "`command >> [file]` appends a command's output to a file."
-- "`[first] | [second]` is a pipeline: the output of the first command is used as the input to the second."
-- "The best way to use the shell is to use pipes to combine simple single-purpose programs (filters)."
+- "`wc` 计算输入中的行数、单词和字符。"
+- "`cat` 显示输入的内容。"
+- "`sort` 对其输入进行排序。"
+- "`head` 显示其输入的前 10 行。"
+- "`tail` 显示其输入的最后 10 行。"
+- "`command > [file]` 将命令的输出重定向到文件（覆盖任何现有内容）。"
+- "`command >> [file]` 将命令的输出附加到文件中。"
+- "`[第一个] | [second]` 是一个管道：第一个命令的输出用作第二个命令的输入。"
+- "使用 shell 的最佳方式是使用管道来组合简单的单一用途程序（过滤器）。"
 ---
 
-Now that we know a few basic commands,
-we can finally look at the shell's most powerful feature:
-the ease with which it lets us combine existing programs in new ways.
-We'll start with the directory called `shell-lesson-data/molecules`
-that contains six files describing some simple organic molecules.
-The `.pdb` extension indicates that these files are in Protein Data Bank format,
-a simple text format that specifies the type and position of each atom in the molecule.
+现在我们知道了一些基本的命令，
+我们终于可以看看 shell 最强大的功能了：
+它让我们可以轻松地以新的方式组合现有程序。
+我们将从名为“shell-lesson-data/molecules”的目录开始
+其中包含六个文件，描述了一些简单的有机分子。
+`.pdb` 扩展名表示这些文件是蛋白质数据库格式，
+一种简单的文本格式，用于指定分子中每个原子的类型和位置。
 
 ~~~
 $ ls molecules
@@ -40,7 +40,7 @@ ethane.pdb    octane.pdb     propane.pdb
 ~~~
 {: .output}
 
-Let's go into that directory with `cd` and run an example  command `wc cubane.pdb`:
+让我们使用 `cd` 进入该目录并运行示例命令 `wc cubane.pdb`：
 
 ~~~
 $ cd molecules
@@ -53,11 +53,11 @@ $ wc cubane.pdb
 ~~~
 {: .output}
 
-`wc` is the 'word count' command:
-it counts the number of lines, words, and characters in files (from left to right, in that order).
+`wc` 是“字数统计”命令：
+它计算文件中的行数、单词数和字符数（从左到右，按此顺序）。
 
-If we run the command `wc *.pdb`, the `*` in `*.pdb` matches zero or more characters,
-so the shell turns `*.pdb` into a list of all `.pdb` files in the current directory:
+如果我们运行命令 `wc *.pdb`，`*.pdb` 中的 `*` 匹配零个或多个字符，
+因此 shell 将 `*.pdb` 转换为当前目录中所有 `.pdb` 文件的列表：
 
 ~~~
 $ wc *.pdb
@@ -75,10 +75,10 @@ $ wc *.pdb
 ~~~
 {: .output}
 
-Note that `wc *.pdb` also shows the total number of all lines in the last line of the output.
+请注意，`wc *.pdb` 还会在输出的最后一行显示所有行的总数。
 
-If we run `wc -l` instead of just `wc`,
-the output shows only the number of lines per file:
+如果我们运行 `wc -l` 而不是 `wc`，
+输出仅显示每个文件的行数：
 
 ~~~
 $ wc -l *.pdb
@@ -96,52 +96,52 @@ $ wc -l *.pdb
 ~~~
 {: .output}
 
-The `-m` and `-w` options can also be used with the `wc` command, to show
-only the number of characters or the number of words in the files.
+`-m` 和 `-w` 选项也可以与 `wc` 命令一起使用，以显示
+只有文件中的字符数或单词数。
 
-> ## Why Isn't It Doing Anything?
+> ## 为什么它什么都不做？
 >
-> What happens if a command is supposed to process a file, but we
-> don't give it a filename? For example, what if we type:
+> 如果一个命令应该处理一个文件会发生什么，但是我们
+> 不要给它一个文件名？ 例如，如果我们键入：
 >
 > ~~~
 > $ wc -l
 > ~~~
 > {: .language-bash}
 >
-> but don't type `*.pdb` (or anything else) after the command?
-> Since it doesn't have any filenames, `wc` assumes it is supposed to
-> process input given at the command prompt, so it just sits there and waits for us to give
-> it some data interactively. From the outside, though, all we see is it
-> sitting there: the command doesn't appear to do anything.
+> 但不要在命令后键入`*.pdb`（或其他任何内容）？
+> 因为它没有任何文件名，`wc` 假定它应该
+> 处理在命令提示符下给出的输入，所以它只是坐在那里等待我们给出
+> 它以交互方式获取一些数据。 然而，从外面看，我们所看到的只是它
+> 坐在那里：命令似乎没有做任何事情。
 >
-> If you make this kind of mistake, you can escape out of this state by holding down
-> the control key (<kbd>Ctrl</kbd>) and typing the letter <kbd>C</kbd> once and
-> letting go of the <kbd>Ctrl</kbd> key.
+> 如果你犯了这种错误，你可以通过按住退出这个状态
+> 控制键 (<kbd>Ctrl</kbd>) 并键入字母 <kbd>C</kbd> 一次，然后
+> 松开 <kbd>Ctrl</kbd> 键。
 > <kbd>Ctrl</kbd>+<kbd>C</kbd>
 {: .callout}
 
 
-## Capturing output from commands
+## 捕获命令的输出
 
-Which of these files contains the fewest lines?
-It's an easy question to answer when there are only six files,
-but what if there were 6000?
-Our first step toward a solution is to run the command:
+这些文件中哪个包含最少的行？
+当只有六个文件时，这是一个容易回答的问题，
+但是如果有 6000 个呢？
+我们迈向解决方案的第一步是运行以下命令：
 
 ~~~
 $ wc -l *.pdb > lengths.txt
 ~~~
 {: .language-bash}
 
-The greater than symbol, `>`, tells the shell to **redirect** the command's output
-to a file instead of printing it to the screen. (This is why there is no screen output:
-everything that `wc` would have printed has gone into the
-file `lengths.txt` instead.)  The shell will create
-the file if it doesn't exist. If the file exists, it will be
-silently overwritten, which may lead to data loss and thus requires
-some caution.
-`ls lengths.txt` confirms that the file exists:
+大于号 `>` 告诉 shell **redirect** 命令的输出
+到文件而不是打印到屏幕上。 （这就是没有屏幕输出的原因：
+`wc` 会打印的所有内容都已进入
+文件 `lengths.txt` 代替。）shell 将创建
+如果文件不存在。 如果文件存在，它将是
+静默覆盖，这可能会导致数据丢失，因此需要
+一些谨慎。
+`ls lengths.txt` 确认文件存在：
 
 ~~~
 $ ls lengths.txt
@@ -153,11 +153,11 @@ lengths.txt
 ~~~
 {: .output}
 
-We can now send the content of `lengths.txt` to the screen using `cat lengths.txt`.
-The `cat` command gets its name from 'concatenate' i.e. join together,
-and it prints the contents of files one after another.
-There's only one file in this case,
-so `cat` just shows us what it contains:
+我们现在可以使用 `cat lengths.txt` 将 `lengths.txt` 的内容发送到屏幕。
+`cat` 命令的名称来自 'concatenate'，即连接在一起，
+它一个接一个地打印文件的内容。
+在这种情况下只有一个文件，
+所以 `cat` 只是向我们展示了它包含的内容：
 
 ~~~
 $ cat lengths.txt
@@ -175,27 +175,27 @@ $ cat lengths.txt
 ~~~
 {: .output}
 
-> ## Output Page by Page
+> ## 逐页输出
 >
-> We'll continue to use `cat` in this lesson, for convenience and consistency,
-> but it has the disadvantage that it always dumps the whole file onto your screen.
-> More useful in practice is the command `less`,
-> which you use with `less lengths.txt`.
-> This displays a screenful of the file, and then stops.
-> You can go forward one screenful by pressing the spacebar,
-> or back one by pressing `b`.  Press `q` to quit.
+> 为了方便和一致，我们将在本课中继续使用 `cat`，
+> 但它的缺点是它总是将整个文件转储到您的屏幕上。
+> 在实践中更有用的是命令 `less`，
+> 与 `less lengths.txt` 一起使用。
+> 这会显示一屏文件，然后停止。
+> 按空格键可以前进一屏，
+> 或按“b”返回一个。 按“q”退出。
 {: .callout}
 
 
-## Filtering output
+## 过滤输出
 
-Next we'll use the `sort` command to sort the contents of the `lengths.txt` file.
-But first we'll use an exercise to learn a little about the sort command:
+接下来我们将使用 `sort` 命令对 `lengths.txt` 文件的内容进行排序。
+但首先我们将使用一个练习来了解一些关于 sort 命令的知识：
 
-> ## What Does `sort -n` Do?
+> ## `sort -n` 有什么作用？
 >
-> The file [`shell-lesson-data/numbers.txt`](../shell-lesson-data/numbers.txt)
-> contains the following lines:
+> 文件 [`shell-lesson-data/numbers.txt`](../shell-lesson-data/numbers.txt)
+> 包含以下几行：
 >
 > ~~~
 > 10
@@ -206,7 +206,7 @@ But first we'll use an exercise to learn a little about the sort command:
 > ~~~
 > {: .source}
 >
-> If we run `sort` on this file, the output is:
+> 如果我们对这个文件运行`sort`，输出是：
 >
 > ~~~
 > 10
@@ -217,7 +217,7 @@ But first we'll use an exercise to learn a little about the sort command:
 > ~~~
 > {: .output}
 >
-> If we run `sort -n` on the same file, we get this instead:
+> 如果我们在同一个文件上运行 `sort -n`，我们会得到这个：
 >
 > ~~~
 > 2
@@ -228,17 +228,17 @@ But first we'll use an exercise to learn a little about the sort command:
 > ~~~
 > {: .output}
 >
-> Explain why `-n` has this effect.
+> 解释为什么 `-n` 有这个效果。
 >
-> > ## Solution
-> > The `-n` option specifies a numerical rather than an alphanumerical sort.
+> > ## 解决方案
+> > `-n` 选项指定数字而非字母数字排序。
 > {: .solution}
 {: .challenge}
 
-We will also use the `-n` option to specify that the sort is
-numerical instead of alphanumerical.
-This does *not* change the file;
-instead, it sends the sorted result to the screen:
+我们还将使用 `-n` 选项来指定排序是
+数字而不是字母数字。
+这*不会*更改文件；
+相反，它将排序结果发送到屏幕：
 
 ~~~
 $ sort -n lengths.txt
@@ -257,11 +257,11 @@ $ sort -n lengths.txt
 {: .output}
 
 
-We can put the sorted list of lines in another temporary file called `sorted-lengths.txt`
-by putting `> sorted-lengths.txt` after the command,
-just as we used `> lengths.txt` to put the output of `wc` into `lengths.txt`.
-Once we've done that,
-we can run another command called `head` to get the first few lines in `sorted-lengths.txt`:
+我们可以将排序后的行列表放在另一个名为“sorted-lengths.txt”的临时文件中
+通过在命令后放置`> sorted-lengths.txt`，
+就像我们使用 `>lengths.txt` 将 `wc` 的输出放入 `lengths.txt` 中一样。
+一旦我们这样做了，
+我们可以运行另一个名为 `head` 的命令来获取 `sorted-lengths.txt` 中的前几行：
 
 ~~~
 $ sort -n lengths.txt > sorted-lengths.txt
@@ -274,35 +274,35 @@ $ head -n 1 sorted-lengths.txt
 ~~~
 {: .output}
 
-Using `-n 1` with `head` tells it that
-we only want the first line of the file;
-`-n 20` would get the first 20,
-and so on.
-Since `sorted-lengths.txt` contains the lengths of our files ordered from least to greatest,
-the output of `head` must be the file with the fewest lines.
+使用带有 `head` 的 `-n 1` 告诉它
+我们只想要文件的第一行；
+`-n 20` 会得到前 20 个，
+等等。
+由于 `sorted-lengths.txt` 包含我们文件的长度，从最小到最大排序，
+`head` 的输出必须是行数最少的文件。
 
-> ## Redirecting to the same file
+> ## 重定向到同一个文件
 >
-> It's a very bad idea to try redirecting
-> the output of a command that operates on a file
-> to the same file. For example:
+> 尝试重定向是一个非常糟糕的主意
+> 对文件进行操作的命令的输出
+> 到同一个文件。 例如：
 >
 > ~~~
 > $ sort -n lengths.txt > lengths.txt
 > ~~~
 > {: .language-bash}
 >
-> Doing something like this may give you
-> incorrect results and/or delete
-> the contents of `lengths.txt`.
+> 做这样的事情可能会给你
+> 不正确的结果和/或删除
+> `lengths.txt` 的内容。
 {: .callout}
 
-> ## What Does `>>` Mean?
+> ## `>>` 是什么意思？
 >
-> We have seen the use of `>`, but there is a similar operator `>>`
-> which works slightly differently.
-> We'll learn about the differences between these two operators by printing some strings.
-> We can use the `echo` command to print strings e.g.
+> 我们已经看到了`>`的使用，但是有一个类似的操作符`>>`
+> 其工作方式略有不同。
+> 我们将通过打印一些字符串来了解这两个运算符之间的区别。
+> 我们可以使用 `echo` 命令打印字符串，例如
 >
 > ~~~
 > $ echo The echo command prints text
@@ -313,7 +313,7 @@ the output of `head` must be the file with the fewest lines.
 > ~~~
 > {: .output}
 >
-> Now test the commands below to reveal the difference between the two operators:
+> 现在测试下面的命令以揭示两个运算符之间的区别：
 >
 > ~~~
 > $ echo hello > testfile01.txt
@@ -327,27 +327,27 @@ the output of `head` must be the file with the fewest lines.
 > ~~~
 > {: .language-bash}
 >
-> Hint: Try executing each command twice in a row and then examining the output files.
+> 提示：尝试连续两次执行每个命令，然后检查输出文件。
 >
-> > ## Solution
-> > In the first example with `>`, the string 'hello' is written to `testfile01.txt`,
-> > but the file gets overwritten each time we run the command.
+> > ## 解决方案
+> > 在第一个带有`>`的例子中，字符串'hello'被写入`testfile01.txt`，
+> > 但是每次我们运行命令时文件都会被覆盖。
 > >
-> > We see from the second example that the `>>` operator also writes 'hello' to a file
-> > (in this case`testfile02.txt`),
-> > but appends the string to the file if it already exists
-> > (i.e. when we run it for the second time).
+>> 我们从第二个例子中看到`>>` 操作符也将 'hello' 写入文件
+> > (在本例中为`testfile02.txt`),
+> > 但如果字符串已经存在，则将其附加到文件中
+> >（即当我们第二次运行它时）。
 > {: .solution}
 {: .challenge}
 
-> ## Appending Data
+> ## 附加数据
 >
-> We have already met the `head` command, which prints lines from the start of a file.
-> `tail` is similar, but prints lines from the end of a file instead.
+> 我们已经遇到过 `head` 命令，它从文件的开头打印行。
+> `tail` 类似，但从文件末尾打印行。
 >
-> Consider the file `shell-lesson-data/data/animals.txt`.
-> After these commands, select the answer that
-> corresponds to the file `animals-subset.txt`:
+> 考虑文件 `shell-lesson-data/data/animals.txt`。
+> 在这些命令之后，选择答案
+> 对应于文件 `animals-subset.txt`：
 >
 > ~~~
 > $ head -n 3 animals.txt > animals-subset.txt
@@ -355,28 +355,28 @@ the output of `head` must be the file with the fewest lines.
 > ~~~
 > {: .language-bash}
 >
-> 1. The first three lines of `animals.txt`
-> 2. The last two lines of `animals.txt`
-> 3. The first three lines and the last two lines of `animals.txt`
-> 4. The second and third lines of `animals.txt`
+> 1. `animals.txt`的前三行
+> 2. `animals.txt`的最后两行
+> 3. `animals.txt`的前三行和后两行
+> 4. `animals.txt`的第二行和第三行
 >
-> > ## Solution
-> > Option 3 is correct.
-> > For option 1 to be correct we would only run the `head` command.
-> > For option 2 to be correct we would only run the `tail` command.
-> > For option 4 to be correct we would have to pipe the output of `head` into `tail -n 2`
-> > by doing `head -n 3 animals.txt | tail -n 2 > animals-subset.txt`
+> > ## 解决方案
+> > 选项 3 是正确的。
+> > 为了使选项 1 正确，我们只运行 `head` 命令。
+>> 为了使选项 2 正确，我们只运行 `tail` 命令。
+>> 为了使选项 4 正确，我们必须将 `head` 的输出通过管道传输到 `tail -n 2`
+>> 通过执行 `head -n 3 animals.txt | 尾巴 -n 2 > 动物-subset.txt`
 > {: .solution}
 {: .challenge}
 
 
-## Passing output to another command
-In our example of finding the file with the fewest lines,
-we are using two intermediate files `lengths.txt` and `sorted-lengths.txt` to store output.
-This is a confusing way to work because
-even once you understand what `wc`, `sort`, and `head` do,
-those intermediate files make it hard to follow what's going on.
-We can make it easier to understand by running `sort` and `head` together:
+## 将输出传递给另一个命令
+在我们查找行数最少的文件的示例中，
+我们使用两个中间文件“lengths.txt”和“sorted-lengths.txt”来存储输出。
+这是一种令人困惑的工作方式，因为
+即使你理解了 `wc`、`sort` 和 `head` 的作用，
+那些中间文件让人很难跟踪正在发生的事情。
+我们可以通过同时运行 `sort` 和 `head` 使其更容易理解：
 
 ~~~
 $ sort -n lengths.txt | head -n 1
@@ -388,20 +388,20 @@ $ sort -n lengths.txt | head -n 1
 ~~~
 {: .output}
 
-The vertical bar, `|`, between the two commands is called a **pipe**.
-It tells the shell that we want to use
-the output of the command on the left
-as the input to the command on the right.
+两个命令之间的竖线 `|` 称为 **pipe**。
+它告诉我们要使用的 shell
+左侧命令的输出
+作为右侧命令的输入。
 
-This has removed the need for the `sorted-lengths.txt` file.
+这消除了对 `sorted-lengths.txt` 文件的需要。
 
-## Combining multiple commands
-Nothing prevents us from chaining pipes consecutively.
-We can for example send the output of `wc` directly to `sort`,
-and then the resulting output to `head`.
-This removes the need for any intermediate files.
+## 组合多个命令
+没有什么能阻止我们连续链接管道。
+例如，我们可以将 `wc` 的输出直接发送到 `sort`，
+然后将结果输出到`head`。
+这消除了对任何中间文件的需要。
 
-We'll start by using a pipe to send the output of `wc` to `sort`:
+我们将首先使用管道将 `wc` 的输出发送到 `sort`：
 
 ~~~
 $ wc -l *.pdb | sort -n
@@ -419,7 +419,7 @@ $ wc -l *.pdb | sort -n
 ~~~
 {: .output}
 
-We can then send that output through another pipe, to `head`, so that the full pipeline becomes:
+然后我们可以通过另一个管道将该输出发送到“head”，这样整个管道就变成了：
 
 ~~~
 $ wc -l *.pdb | sort -n | head -n 1
@@ -431,66 +431,66 @@ $ wc -l *.pdb | sort -n | head -n 1
 ~~~
 {: .output}
 
-This is exactly like a mathematician nesting functions like *log(3x)*
-and saying 'the log of three times *x*'.
-In our case,
-the calculation is 'head of sort of line count of `*.pdb`'.
+这就像数学家嵌套函数，如 *log(3x)*
+并说“三倍*x*的日志”。
+在我们的案例中，
+计算是'* .pdb'的行数的头部'。
 
 
-The redirection and pipes used in the last few commands are illustrated below:
+最后几个命令中使用的重定向和管道如下所示：
 
-![Redirects and Pipes of different commands: "wc -l *.pdb" will direct the
-output to the shell. "wc -l *.pdb > lengths" will direct output to the file
-"lengths". "wc -l *.pdb | sort -n | head -n 1" will build a pipeline where the
-output of the "wc" command is the input to the "sort" command, the output of
-the "sort" command is the input to the "head" command and the output of the
-"head" command is directed to the shell](../fig/redirects-and-pipes.svg)
+![不同命令的重定向和管道：“wc -l *.pdb”将直接
+输出到外壳。 “wc -l *.pdb > lengths”将直接输出到文件
+“长度”。 “wc -l *.pdb | sort -n | head -n 1”将构建一个管道，其中
+“wc”命令的输出是“sort”命令的输入，
+“排序”命令是“头”命令的输入和输出
+“head”命令被定向到 shell](../fig/redirects-and-pipes.svg)
 
-> ## Piping Commands Together
+> ## 管道组织命令
 >
-> In our current directory, we want to find the 3 files which have the least number of
-> lines. Which command listed below would work?
+> 在我们的当前目录中，我们要找到 3 个文件数量最少的文件
+> 线。 下面列出的哪个命令会起作用？
 >
 > 1. `wc -l * > sort -n > head -n 3`
 > 2. `wc -l * | sort -n | head -n 1-3`
 > 3. `wc -l * | head -n 3 | sort -n`
 > 4. `wc -l * | sort -n | head -n 3`
 >
-> > ## Solution
-> > Option 4 is the solution.
-> > The pipe character `|` is used to connect the output from one command to
-> > the input of another.
-> > `>` is used to redirect standard output to a file.
-> > Try it in the `shell-lesson-data/molecules` directory!
+> > ## 解决方案
+> > 选项 4 是解决方案。
+> > 管道字符`|`用于将一个命令的输出连接到
+> > 另一个的输入。
+> > `>` 用于将标准输出重定向到文件。
+> > 在 `shell-lesson-data/molecules` 目录下试试吧！
 > {: .solution}
 {: .challenge}
 
 
-## Tools designed to work together
-This idea of linking programs together is why Unix has been so successful.
-Instead of creating enormous programs that try to do many different things,
-Unix programmers focus on creating lots of simple tools that each do one job well,
-and that work well with each other.
-This programming model is called 'pipes and filters'.
-We've already seen pipes;
-a **filter** is a program like `wc` or `sort`
-that transforms a stream of input into a stream of output.
-Almost all of the standard Unix tools can work this way:
-unless told to do otherwise,
-they read from standard input,
-do something with what they've read,
-and write to standard output.
+## 旨在协同工作的工具
+这种将程序链接在一起的想法是 Unix 如此成功的原因。
+与其创建试图做许多不同事情的巨大程序，
+Unix 程序员专注于创建许多简单的工具，每个工具都能很好地完成一项工作，
+并且彼此配合得很好。
+这种编程模型称为“管道和过滤器”。
+我们已经看到了管道；
+**filter** 是类似于 `wc` 或 `sort` 的程序
+它将输入流转换为输出流。
+几乎所有标准的 Unix 工具都可以这样工作：
+除非另有说明，否则
+他们从标准输入中读取，
+用他们读过的东西做点什么，
+并写入标准输出。
 
-The key is that any program that reads lines of text from standard input
-and writes lines of text to standard output
-can be combined with every other program that behaves this way as well.
-You can *and should* write your programs this way
-so that you and other people can put those programs into pipes to multiply their power.
+关键是任何从标准输入读取文本行的程序
+并将文本行写入标准输出
+也可以与其他所有以这种方式运行的程序结合使用。
+您可以*并且应该*以这种方式编写程序
+这样您和其他人就可以将这些程序放入管道中以增加其功能。
 
 
-> ## Pipe Reading Comprehension
+> ## 管道阅读理解
 >
-> A file called `animals.txt` (in the `shell-lesson-data/data` folder) contains the following data:
+> 一个名为 `animals.txt` 的文件（在 `shell-lesson-data/data` 文件夹中）包含以下数据：
 >
 > ~~~
 > 2012-11-05,deer
@@ -504,20 +504,20 @@ so that you and other people can put those programs into pipes to multiply their
 > ~~~
 > {: .source}
 >
-> What text passes through each of the pipes and the final redirect in the pipeline below?
+> 什么文本通过每个管道以及下面管道中的最终重定向？
 >
 > ~~~
 > $ cat animals.txt | head -n 5 | tail -n 3 | sort -r > final.txt
 > ~~~
 > {: .language-bash}
-> Hint: build the pipeline up one command at a time to test your understanding
-> > ## Solution
-> > The `head` command extracts the first 5 lines from `animals.txt`.
-> > Then, the last 3 lines are extracted from the previous 5 by using the `tail` command.
-> > With the `sort -r` command those 3 lines are sorted in reverse order and finally,
-> > the output is redirected to a file `final.txt`.
-> > The content of this file can be checked by executing `cat final.txt`.
-> > The file should contain the following lines:
+> 提示：一次建立一个命令来测试你的理解
+> > ## 解决方案
+> > `head` 命令从 `animals.txt` 中提取前 5 行。
+> > 然后，使用 `tail` 命令从前 5 行中提取最后 3 行。
+> > 使用 `sort -r` 命令，这 3 行以相反的顺序排序，最后，
+> > 输出被重定向到文件`final.txt`。
+> > 这个文件的内容可以通过执行`cat final.txt`来检查。
+> > 该文件应包含以下几行：
 > > ```
 > > 2012-11-06,rabbit
 > > 2012-11-06,deer
@@ -527,21 +527,21 @@ so that you and other people can put those programs into pipes to multiply their
 > {: .solution}
 {: .challenge}
 
-> ## Pipe Construction
+> ## 管道建设
 >
-> For the file `animals.txt` from the previous exercise, consider the following command:
+> 对于上一个练习中的文件 `animals.txt`，考虑以下命令：
 >
 > ~~~
 > $ cut -d , -f 2 animals.txt
 > ~~~
 > {: .language-bash}
 >
-> The `cut` command is used to remove or 'cut out' certain sections of each line in the file,
-> and `cut` expects the lines to be separated into columns by a <kbd>Tab</kbd> character.
-> A character used in this way is a called a **delimiter**.
-> In the example above we use the `-d` option to specify the comma as our delimiter character.
-> We have also used the `-f` option to specify that we want to extract the second field (column).
-> This gives the following output:
+> `cut` 命令用于删除或“剪切”文件中每一行的某些部分，
+> 和 `cut` 期望用 <kbd>Tab</kbd> 字符将行分隔成列。
+> 以这种方式使用的字符称为**分隔符**。
+> 在上面的示例中，我们使用 `-d` 选项将逗号指定为分隔符。
+> 我们还使用了 `-f` 选项来指定我们要提取第二个字段（列）。
+> 这给出以下输出：
 >
 > ~~~
 > deer
@@ -555,10 +555,10 @@ so that you and other people can put those programs into pipes to multiply their
 > ~~~
 > {: .output}
 >
-> The `uniq` command filters out adjacent matching lines in a file.
-> How could you extend this pipeline (using `uniq` and another command) to find
-> out what animals the file contains (without any duplicates in their
-> names)?
+> `uniq` 命令过滤掉文件中相邻的匹配行。
+> 你怎么能扩展这个管道（使用 `uniq` 和另一个命令）来查找
+> 找出文件包含的动物（其中没有任何重复
+> 名称）？
 >
 > > ## Solution
 > > ```
@@ -568,9 +568,9 @@ so that you and other people can put those programs into pipes to multiply their
 > {: .solution}
 {: .challenge}
 
-> ## Which Pipe?
+> ## 哪个管道？
 >
-> The file `animals.txt` contains 8 lines of data formatted as follows:
+> 文件 `animals.txt` 包含 8 行数据，格式如下：
 >
 > ~~~
 > 2012-11-05,deer
@@ -581,10 +581,10 @@ so that you and other people can put those programs into pipes to multiply their
 > ~~~
 > {: .output}
 >
-> The `uniq` command has a `-c` option which gives a count of the
-> number of times a line occurs in its input.  Assuming your current
-> directory is `shell-lesson-data/data/`, what command would you use to produce
-> a table that shows the total count of each type of animal in the file?
+> `uniq` 命令有一个 `-c` 选项，用于计算
+> 一行在其输入中出现的次数。 假设你当前
+> 目录是`shell-lesson-data/data/`，你会用什么命令来生成
+> 一个表格，显示文件中每种动物的总数？
 >
 > 1.  `sort animals.txt | uniq -c`
 > 2.  `sort -t, -k2,2 animals.txt | uniq -c`
@@ -592,18 +592,18 @@ so that you and other people can put those programs into pipes to multiply their
 > 4.  `cut -d, -f 2 animals.txt | sort | uniq -c`
 > 5.  `cut -d, -f 2 animals.txt | sort | uniq -c | wc -l`
 >
-> > ## Solution
-> > Option 4. is the correct answer.
-> > If you have difficulty understanding why, try running the commands, or sub-sections of
-> > the pipelines (make sure you are in the `shell-lesson-data/data` directory).
+> > ## 解决方案
+> > 选项 4. 是正确答案。
+> > 如果您难以理解原因，请尝试运行命令或子部分
+> > 管道（确保您位于 `shell-lesson-data/data` 目录中）。
 > {: .solution}
 {: .challenge}
 
-## Nelle's Pipeline: Checking Files
+## Nelle 的管道：检查文件
 
-Nelle has run her samples through the assay machines
-and created 17 files in the `north-pacific-gyre/2012-07-03` directory described earlier.
-As a quick check, starting from her home directory, Nelle types:
+Nelle 已经通过化验机运行了她的样本
+并在前面描述的“north-pacific-gyre/2012-07-03”目录中创建了 17 个文件。
+作为快速检查，从她的主目录开始，Nelle 键入：
 
 ~~~
 $ cd north-pacific-gyre/2012-07-03
@@ -611,7 +611,7 @@ $ wc -l *.txt
 ~~~
 {: .language-bash}
 
-The output is 18 lines that look like this:
+输出是 18 行，如下所示：
 
 ~~~
 300 NENE01729A.txt
@@ -624,7 +624,7 @@ The output is 18 lines that look like this:
 ~~~
 {: .output}
 
-Now she types this:
+现在她输入这个：
 
 ~~~
 $ wc -l *.txt | sort -n | head -n 5
@@ -640,13 +640,13 @@ $ wc -l *.txt | sort -n | head -n 5
 ~~~
 {: .output}
 
-Whoops: one of the files is 60 lines shorter than the others.
-When she goes back and checks it,
-she sees that she did that assay at 8:00 on a Monday morning --- someone
-was probably in using the machine on the weekend,
-and she forgot to reset it.
-Before re-running that sample,
-she checks to see if any files have too much data:
+哎呀：其中一个文件比其他文件短 60 行。
+当她回去检查它时，
+她看到她在星期一早上 8:00 做了那个化验 --- 某人
+可能是在周末使用机器，
+她忘了重置它。
+在重新运行该示例之前，
+她检查是否有任何文件有太多数据：
 
 ~~~
 $ wc -l *.txt | sort -n | tail -n 5
@@ -662,11 +662,11 @@ $ wc -l *.txt | sort -n | tail -n 5
 ~~~
 {: .output}
 
-Those numbers look good --- but what's that 'Z' doing there in the third-to-last line?
-All of her samples should be marked 'A' or 'B';
-by convention,
-her lab uses 'Z' to indicate samples with missing information.
-To find others like it, she does this:
+这些数字看起来不错——但是倒数第三行中的“Z”在做什么？
+她的所有样品都应标记为“A”或“B”；
+按照惯例，
+她的实验室使用“Z”表示缺少信息的样本。
+为了找到其他喜欢的人，她这样做：
 
 ~~~
 $ ls *Z.txt
@@ -678,38 +678,38 @@ NENE01971Z.txt    NENE02040Z.txt
 ~~~
 {: .output}
 
-Sure enough,
-when she checks the log on her laptop,
-there's no depth recorded for either of those samples.
-Since it's too late to get the information any other way,
-she must exclude those two files from her analysis.
-She could delete them using `rm`,
-but there are actually some analyses she might do later where depth doesn't matter,
-so instead, she'll have to be careful later on to select files using the wildcard expressions
-`NENE*A.txt NENE*B.txt`.
+果然，
+当她检查笔记本电脑上的日志时，
+这些样本中的任何一个都没有记录深度。
+由于以其他方式获取信息为时已晚，
+她必须从她的分析中排除这两个文件。
+她可以使用“rm”删除它们，
+但实际上她以后可能会做一些分析，深度无关紧要，
+因此，她以后必须小心使用通配符表达式选择文件
+`NENE*A.txt NENE*B.txt`。
 
 
-> ## Removing Unneeded Files
+> ## 删除不需要的文件
 >
-> Suppose you want to delete your processed data files, and only keep
-> your raw files and processing script to save storage.
-> The raw files end in `.dat` and the processed files end in `.txt`.
-> Which of the following would remove all the processed data files,
-> and *only* the processed data files?
+> 假设你想删除你处理过的数据文件，只保留
+> 您的原始文件和处理脚本以节省存储空间。
+> 原始文件以 `.dat` 结尾，处理后的文件以 `.txt` 结尾。
+> 以下哪项会删除所有已处理的数据文件，
+> 并且*仅*处理过的数据文件？
 >
 > 1. `rm ?.txt`
 > 2. `rm *.txt`
 > 3. `rm * .txt`
 > 4. `rm *.*`
 >
-> > ## Solution
-> > 1. This would remove `.txt` files with one-character names
-> > 2. This is correct answer
-> > 3. The shell would expand `*` to match everything in the current directory,
-> > so the command would try to remove all matched files and an additional
-> > file called `.txt`
-> > 4. The shell would expand `*.*` to match all files with any extension,
-> > so this command would delete all files
+> > ## 解决方案
+> > 1. 这将删除具有单字符名称的 `.txt` 文件
+> > 2. 这是正确答案
+> > 3. shell 会扩展 `*` 以匹配当前目录中的所有内容，
+> >    所以该命令会尝试删除所有匹配的文件和一个额外的
+> >    名为 `.txt` 的文件
+> > 4. shell 将扩展 `*.*` 以匹配所有具有任何扩展名的文件，
+> >    所以这个命令会删除所有文件
 > {: .solution}
 {: .challenge}
 

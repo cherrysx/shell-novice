@@ -1,33 +1,33 @@
 ---
-title: "Working With Files and Directories"
+title: "使用文件和目录"
 teaching: 30
 exercises: 20
 questions:
-- "How can I create, copy, and delete files and directories?"
-- "How can I edit files?"
+- "如何创建、复制和删除文件和目录？"
+- "如何编辑文件？"
 objectives:
-- "Create a directory hierarchy that matches a given diagram."
-- "Create files in that hierarchy using an editor or by copying and renaming existing files."
-- "Delete, copy and move specified files and/or directories."
+- "创建与给定图表匹配的目录层次结构。"
+- "在该层次结构中，使用编辑器或通过复制和重命名现有文件创建文件。"
+- "删除、复制和移动指定的文件和/或目录。"
 keypoints:
-- "`cp [old] [new]` copies a file."
-- "`mkdir [path]` creates a new directory."
-- "`mv [old] [new]` moves (renames) a file or directory."
-- "`rm [path]` removes (deletes) a file."
-- "`*` matches zero or more characters in a filename, so `*.txt` matches all files ending in `.txt`."
-- "`?` matches any single character in a filename, so `?.txt` matches `a.txt` but not `any.txt`."
-- "Use of the Control key may be described in many ways, including `Ctrl-X`, `Control-X`, and `^X`."
-- "The shell does not have a trash bin: once something is deleted, it's really gone."
-- "Most files' names are `something.extension`. The extension isn't required, and doesn't guarantee anything, but is normally used to indicate the type of data in the file."
-- "Depending on the type of work you do, you may need a more powerful text editor than Nano."
+- "`cp [old] [new]` 复制一个文件。"
+- "`mkdir [path]` 创建一个新目录。"
+- "`mv [old] [new]` 移动（重命名）文件或目录。"
+- "`rm [path]` 移除（删除）一个文件。"
+- "`*` 匹配文件名中的零个或多个字符，因此 `*.txt` 匹配所有以 `.txt` 结尾的文件。"
+- "`?` 匹配文件名中的任何单个字符，因此 `?.txt` 匹配 `a.txt` 但不匹配 `any.txt`。"
+- "可以通过多种方式描述 Control 键的使用，包括“Ctrl-X”、“Control-X”和“^X”。"
+- "Shell没有垃圾箱：一旦删除某些内容，它就真的消失了。"
+- "大多数文件的名称是 `something.extension`。 扩展名不是必需的，也不保证任何东西，但通常用于指示文件中的数据类型。"
+- "根据您所做的工作类型，您可能需要比 Nano 更强大的文本编辑器。"
 ---
-## Creating directories
-We now know how to explore files and directories,
-but how do we create them in the first place?
+## 创建目录
+我们现在知道如何探索文件和目录，
+但是我们如何首先创建它们？
 
-### Step one: see where we are and what we already have
-Let's go back to our `shell-lesson-data` directory on the Desktop
-and use `ls -F` to see what it contains:
+### 第一步：看看我们在哪里以及我们已经拥有什么
+让我们回到桌面上的 `shell-lesson-data` 目录
+并使用 `ls -F` 查看它包含的内容：
 
 ~~~
 $ pwd
@@ -50,21 +50,21 @@ data/       north-pacific-gyre/  numbers.txt  solar.pdf
 ~~~
 {: .output}
 
-### Create a directory
+### 创建目录
 
-Let's create a new directory called `thesis` using the command `mkdir thesis`
-(which has no output):
+让我们使用命令 `mkdir thesis` 创建一个名为 `thesis` 的新目录
+（没有输出）：
 
 ~~~
 $ mkdir thesis
 ~~~
 {: .language-bash}
 
-As you might guess from its name,
-`mkdir` means 'make directory'.
-Since `thesis` is a relative path
-(i.e., does not have a leading slash, like `/what/ever/thesis`),
-the new directory is created in the current working directory:
+正如你可能从它的名字中猜到的那样，
+`mkdir` 表示“制作目录”。
+由于 `thesis` 是相对路径
+（即，没有前导斜杠，例如`/what/ever/thesis`），
+在当前工作目录中创建新目录：
 
 ~~~
 $ ls -F
@@ -77,25 +77,25 @@ data/       north-pacific-gyre/  numbers.txt  solar.pdf  writing/
 ~~~
 {: .output}
 
-Since we've just created the `thesis` directory, there's nothing in it yet:
+由于我们刚刚创建了 `thesis` 目录，所以里面还没有任何内容：
 
 ~~~
 $ ls -F thesis
 ~~~
 {: .language-bash}
 
-Note that `mkdir` is not limited to creating single directories one at a time.
-The `-p` option allows `mkdir` to create a directory with nested subdirectories
-in a single operation:
+请注意，`mkdir` 不限于一次创建一个目录。
+`-p` 选项允许 `mkdir` 创建具有嵌套子目录的目录
+在一次操作中：
 
 ~~~
 $ mkdir -p project/data project/results
 ~~~
 {: .language-bash}
 
-The `-R` option to the `ls` command will list all nested subdirectories within a directory.
-Let's use `ls -FR` to recursively list the new directory hierarchy we just created in the
-`project` directory:
+`ls` 命令的`-R` 选项将列出目录中的所有嵌套子目录。
+让我们使用 `ls -FR` 递归地列出我们刚刚在
+`项目`目录：
 
 ~~~
 $ ls -FR project
@@ -112,47 +112,47 @@ project/results:
 ~~~
 {: .output}
 
-> ## Two ways of doing the same thing
-> Using the shell to create a directory is no different than using a file explorer.
-> If you open the current directory using your operating system's graphical file explorer,
-> the `thesis` directory will appear there too.
-> While the shell and the file explorer are two different ways of interacting with the files,
-> the files and directories themselves are the same.
+> ## 做同一件事的两种方法
+> 使用 shell 创建目录与使用文件资源管理器没有什么不同。
+> 如果您使用操作系统的图形文件资源管理器打开当前目录，
+> `thesis` 目录也会出现在那里。
+> 虽然 shell 和文件资源管理器是与文件交互的两种不同方式，
+> 文件和目录本身是相同的。
 {: .callout}
 
-> ## Good names for files and directories
+> ## 文件和目录的好名字
 >
-> Complicated names of files and directories can make your life painful
-> when working on the command line. Here we provide a few useful
-> tips for the names of your files and directories.
+> 复杂的文件名和目录名会让你的生活变得痛苦
+> 在命令行上工作时。 在这里我们提供一些有用的
+> 文件和目录名称的提示。
 >
-> 1. Don't use spaces.
+> 1. 不要用空格
 >
->    Spaces can make a name more meaningful,
->    but since spaces are used to separate arguments on the command line
->    it is better to avoid them in names of files and directories.
->    You can use `-` or `_` instead (e.g. `north-pacific-gyre/` rather than `north pacific gyre/`).
->    To test this out, try typing `mkdir north pacific gyre`and see what directory (or directories!)
->    are made when you check with `ls -F`.
+>    空格可以让名字更有意义，
+>    但是由于空格用于分隔命令行上的参数
+>    最好在文件名和目录名中避免使用它们。
+>    您可以使用 `-` 或 `_` 代替（例如 `north-pacific-gyre/` 而不是 `north pacific gyre/`）。
+>    要对此进行测试，请尝试输入“mkdir north pacific gyre”并查看是哪个目录（或多个目录！）
+>    是在您使用 `ls -F` 检查时生成的。
 >
-> 2. Don't begin the name with `-` (dash).
+> 2. 名称不要以 `-`（破折号）开始。
 >
->    Commands treat names starting with `-` as options.
+>    命令将以 `-` 开头的名称视为选项。
 >
-> 3. Stick with letters, numbers, `.` (period or 'full stop'), `-` (dash) and `_` (underscore).
+> 3. 坚持使用字母、数字、`.`（句点或“句号”）、`-`（破折号）和`_`（下划线）。
 >
->    Many other characters have special meanings on the command line.
->    We will learn about some of these during this lesson.
->    There are special characters that can cause your command to not work as
->    expected and can even result in data loss.
+>    许多其他字符在命令行中具有特殊含义。
+>    我们将在本课中了解其中的一些内容。
+>    有一些特殊字符会导致您的命令无法正常工作
+>    预期的，甚至可能导致数据丢失。
 >
-> If you need to refer to names of files or directories that have spaces
-> or other special characters, you should surround the name in quotes (`""`).
+> 如果您需要引用包含空格的文件或目录的名称
+> 或其他特殊字符，您应该用引号 (`""`) 将名称括起来。
 {: .callout}
 
-### Create a text file
-Let's change our working directory to `thesis` using `cd`,
-then run a text editor called Nano to create a file called `draft.txt`:
+### 创建一个文本文件
+让我们使用 `cd` 将我们的工作目录更改为 `thesis`，
+然后运行一个名为 Nano 的文本编辑器来创建一个名为 `draft.txt` 的文件：
 
 ~~~
 $ cd thesis
@@ -160,49 +160,49 @@ $ nano draft.txt
 ~~~
 {: .language-bash}
 
-> ## Which Editor?
+> ## 哪个编辑器？
 >
-> When we say, '`nano` is a text editor' we really do mean 'text': it can
-> only work with plain character data, not tables, images, or any other
-> human-friendly media. We use it in examples because it is one of the
-> least complex text editors. However, because of this trait, it may
-> not be powerful enough or flexible enough for the work you need to do
-> after this workshop. On Unix systems (such as Linux and macOS),
-> many programmers use [Emacs](http://www.gnu.org/software/emacs/) or
-> [Vim](http://www.vim.org/) (both of which require more time to learn),
-> or a graphical editor such as
-> [Gedit](http://projects.gnome.org/gedit/). On Windows, you may wish to
-> use [Notepad++](http://notepad-plus-plus.org/).  Windows also has a built-in
-> editor called `notepad` that can be run from the command line in the same
-> way as `nano` for the purposes of this lesson.
+> 当我们说“nano”是一个文本编辑器时，我们的意思是“文本”：它可以
+> 仅适用于纯字符数据，不适用于表格、图像或任何其他
+> 人性化媒体。我们在示例中使用它是因为它是
+> 最简单的文本编辑器。然而，由于这种特性，它可能
+> 对你需要做的工作不够强大或不够灵活
+> 在本次研讨会之后。在 Unix 系统（如 Linux 和 macOS）上，
+> 许多程序员使用 [Emacs](http://www.gnu.org/software/emacs/) 或
+> [Vim](http://www.vim.org/)（两者都需要更多时间学习），
+> 或图形编辑器，例如
+> [Gedit](http://projects.gnome.org/gedit/)。在 Windows 上，您可能希望
+> 使用 [Notepad++](http://notepad-plus-plus.org/)。 Windows 也有一个内置的
+> 名为“记事本”的编辑器，可以在同一命令行中运行
+> 在本课中使用“nano”的方式。
 >
-> No matter what editor you use, you will need to know where it searches
-> for and saves files. If you start it from the shell, it will (probably)
-> use your current working directory as its default location. If you use
-> your computer's start menu, it may want to save files in your desktop or
-> documents directory instead. You can change this by navigating to
-> another directory the first time you 'Save As...'
+> 无论您使用什么编辑器，您都需要知道它在哪里搜索
+> 用于和保存文件。如果你从 shell 启动它，它会（可能）
+> 使用您当前的工作目录作为其默认位置。如果你使用
+> 您计算机的开始菜单，它可能希望将文件保存在您的桌面或
+> 文档目录。您可以通过导航到
+> 第一次“另存为...”时的另一个目录
 {: .callout}
 
-Let's type in a few lines of text.
-Once we're happy with our text, we can press <kbd>Ctrl</kbd>+<kbd>O</kbd>
-(press the <kbd>Ctrl</kbd> or <kbd>Control</kbd> key and, while
-holding it down, press the <kbd>O</kbd> key) to write our data to disk
-(we'll be asked what file we want to save this to:
-press <kbd>Return</kbd> to accept the suggested default of `draft.txt`).
+让我们输入几行文本。
+一旦我们对文本感到满意，我们可以按 <kbd>Ctrl</kbd>+<kbd>O</kbd>
+（按 <kbd>Ctrl</kbd> 或 <kbd>Control</kbd> 键，同时
+按住它，按 <kbd>O</kbd> 键）将我们的数据写入磁盘
+（系统会询问我们要将其保存到哪个文件：
+按 <kbd>Return</kbd> 接受建议的默认值 `draft.txt`）。
 
 <div style="width:80%; margin: auto;"><img alt="screenshot of nano text editor in action"
 src="../fig/nano-screenshot.png"></div>
 
-Once our file is saved, we can use <kbd>Ctrl</kbd>+<kbd>X</kbd> to quit the editor and
-return to the shell.
+保存文件后，我们可以使用 <kbd>Ctrl</kbd>+<kbd>X</kbd> 退出编辑器并
+返回shell。
 
-> ## Control, Ctrl, or ^ Key
+> ## 控制、Ctrl 或 ^ 键
 >
-> The Control key is also called the 'Ctrl' key. There are various ways
-> in which using the Control key may be described. For example, you may
-> see an instruction to press the <kbd>Control</kbd> key and, while holding it down,
-> press the <kbd>X</kbd> key, described as any of:
+> Control 键也称为“Ctrl”键。 有多种方式
+> 其中可能会描述使用 Control 键。 例如，您可以
+> 查看按 <kbd>Control</kbd> 键的说明，并在按住它的同时，
+> 按 <kbd>X</kbd> 键，描述为：
 >
 > * `Control-X`
 > * `Control+X`
@@ -211,13 +211,13 @@ return to the shell.
 > * `^X`
 > * `C-x`
 >
-> In nano, along the bottom of the screen you'll see `^G Get Help ^O WriteOut`.
-> This means that you can use `Control-G` to get help and `Control-O` to save your
-> file.
+> 在 nano 中，您会在屏幕底部看到 `^G Get Help ^O WriteOut`。
+> 这意味着您可以使用 `Control-G` 来获取帮助并使用 `Control-O` 来保存您的
+> 文件。
 {: .callout}
 
-`nano` doesn't leave any output on the screen after it exits,
-but `ls` now shows that we have created a file called `draft.txt`:
+`nano` 退出后不会在屏幕上留下任何输出，
+但是`ls`现在显示我们已经创建了一个名为`draft.txt`的文件：
 
 ~~~
 $ ls
@@ -229,93 +229,93 @@ draft.txt
 ~~~
 {: .output}
 
-> ## Creating Files a Different Way
+> ## 以不同的方式创建文件
 >
-> We have seen how to create text files using the `nano` editor.
-> Now, try the following command:
+> 我们已经了解了如何使用 `nano` 编辑器创建文本文件。
+> 现在，尝试以下命令：
 >
 > ~~~
 > $ touch my_file.txt
 > ~~~
 > {: .language-bash}
 >
-> 1.  What did the `touch` command do?
->     When you look at your current directory using the GUI file explorer,
->     does the file show up?
+> 1.  `touch` 命令做了什么？
+>     当您使用 GUI 文件资源管理器查看当前目录时，
+>     文件是否显示？
 >
-> 2.  Use `ls -l` to inspect the files.  How large is `my_file.txt`?
+> 2.  使用 `ls -l` 检查文件。 `my_file.txt` 有多大？
 >
-> 3.  When might you want to create a file this way?
+> 3.  您什么时候想以这种方式创建文件？
 >
-> > ## Solution
-> > 1.  The `touch` command generates a new file called `my_file.txt` in
-> >     your current directory.  You
-> >     can observe this newly generated file by typing `ls` at the
-> >     command line prompt.  `my_file.txt` can also be viewed in your
-> >     GUI file explorer.
+> > ## 解决方案
+> > 1.  `touch` 命令生成一个名为 `my_file.txt` 的新文件
+> >     你的当前目录。 你
+> >     可以通过在
+> >     命令行提示符。 `my_file.txt` 也可以在您的
+> >     GUI 文件浏览器。
 > >
-> > 2.  When you inspect the file with `ls -l`, note that the size of
-> >     `my_file.txt` is 0 bytes.  In other words, it contains no data.
-> >     If you open `my_file.txt` using your text editor it is blank.
+> > 2.  当您使用 `ls -l` 检查文件时，请注意
+> >     `my_file.txt` 为 0 字节。 换句话说，它不包含任何数据。
+> >     如果您使用文本编辑器打开 `my_file.txt`，它是空白的。
 > >
-> > 3.  Some programs do not generate output files themselves, but
-> >     instead require that empty files have already been generated.
-> >     When the program is run, it searches for an existing file to
-> >     populate with its output.  The touch command allows you to
-> >     efficiently generate a blank text file to be used by such
-> >     programs.
+> > 3.  有些程序本身不生成输出文件，但
+> >     而是要求已经生成了空文件。
+> >     当程序运行时，它会搜索现有文件以
+> >     填充其输出。 触摸命令允许您
+> >     有效地生成一个空白文本文件供此类使用
+> >     节目。
 > {: .solution}
 {: .challenge}
 
-> ## What's In A Name?
+> ## 名字里有什么？
 >
-> You may have noticed that all of Nelle's files are named 'something dot
-> something', and in this part of the lesson, we always used the extension
-> `.txt`.  This is just a convention: we can call a file `mythesis` or
-> almost anything else we want. However, most people use two-part names
-> most of the time to help them (and their programs) tell different kinds
-> of files apart. The second part of such a name is called the
-> **filename extension** and indicates
-> what type of data the file holds: `.txt` signals a plain text file, `.pdf`
-> indicates a PDF document, `.cfg` is a configuration file full of parameters
-> for some program or other, `.png` is a PNG image, and so on.
+> 你可能已经注意到 Nelle 的所有文件都被命名为“something dot”
+> something'，在这部分课程中，我们总是使用扩展名
+> `.txt`。这只是一个约定：我们可以将文件称为“mythesis”或
+> 几乎任何我们想要的东西。但是，大多数人使用两部分名称
+> 大多数时候帮助他们（和他们的程序）告诉不同的种类
+> 文件分开。这种名称的第二部分称为
+> **文件扩展名**并表示
+> 文件包含什么类型的数据：`.txt` 表示纯文本文件，`.pdf`
+> 表示一个PDF文件，`.cfg`是一个配置文件，里面有很多参数
+> 对于某些程序或其他程序，`.png` 是 PNG 图像，依此类推。
 >
-> This is just a convention, albeit an important one. Files contain
-> bytes: it's up to us and our programs to interpret those bytes
-> according to the rules for plain text files, PDF documents, configuration
-> files, images, and so on.
+> 这只是一个约定，尽管它很重要。文件包含
+> 字节：由我们和我们的程序来解释这些字节
+> 按规则对纯文本文件、PDF文件、配置
+> 文件、图像等。
 >
-> Naming a PNG image of a whale as `whale.mp3` doesn't somehow
-> magically turn it into a recording of whale song, though it *might*
-> cause the operating system to try to open it with a music player
-> when someone double-clicks it.
+> 将鲸鱼的 PNG 图像命名为 `whale.mp3`
+> 神奇地把它变成鲸歌的录音，虽然它*可能*
+> 导致操作系统尝试使用音乐播放器打开它
+> 当有人双击它时。
 {: .callout}
 
-## Moving files and directories
-Returning to the `shell-lesson-data` directory,
+## 移动文件和目录
+返回到 `shell-lesson-data` 目录，
 
 ```
 $ cd ~/Desktop/shell-lesson-data/
 ```
 {: .language-bash}
 
-In our `thesis` directory we have a file `draft.txt`
-which isn't a particularly informative name,
-so let's change the file's name using `mv`,
-which is short for 'move':
+I在我们的 `thesis` 目录中，我们有一个文件 `draft.txt`
+这不是一个特别有用的名字，
+所以让我们使用 `mv` 更改文件名，
+这是“move”的缩写：
 
 ~~~
 $ mv thesis/draft.txt thesis/quotes.txt
 ~~~
 {: .language-bash}
 
-The first argument tells `mv` what we're 'moving',
-while the second is where it's to go.
-In this case,
-we're moving `thesis/draft.txt` to `thesis/quotes.txt`,
-which has the same effect as renaming the file.
-Sure enough,
-`ls` shows us that `thesis` now contains one file called `quotes.txt`:
+第一个参数告诉 `mv` 我们正在“move”什么，
+而第二个是它要去的地方。
+在这种情况下，
+我们将 `thesis/draft.txt` 移动到 `thesis/quotes.txt`，
+这与重命名文件具有相同的效果。
+果然，
+`ls` 向我们展示了 `thesis` 现在包含一个名为 `quotes.txt` 的文件：
 
 ~~~
 $ ls thesis
@@ -327,29 +327,29 @@ quotes.txt
 ~~~
 {: .output}
 
-One must be careful when specifying the target file name, since `mv` will
-silently overwrite any existing file with the same name, which could
-lead to data loss. An additional option, `mv -i` (or `mv --interactive`),
-can be used to make `mv` ask you for confirmation before overwriting.
+指定目标文件名时必须小心，因为 `mv` 会
+默默地覆盖任何现有的同名文件，这可能
+导致数据丢失。 一个附加选项，`mv -i`（或 `mv --interactive`），
+可用于让 `mv` 在覆盖前要求您确认。
 
-Note that `mv` also works on directories.
+请注意，`mv` 也适用于目录。
 
-Let's move `quotes.txt` into the current working directory.
-We use `mv` once again,
-but this time we'll use just the name of a directory as the second argument
-to tell `mv` that we want to keep the filename
-but put the file somewhere new.
-(This is why the command is called 'move'.)
-In this case,
-the directory name we use is the special directory name `.` that we mentioned earlier.
+让我们将 `quotes.txt` 移动到当前工作目录中。
+我们再次使用`mv`，
+但是这次我们将只使用目录的名称作为第二个参数
+告诉 `mv` 我们要保留文件名
+但将文件放在新的地方。
+（这就是该命令被称为“移动”的原因。）
+在这种情况下，
+我们使用的目录名是我们前面提到的特殊目录名`.`。
 
 ~~~
 $ mv thesis/quotes.txt .
 ~~~
 {: .language-bash}
 
-The effect is to move the file from the directory it was in to the current working directory.
-`ls` now shows us that `thesis` is empty:
+效果是将文件从它所在的目录移动到当前工作目录。
+`ls` 现在告诉我们`thesis` 是空的：
 
 ~~~
 $ ls thesis
@@ -361,8 +361,8 @@ $
 ~~~
 {: .output}
 
-Alternatively, we can confirm the file `quotes.txt` is no longer present in the `thesis` directory
-by explicitly trying to list it:
+或者，我们可以确认文件 `quotes.txt` 不再存在于 `thesis` 目录中
+通过明确尝试列出它：
 
 ~~~
 $ ls thesis/quotes.txt
@@ -374,9 +374,9 @@ ls: cannot access 'thesis/quotes.txt': No such file or directory
 ```
 {: .error}
 
-`ls` with a filename or directory as an argument only lists the requested file or directory.
-If the file given as the argument doesn't exist, the shell returns an error as we saw above.
-We can use this to see that `quotes.txt` is now present in our current directory:
+以文件名或目录作为参数的 `ls` 仅列出请求的文件或目录。
+如果作为参数给出的文件不存在，shell 会返回一个错误，如我们上面所见。
+我们可以使用它来查看 `quotes.txt` 现在存在于我们的当前目录中：
 
 ~~~
 $ ls quotes.txt
@@ -388,11 +388,11 @@ quotes.txt
 ~~~
 {: .output}
 
-> ## Moving Files to a new folder
+> ## 将文件移动到新文件夹
 >
-> After running the following commands,
-> Jamie realizes that she put the files `sucrose.dat` and `maltose.dat` into the wrong folder.
-> The files should have been placed in the `raw` folder.
+> 运行以下命令后，
+> Jamie意识到她将文件 `sucrose.dat` 和 `maltose.dat` 放入了错误的文件夹。
+> 文件应该已放置在 `raw` 文件夹中。
 >
 > ~~~
 > $ ls -F
@@ -403,8 +403,8 @@ quotes.txt
 > ~~~
 > {: .language-bash}
 >
-> Fill in the blanks to move these files to the `raw/` folder
-> (i.e. the one she forgot to put them in)
+> 填空以将这些文件移动到 `raw/` 文件夹
+>（即她忘记放入的那个）
 >
 > ~~~
 > $ mv sucrose.dat maltose.dat ____/____
@@ -415,18 +415,18 @@ quotes.txt
 > > $ mv sucrose.dat maltose.dat ../raw
 > > ```
 > > {: .language-bash}
-> > Recall that `..` refers to the parent directory (i.e. one above the current directory)
-> > and that `.` refers to the current directory.
+>> 回想一下，`..` 指的是父目录（即当前目录之上的一个）
+> > 并且那个 `.` 指的是当前目录。
 > {: .solution}
 {: .challenge}
 
-## Copying files and directories
+## 复制文件和目录
 
-The `cp` command works very much like `mv`,
-except it copies a file instead of moving it.
-We can check that it did the right thing using `ls`
-with two paths as arguments --- like most Unix commands,
-`ls` can be given multiple paths at once:
+`cp` 命令的工作方式非常类似于 `mv`，
+除了它复制文件而不是移动它。
+我们可以使用`ls`检查它是否正确
+以两条路径作为参数——像大多数 Unix 命令一样，
+`ls` 可以一次给定多个路径：
 
 ~~~
 $ cp quotes.txt thesis/quotations.txt
@@ -439,16 +439,16 @@ quotes.txt   thesis/quotations.txt
 ~~~
 {: .output}
 
-We can also copy a directory and all its contents by using the
-[recursive](https://en.wikipedia.org/wiki/Recursion) option `-r`,
-e.g. to back up a directory:
+我们还可以使用
+[递归]（https://en.wikipedia.org/wiki/Recursion）选项`-r`，
+例如备份目录：
 
 ```
 $ cp -r thesis thesis_backup
 ```
 {: .language-bash}
 
-We can check the result by listing the contents of both the `thesis` and `thesis_backup` directory:
+我们可以通过列出 `thesis` 和 `thesis_backup` 目录的内容来检查结果：
 
 ```
 $ ls thesis thesis_backup
@@ -465,35 +465,35 @@ quotations.txt
 {: .output}
 
 
-> ## Renaming Files
+> ## 重命名文件
 >
-> Suppose that you created a plain-text file in your current directory to contain a list of the
-> statistical tests you will need to do to analyze your data, and named it: `statstics.txt`
+> 假设您在当前目录中创建了一个纯文本文件以包含
+> 分析数据需要进行的统计测试，并将其命名为：`statstics.txt`
 >
-> After creating and saving this file you realize you misspelled the filename! You want to
-> correct the mistake, which of the following commands could you use to do so?
+> 创建并保存此文件后，您意识到您拼错了文件名！ 你想要
+> 纠正错误，您可以使用以下哪个命令来纠正错误？
 >
 > 1. `cp statstics.txt statistics.txt`
 > 2. `mv statstics.txt statistics.txt`
 > 3. `mv statstics.txt .`
 > 4. `cp statstics.txt .`
 >
-> > ## Solution
-> > 1. No.  While this would create a file with the correct name,
-> > the incorrectly named file still exists in the directory
-> > and would need to be deleted.
-> > 2. Yes, this would work to rename the file.
-> > 3. No, the period(.) indicates where to move the file, but does not provide a new file name;
-> > identical file names
-> > cannot be created.
-> > 4. No, the period(.) indicates where to copy the file, but does not provide a new file name;
-> > identical file names cannot be created.
+> > ## 解决方案
+> > 1. 不。虽然这会创建一个具有正确名称的文件，
+> >    错误命名的文件仍然存在于目录中
+> >    并且需要删除。
+> > 2. 是的，这可以重命名文件。
+> > 3. 不，句点（.）表示将文件移动到哪里，但不提供新的文件名；
+> >    相同的文件名
+> >    无法创建。
+> > 4. 不，句点（.）表示将文件复制到哪里，但不提供新的文件名；
+> >    无法创建相同的文件名。
 > {: .solution}
 {: .challenge}
 
-> ## Moving and Copying
+> ## 移动和复制
 >
-> What is the output of the closing `ls` command in the sequence shown below?
+> 关闭 `ls` 命令的输出如下所示的顺序是什么？
 >
 > ~~~
 > $ pwd
@@ -525,28 +525,28 @@ quotations.txt
 > 3.   `proteins.dat recombined`
 > 4.   `proteins-saved.dat`
 >
-> > ## Solution
-> > We start in the `/Users/jamie/data` directory, and create a new folder called `recombined`.
-> > The second line moves (`mv`) the file `proteins.dat` to the new folder (`recombined`).
-> > The third line makes a copy of the file we just moved.
-> > The tricky part here is where the file was copied to.
-> > Recall that `..` means 'go up a level', so the copied file is now in `/Users/jamie`.
-> > Notice that `..` is interpreted with respect to the current working
-> > directory, **not** with respect to the location of the file being copied.
-> > So, the only thing that will show using ls (in `/Users/jamie/data`) is the recombined folder.
+> > ## 解决方案
+> > 我们从 `/Users/jamie/data` 目录开始，并创建一个名为 `recombined` 的新文件夹。
+> > 第二行将文件 `proteins.dat` 移动 (`mv`) 到新文件夹 (`recombined`)。
+> > 第三行复制了我们刚刚移动的文件。
+> > 这里棘手的部分是文件被复制到的位置。
+> > 回想一下，`..` 的意思是“上一级”，所以复制的文件现在位于 `/Users/jamie` 中。
+> > 请注意，`..` 是相对于当前工作进行解释的
+> > 目录，**不是**相对于被复制文件的位置。
+> > 所以，唯一会使用 ls 显示的东西（在 `/Users/jamie/data` 中）是重新组合的文件夹。
 > >
-> > 1. No, see explanation above.  `proteins-saved.dat` is located at `/Users/jamie`
-> > 2. Yes
-> > 3. No, see explanation above.  `proteins.dat` is located at `/Users/jamie/data/recombined`
-> > 4. No, see explanation above.  `proteins-saved.dat` is located at `/Users/jamie`
+> > 1. 不，见上面的解释。 `proteins-saved.dat` 位于 `/Users/jamie`
+> > 2. 是的
+> > 3. 不，见上面的解释。 `proteins.dat` 位于 `/Users/jamie/data/recombined`
+> > 4. 不，见上面的解释。 `proteins-saved.dat` 位于 `/Users/jamie`
 > {: .solution}
 {: .challenge}
 
-## Removing files and directories
+## 删除文件和目录
 
-Returning to the `shell-lesson-data` directory,
-let's tidy up this directory by removing the `quotes.txt` file we created.
-The Unix command we'll use for this is `rm` (short for 'remove'):
+返回到 `shell-lesson-data` 目录，
+让我们通过删除我们创建的 `quotes.txt` 文件来整理这个目录。
+我们将使用的 Linux 命令是“rm”（“remove”的缩写）：
 
 ~~~
 $ rm quotes.txt
@@ -565,39 +565,39 @@ ls: cannot access 'quotes.txt': No such file or directory
 ```
 {: .error}
 
-> ## Deleting Is Forever
+> ## 删除是永远的
 >
-> The Unix shell doesn't have a trash bin that we can recover deleted
-> files from (though most graphical interfaces to Unix do).  Instead,
-> when we delete files, they are unlinked from the file system so that
-> their storage space on disk can be recycled. Tools for finding and
-> recovering deleted files do exist, but there's no guarantee they'll
-> work in any particular situation, since the computer may recycle the
-> file's disk space right away.
+> Linux shell 没有我们可以恢复的垃圾箱已删除
+> 文件来自（尽管大多数 Unix 的图形界面都这样做）。 反而，
+> 当我们删除文件时，它们会从文件系统中取消链接，这样
+> 他们在磁盘上的存储空间是可以回收的。 查找工具和
+> 恢复已删除文件确实存在，但不能保证它们会
+> 在任何特定情况下工作，因为计算机可能会回收
+> 文件的磁盘空间。
 {: .callout}
 
 
-> ## Using `rm` Safely
+> ## 安全地使用 rm
 >
-> What happens when we execute `rm -i thesis_backup/quotations.txt`?
-> Why would we want this protection when using `rm`?
+> 当我们执行 `rm -i thesis_backup/quotations.txt` 时会发生什么？
+> 为什么我们在使用 `rm` 时需要这种保护？
 >
-> > ## Solution
+> > ## 解决方案
 > > ```
 > > rm: remove regular file 'thesis_backup/quotations.txt'? y
 > > ```
 > > {: .output}
-> > The `-i` option will prompt before (every) removal (use <kbd>Y</kbd> to confirm deletion
-> > or <kbd>N</kbd> to keep the file).
-> > The Unix shell doesn't have a trash bin, so all the files removed will disappear forever.
-> > By using the `-i` option, we have the chance to check that we are deleting only the files
-> > that we want to remove.
+> > `-i` 选项将在（每次）删除之前提示（使用 <kbd>Y</kbd> 确认删除
+> > 或 <kbd>N</kbd> 保留文件）。
+> > Linux shell 没有垃圾箱，所以所有被删除的文件都会永远消失。
+> > 通过使用 `-i` 选项，我们有机会检查我们是否只删除文件
+> > 我们要删除的。
 > {: .solution}
 {: .challenge}
 
 
-If we try to remove the `thesis` directory using `rm thesis`,
-we get an error message:
+如果我们尝试使用 `rm thesis` 删除 `thesis` 目录，
+我们收到一条错误消息：
 
 ~~~
 $ rm thesis
@@ -609,31 +609,31 @@ rm: cannot remove `thesis': Is a directory
 ~~~
 {: .error}
 
-This happens because `rm` by default only works on files, not directories.
+发生这种情况是因为 `rm` 默认情况下仅适用于文件，而不适用于目录。
 
-`rm` can remove a directory *and all its contents* if we use the
-recursive option `-r`, and it will do so *without any confirmation prompts*:
+`rm` 可以删除目录*及其所有内容*，如果我们使用
+递归选项`-r`，它会这样做*没有任何确认提示*：
 
 ~~~
 $ rm -r thesis
 ~~~
 {: .language-bash}
 
-Given that there is no way to retrieve files deleted using the shell,
-`rm -r` *should be used with great caution*
-(you might consider adding the interactive option `rm -r -i`).
+鉴于无法检索使用 shell 删除的文件，
+`rm -r` *应谨慎使用*
+（您可以考虑添加交互式选项 `rm -r -i`）。
 
-## Operations with multiple files and directories
+## 多个文件和目录的操作
 
-Oftentimes one needs to copy or move several files at once.
-This can be done by providing a list of individual filenames,
-or specifying a naming pattern using wildcards.
+通常需要一次复制或移动多个文件。
+这可以通过提供单个文件名列表来完成，
+或使用通配符指定命名模式。
 
-> ## Copy with Multiple Filenames
+> ## 使用多个文件名复制
 >
-> For this exercise, you can test the commands in the `shell-lesson-data/data` directory.
+> 对于本练习，您可以测试 `shell-lesson-data/data` 目录中的命令。
 >
-> In the example below, what does `cp` do when given several filenames and a directory name?
+> 在下面的例子中，当给定多个文件名和一个目录名时，`cp` 会做什么？
 >
 > ~~~
 > $ mkdir backup
@@ -641,7 +641,7 @@ or specifying a naming pattern using wildcards.
 > ~~~
 > {: .language-bash}
 >
-> In the example below, what does `cp` do when given three or more file names?
+> 在下面的示例中，当给定三个或更多文件名时，`cp` 会做什么？
 >
 > ~~~
 > $ ls -F
@@ -657,13 +657,13 @@ or specifying a naming pattern using wildcards.
 > ~~~
 > {: .language-bash}
 >
-> > ## Solution
-> > If given more than one file name followed by a directory name
-> > (i.e. the destination directory must be the last argument),
-> > `cp` copies the files to the named directory.
+> > ## 解决方案
+> > 如果给出多个文件名后跟一个目录名
+> >（即目标目录必须是最后一个参数），
+> > `cp` 将文件复制到指定目录。
 > >
-> > If given three file names, `cp` throws an error such as the one below,
-> > because it is expecting a directory name as the last argument.
+> > 如果给定三个文件名，`cp` 会抛出如下错误，
+> > 因为它需要一个目录名作为最后一个参数。
 > >
 > > ```
 > > cp: target 'morse.txt' is not a directory
@@ -672,42 +672,42 @@ or specifying a naming pattern using wildcards.
 > {: .solution}
 {: .challenge}
 
-### Using wildcards for accessing multiple files at once
+### 使用通配符一次访问多个文件
 
-> ## Wildcards
+> ## 通配符
 >
-> `*` is a **wildcard**, which matches zero or more  characters.
-> Let's consider the `shell-lesson-data/molecules` directory:
-> `*.pdb` matches `ethane.pdb`, `propane.pdb`, and every
-> file that ends with '.pdb'. On the other hand, `p*.pdb` only matches
-> `pentane.pdb` and `propane.pdb`, because the 'p' at the front only
-> matches filenames that begin with the letter 'p'.
+> `*` 是一个**通配符**，它匹配零个或多个字符。
+> 让我们考虑 `shell-lesson-data/molecules` 目录：
+> `*.pdb` 匹配 `ethane.pdb`、`propane.pdb` 和每个
+> 以“.pdb”结尾的文件。另一方面，`p*.pdb` 只匹配
+> `pentane.pdb` 和 `propane.pdb`，因为只有前面的 'p'
+> 匹配以字母“p”开头的文件名。
 >
-> `?` is also a wildcard, but it matches exactly one character.
-> So `?ethane.pdb` would match `methane.pdb` whereas
-> `*ethane.pdb` matches both `ethane.pdb`, and `methane.pdb`.
+> `?` 也是一个通配符，但它只匹配一个字符。
+> 所以 `?ethane.pdb` 会匹配 `methane.pdb` 而
+> `*ethane.pdb` 匹配 `ethane.pdb` 和 `methane.pdb`。
 >
-> Wildcards can be used in combination with each other
-> e.g. `???ane.pdb` matches three characters followed by `ane.pdb`,
-> giving `cubane.pdb  ethane.pdb  octane.pdb`.
+> 通配符可以相互结合使用
+> 例如`???ane.pdb` 匹配后跟 `ane.pdb` 的三个字符，
+> 给予 `cubane.pdb ethane.pdb octane.pdb`。
 >
-> When the shell sees a wildcard, it expands the wildcard to create a
-> list of matching filenames *before* running the command that was
-> asked for. As an exception, if a wildcard expression does not match
-> any file, Bash will pass the expression as an argument to the command
-> as it is. For example, typing `ls *.pdf` in the `molecules` directory
-> (which contains only files with names ending with `.pdb`) results in
-> an error message that there is no file called `*.pdf`.
-> However, generally commands like `wc` and `ls` see the lists of
-> file names matching these expressions, but not the wildcards
-> themselves. It is the shell, not the other programs, that deals with
-> expanding wildcards.
+> 当 shell 看到通配符时，它会扩展通配符以创建一个
+> 匹配文件名列表*在*运行之前的命令之前
+> 要求。作为一个例外，如果通配符表达式不匹配
+> 任何文件，Bash 会将表达式作为参数传递给命令
+> 原样。例如，在 `molecules` 目录中输入 `ls *.pdf`
+> （仅包含名称以 `.pdb` 结尾的文件）导致
+> 没有名为 `*.pdf` 的文件的错误消息。
+> 但是，通常像 `wc` 和 `ls` 这样的命令会看到
+> 匹配这些表达式的文件名，但不匹配通配符
+> 他们自己。处理的是外壳程序，而不是其他程序
+> 扩展通配符。
 {: .callout}
 
-> ## List filenames matching a pattern
+> ## 列出匹配模式的文件名
 >
-> When run in the `molecules` directory, which `ls` command(s) will
-> produce this output?
+> 在 `molecules` 目录中运行时，`ls` 命令将
+> 产生这个输出？
 >
 > `ethane.pdb   methane.pdb`
 >
@@ -716,31 +716,31 @@ or specifying a naming pattern using wildcards.
 > 3. `ls *t??ne.pdb`
 > 4. `ls ethane.*`
 >
-> > ## Solution
->>  The solution is `3.`
->>
->> `1.` shows all files whose names contain zero or more characters (`*`)
->> followed by the letter `t`,
->> then zero or more characters (`*`) followed by `ane.pdb`.
->> This gives `ethane.pdb  methane.pdb  octane.pdb  pentane.pdb`.
->>
->> `2.` shows all files whose names start with zero or more characters (`*`) followed by
->> the letter `t`,
->> then a single character (`?`), then `ne.` followed by zero or more characters (`*`).
->> This will give us `octane.pdb` and `pentane.pdb` but doesn't match anything
->> which ends in `thane.pdb`.
->>
->> `3.` fixes the problems of option 2 by matching two characters (`??`) between `t` and `ne`.
->> This is the solution.
->>
->> `4.` only shows files starting with `ethane.`.
+> > ## 解决方案
+> > 解决方案是`3.`
+> >
+> > `1.` 显示名称中包含零个或多个字符 (`*`) 的所有文件
+> > 后跟字母 `t`,
+> > 然后是零个或多个字符 (`*`)，后跟 `ane.pdb`。
+> > 这给出了`ethane.pdb methane.pdb octane.pdb pentane.pdb`。
+> >
+> > `2.` 显示名称以零个或多个字符 (`*`) 开头的所有文件，后跟
+> > 字母 `t`,
+> > 然后是单个字符 (`?`)，然后是 `ne.`，后跟零个或多个字符 (`*`)。
+> > 这将为我们提供 `octane.pdb` 和 `pentane.pdb` 但不匹配任何内容
+> > 以 `thane.pdb` 结尾。
+> >
+> > `3.`通过匹配`t`和`ne`之间的两个字符（`??`）修复了选项2的问题。
+> > 这就是解决方案。
+> >
+> > `4.` 只显示以 `ethane.` 开头的文件。
 > {: .solution}
 {: .challenge}
 
-> ## More on Wildcards
+> ## 更多关于通配符
 >
-> Sam has a directory containing calibration data, datasets, and descriptions of
-> the datasets:
+> Sam 有一个目录，其中包含校准数据、数据集和描述
+> 数据集：
 >
 > ~~~
 > .
@@ -765,9 +765,9 @@ or specifying a naming pattern using wildcards.
 > ~~~
 > {: .language-bash}
 >
-> Before heading off to another field trip, she wants to back up her data and
-> send some datasets to her colleague Bob. Sam uses the following commands
-> to get the job done:
+> 在开始另一次实地考察之前，她想备份她的数据和
+> 将一些数据集发送给她的同事 Bob。 Sam 使用以下命令
+> 完成工作：
 >
 > ~~~
 > $ cp *dataset* backup/datasets
@@ -777,9 +777,9 @@ or specifying a naming pattern using wildcards.
 > ~~~
 > {: .language-bash}
 >
-> Help Sam by filling in the blanks.
+> 帮助山姆填空。
 >
-> The resulting directory structure should look like this
+> 生成的目录结构应如下所示
 > ```
 > .
 > ├── 2015-10-23-calibration.txt
@@ -825,7 +825,7 @@ or specifying a naming pattern using wildcards.
 > ```
 > {: .language-bash}
 >
-> > ## Solution
+> > ## 解决方案
 > > ```
 > > $ cp *calibration.txt backup/calibration
 > > $ cp 2015-11-* send_to_bob/all_november_files/
@@ -835,10 +835,10 @@ or specifying a naming pattern using wildcards.
 > {: .solution}
 {: .challenge}
 
-> ## Organizing Directories and Files
+> ## 组织目录和文件
 >
-> Jamie is working on a project and she sees that her files aren't very well
-> organized:
+> Jamie 正在处理一个项目，她发现她的文件不太好
+> 组织：
 >
 > ~~~
 > $ ls -F
@@ -849,9 +849,9 @@ or specifying a naming pattern using wildcards.
 > ~~~
 > {: .output}
 >
-> The `fructose.dat` and `sucrose.dat` files contain output from her data
-> analysis. What command(s) covered in this lesson does she need to run
-> so that the commands below will produce the output shown?
+> `fructose.dat` 和 `sucrose.dat` 文件包含她的数据输出
+> 分析。 她需要运行本课中涵盖的哪些命令
+> 以便下面的命令将产生所示的输出？
 >
 > ~~~
 > $ ls -F
@@ -875,22 +875,22 @@ or specifying a naming pattern using wildcards.
 > > mv *.dat analyzed
 > > ```
 > > {: .language-bash}
-> > Jamie needs to move her files `fructose.dat` and `sucrose.dat` to the `analyzed` directory.
-> > The shell will expand *.dat to match all .dat files in the current directory.
-> > The `mv` command then moves the list of .dat files to the 'analyzed' directory.
+> > Jamie 需要将她的文件 `fructose.dat` 和 `sucrose.dat` 移动到 `analyzed` 目录。
+> > shell 将扩展 *.dat 以匹配当前目录中的所有 .dat 文件。
+> > `mv` 命令然后将 .dat 文件列表移动到 'analyzed' 目录。
 > {: .solution}
 {: .challenge}
 
-> ## Reproduce a folder structure
+> ## 重现文件夹结构
 >
-> You're starting a new experiment and would like to duplicate the directory
-> structure from your previous experiment so you can add new data.
+> 您正在开始一项新实验并希望复制目录
+> 之前实验的结构，以便您可以添加新数据。
 >
-> Assume that the previous experiment is in a folder called `2016-05-18`,
-> which contains a `data` folder that in turn contains folders named `raw` and
-> `processed` that contain data files.  The goal is to copy the folder structure
-> of the `2016-05-18` folder into a folder called `2016-05-20`
-> so that your final directory structure looks like this:
+> 假设之前的实验在一个名为`2016-05-18`的文件夹中，
+> 其中包含一个 `data` 文件夹，该文件夹又包含名为 `raw` 的文件夹和
+> 包含数据文件的“已处理”。 目标是复制文件夹结构
+> 将 `2016-05-18` 文件夹放入名为 `2016-05-20` 的文件夹中
+> 使您的最终目录结构如下所示：
 >
 > ~~~
 > 2016-05-20/
@@ -900,8 +900,8 @@ or specifying a naming pattern using wildcards.
 > ~~~
 > {: .output}
 >
-> Which of the following set of commands would achieve this objective?
-> What would the other commands do?
+> 以下哪一组命令可以实现此目标？
+> 其他命令会做什么？
 >
 > ~~~
 > $ mkdir 2016-05-20
@@ -936,21 +936,21 @@ or specifying a naming pattern using wildcards.
 > ~~~
 > {: .language-bash}
 > >
-> > ## Solution
-> > The first two sets of commands achieve this objective.
-> > The first set uses relative paths to create the top-level directory before
-> > the subdirectories.
+> > ## 解决方案
+> > 前两组命令实现了这个目标。
+> > 第一套使用相对路径创建之前的顶级目录
+> > 子目录。
 > >
-> > The third set of commands will give an error because the default behavior of `mkdir`
-> > won't create a subdirectory of a non-existent directory:
-> > the intermediate level folders must be created first.
+> > 第三组命令会报错，因为 `mkdir` 的默认行为
+> > 不会创建不存在目录的子目录：
+> > 必须首先创建中级文件夹。
 > >
-> > The fourth set of commands achieve this objective. Remember, the `-p` option,
-> > followed by a path of one or more
-> > directories, will cause `mkdir` to create any intermediate subdirectories as required.
+> > 第四组命令实现了这个目标。 请记住，`-p` 选项，
+> > 后跟一条或多条路径
+> > 目录，将导致 `mkdir` 根据需要创建任何中间子目录。
 > >
-> > The final set of commands generates the 'raw' and 'processed' directories at the same level
-> > as the 'data' directory.
+> > 最后一组命令在同一级别生成'raw'和'processed'目录
+> > 作为“数据”目录。
 > {: .solution}
 {: .challenge}
 

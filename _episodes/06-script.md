@@ -1,40 +1,40 @@
 ---
-title: "Shell Scripts"
+title: "Shell脚本"
 teaching: 30
 exercises: 15
 questions:
-- "How can I save and re-use commands?"
+- "如何保存和重复使用命令？"
 objectives:
-- "Write a shell script that runs a command or series of commands for a fixed set of files."
-- "Run a shell script from the command line."
-- "Write a shell script that operates on a set of files defined by the user on the command line."
-- "Create pipelines that include shell scripts you, and others, have written."
+- "编写一个shell脚本，为一组固定的文件运行一个命令或一系列命令。"
+- "从命令行运行shell脚本。"
+- "编写一个shell脚本，对用户在命令行中定义的一组文件进行操作。"
+- "创建包含您和其他人编写的shell脚本的管道。"
 keypoints:
-- "Save commands in files (usually called shell scripts) for re-use."
-- "`bash [filename]` runs the commands saved in a file."
-- "`$@` refers to all of a shell script's command-line arguments."
-- "`$1`, `$2`, etc., refer to the first command-line argument, the second command-line argument, etc."
-- "Place variables in quotes if the values might have spaces in them."
-- "Letting users decide what files to process is more flexible and more consistent with built-in Unix commands."
+- "将命令保存在文件中（通常称为 shell 脚本）以供重复使用。"
+- "`bash [filename]` 运行保存在文件中的命令。"
+- "`$@` 指代所有 shell 脚本的命令行参数。"
+- "`$1`、`$2` 等，指的是第一个命令行参数、第二个命令行参数等。"
+- "如果值中可能包含空格，请将变量放在引号中。"
+- "让用户决定处理哪些文件更灵活，更符合内置的 Unix 命令。"
 ---
 
-We are finally ready to see what makes the shell such a powerful programming environment.
-We are going to take the commands we repeat frequently and save them in files
-so that we can re-run all those operations again later by typing a single command.
-For historical reasons,
-a bunch of commands saved in a file is usually called a **shell script**,
-but make no mistake:
-these are actually small programs.
+我们终于准备好看看是什么让 shell 成为如此强大的编程环境。
+我们将采用我们经常重复的命令并将它们保存在文件中
+以便我们稍后可以通过键入单个命令再次重新运行所有这些操作。
+由于历史原因，
+保存在文件中的一堆命令通常称为 **shell 脚本**，
+但不要搞错：
+这些实际上是小程序。
 
-Not only will writing shell scripts make your work faster ---
-you won't have to retype the same commands over and over again ---
-it will also make it more accurate (fewer chances for typos) and more reproducible.
-If you come back to your work later (or if someone else finds your work and wants to build on it)
-you will be able to reproduce the same results simply by running your script,
-rather than having to remember or retype a long list of commands.
+编写 shell 脚本不仅会让你的工作更快——
+您不必一遍又一遍地重新键入相同的命令 ---
+它还将使其更准确（拼写错误的机会更少）和更可重复。
+如果您稍后回到您的工作中（或者如果其他人找到您的工作并想在此基础上继续工作）
+您只需运行脚本即可重现相同的结果，
+而不必记住或重新输入一长串命令。
 
-Let's start by going back to `molecules/` and creating a new file, `middle.sh` which will
-become our shell script:
+让我们先回到 `molecules/` 并创建一个新文件 `middle.sh`
+成为我们的shell脚本：
 
 ~~~
 $ cd molecules
@@ -42,28 +42,28 @@ $ nano middle.sh
 ~~~
 {: .language-bash}
 
-The command `nano middle.sh` opens the file `middle.sh` within the text editor 'nano'
-(which runs within the shell).
-If the file does not exist, it will be created.
-We can use the text editor to directly edit the file -- we'll simply insert the following line:
+命令“nano middle.sh”在文本编辑器“nano”中打开文件“middle.sh”
+（在外壳中运行）。
+如果文件不存在，则会创建它。
+我们可以使用文本编辑器直接编辑文件——我们只需插入以下行：
 
 ~~~
 head -n 15 octane.pdb | tail -n 5
 ~~~
 {: .source}
 
-This is a variation on the pipe we constructed earlier:
-it selects lines 11-15 of the file `octane.pdb`.
-Remember, we are *not* running it as a command just yet:
-we are putting the commands in a file.
+这是我们之前构建的管道的一种变体：
+它选择文件`octane.pdb`的第11-15行。
+请记住，我们*还没有*将它作为命令运行：
+我们将命令放在一个文件中。
 
-Then we save the file (`Ctrl-O` in nano),
- and exit the text editor (`Ctrl-X` in nano).
-Check that the directory `molecules` now contains a file called `middle.sh`.
+然后我们保存文件（nano 中的`Ctrl-O`），
+  并退出文本编辑器（nano 中的“Ctrl-X”）。
+检查目录 `molecules` 现在是否包含一个名为 `middle.sh` 的文件。
 
-Once we have saved the file,
-we can ask the shell to execute the commands it contains.
-Our shell is called `bash`, so we run the following command:
+一旦我们保存了文件，
+我们可以要求 shell 执行它包含的命令。
+我们的 shell 被称为 `bash`，所以我们运行以下命令：
 
 ~~~
 $ bash middle.sh
@@ -79,43 +79,43 @@ ATOM     13  H           1      -3.172  -1.337   0.206  1.00  0.00
 ~~~
 {: .output}
 
-Sure enough,
-our script's output is exactly what we would get if we ran that pipeline directly.
+果然，
+如果我们直接运行该管道，我们的脚本的输出正是我们想得到的。
 
-> ## Text vs. Whatever
+> ## 文本与任何内容
 >
-> We usually call programs like Microsoft Word or LibreOffice Writer "text
-> editors", but we need to be a bit more careful when it comes to
-> programming. By default, Microsoft Word uses `.docx` files to store not
-> only text, but also formatting information about fonts, headings, and so
-> on. This extra information isn't stored as characters and doesn't mean
-> anything to tools like `head`: they expect input files to contain
-> nothing but the letters, digits, and punctuation on a standard computer
-> keyboard. When editing programs, therefore, you must either use a plain
-> text editor, or be careful to save files as plain text.
+> 我们通常将 Microsoft Word 或 LibreOffice Writer 等程序称为“文本”
+> editors”，但在涉及到
+> 编程。 默认情况下，Microsoft Word 使用 `.docx` 文件来存储不
+> 只有文本，还有关于字体、标题等的格式信息
+> 开。 这些额外信息不存储为字符，并不意味着
+> 像`head`这样的工具：他们希望输入文件包含
+> 只有标准计算机上的字母、数字和标点符号
+> 键盘。 因此，在编辑程序时，您必须使用普通的
+> 文本编辑器，或小心将文件保存为纯文本。
 {: .callout}
 
-What if we want to select lines from an arbitrary file?
-We could edit `middle.sh` each time to change the filename,
-but that would probably take longer than typing the command out again
-in the shell and executing it with a new file name.
-Instead, let's edit `middle.sh` and make it more versatile:
+如果我们想从任意文件中选择行怎么办？
+我们可以每次编辑 `middle.sh` 来更改文件名，
+但这可能比再次输入命令需要更长的时间
+在 shell 中并使用新的文件名执行它。
+相反，让我们编辑 `middle.sh` 并使其更加通用：
 
 ~~~
 $ nano middle.sh
 ~~~
 {: .language-bash}
 
-Now, within "nano", replace the text `octane.pdb` with the special variable called `$1`:
+现在，在“nano”中，用名为“$1”的特殊变量替换文本“octane.pdb”：
 
 ~~~
 head -n 15 "$1" | tail -n 5
 ~~~
 {: .source}
 
-Inside a shell script,
-`$1` means 'the first filename (or other argument) on the command line'.
-We can now run our script like this:
+在 shell 脚本中，
+`$1` 表示“命令行上的第一个文件名（或其他参数）”。
+我们现在可以像这样运行我们的脚本：
 
 ~~~
 $ bash middle.sh octane.pdb
@@ -131,7 +131,7 @@ ATOM     13  H           1      -3.172  -1.337   0.206  1.00  0.00
 ~~~
 {: .output}
 
-or on a different file like this:
+或在这样的不同文件上：
 
 ~~~
 $ bash middle.sh pentane.pdb
@@ -147,22 +147,22 @@ ATOM     13  H           1      -1.183   0.500  -1.412  1.00  0.00
 ~~~
 {: .output}
 
-> ## Double-Quotes Around Arguments
+> ## 参数周围的双引号
 >
-> For the same reason that we put the loop variable inside double-quotes,
-> in case the filename happens to contain any spaces,
-> we surround `$1` with double-quotes.
+> 出于同样的原因，我们将循环变量放在双引号内，
+> 如果文件名恰好包含任何空格，
+> 我们用双引号将 `$1` 括起来。
 {: .callout}
 
-Currently, we need to edit `middle.sh` each time we want to adjust the range of
-lines that is returned.
-Let's fix that by configuring our script to instead use three command-line arguments.
-After the first command-line argument (`$1`), each additional argument that we
-provide will be accessible via the special variables `$1`, `$2`, `$3`,
-which refer to the first, second, third command-line arguments, respectively.
+目前，我们每次要调整范围时都需要编辑`middle.sh`
+返回的行。
+让我们通过将脚本配置为使用三个命令行参数来解决这个问题。
+在第一个命令行参数 (`$1`) 之后，我们添加的每个附加参数
+provide 可以通过特殊变量 `$1`, `$2`, `$3`,
+分别指第一个、第二个、第三个命令行参数。
 
-Knowing this, we can use additional arguments to define the range of lines to
-be passed to `head` and `tail` respectively:
+知道了这一点，我们可以使用额外的参数来定义行的范围
+分别传递给`head`和`tail`：
 
 ~~~
 $ nano middle.sh
@@ -174,7 +174,7 @@ head -n "$2" "$1" | tail -n "$3"
 ~~~
 {: .source}
 
-We can now run:
+我们现在可以运行：
 
 ~~~
 $ bash middle.sh pentane.pdb 15 5
@@ -190,8 +190,8 @@ ATOM     13  H           1      -1.183   0.500  -1.412  1.00  0.00
 ~~~
 {: .output}
 
-By changing the arguments to our command we can change our script's
-behaviour:
+通过更改命令的参数，我们可以更改脚本的
+行为：
 
 ~~~
 $ bash middle.sh pentane.pdb 20 5
@@ -207,9 +207,9 @@ TER      18              1
 ~~~
 {: .output}
 
-This works,
-but it may take the next person who reads `middle.sh` a moment to figure out what it does.
-We can improve our script by adding some **comments** at the top:
+这行得通，
+但是下一个阅读 `middle.sh` 的人可能需要片刻才能弄清楚它的作用。
+我们可以通过在顶部添加一些 **comments** 来改进我们的脚本：
 
 ~~~
 $ nano middle.sh
@@ -223,38 +223,38 @@ head -n "$2" "$1" | tail -n "$3"
 ~~~
 {: .source}
 
-A comment starts with a `#` character and runs to the end of the line.
-The computer ignores comments,
-but they're invaluable for helping people (including your future self) understand and use scripts.
-The only caveat is that each time you modify the script,
-you should check that the comment is still accurate:
-an explanation that sends the reader in the wrong direction is worse than none at all.
+注释以 `#` 字符开头并一直运行到行尾。
+电脑无视评论，
+但它们对于帮助人们（包括你未来的自己）理解和使用脚本非常宝贵。
+唯一需要注意的是，每次修改脚本时，
+您应该检查评论是否仍然准确：
+将读者引向错误方向的解释比根本没有更糟糕。
 
-What if we want to process many files in a single pipeline?
-For example, if we want to sort our `.pdb` files by length, we would type:
+如果我们想在单个管道中处理多个文件怎么办？
+例如，如果我们想按长度对 `.pdb` 文件进行排序，我们可以输入：
 
 ~~~
 $ wc -l *.pdb | sort -n
 ~~~
 {: .language-bash}
 
-because `wc -l` lists the number of lines in the files
-(recall that `wc` stands for 'word count', adding the `-l` option means 'count lines' instead)
-and `sort -n` sorts things numerically.
-We could put this in a file,
-but then it would only ever sort a list of `.pdb` files in the current directory.
-If we want to be able to get a sorted list of other kinds of files,
-we need a way to get all those names into the script.
-We can't use `$1`, `$2`, and so on
-because we don't know how many files there are.
-Instead, we use the special variable `$@`,
-which means,
-'All of the command-line arguments to the shell script'.
-We also should put `$@` inside double-quotes
-to handle the case of arguments containing spaces
-(`"$@"` is special syntax and is equivalent to `"$1"` `"$2"` ...).
+因为 `wc -l` 列出了文件中的行数
+（回想一下，`wc` 代表“字数”，添加 `-l` 选项表示“计数行数”）
+并且 `sort -n` 以数字方式对事物进行排序。
+我们可以把它放在一个文件中，
+但它只会对当前目录中的“.pdb”文件列表进行排序。
+如果我们希望能够获得其他类型文件的排序列表，
+我们需要一种方法将所有这些名称放入脚本中。
+我们不能使用 `$1`、`$2` 等等
+因为我们不知道有多少文件。
+相反，我们使用特殊变量`$@`，
+意思是，
+'shell 脚本的所有命令行参数'。
+我们还应该将`$@`放在双引号内
+处理包含空格的参数的情况
+（`"$@"` 是特殊语法，相当于`"$1"` `"$2"` ...)。
 
-Here's an example:
+这是一个例子：
 
 ~~~
 $ nano sorted.sh
@@ -287,9 +287,9 @@ $ bash sorted.sh *.pdb ../creatures/*.dat
 ~~~
 {: .output}
 
-> ## List Unique Species
+> ## 列出独特的物种
 >
-> Leah has several hundred data files, each of which is formatted like this:
+> Leah 有数百个数据文件，每个文件的格式如下：
 >
 > ~~~
 > 2013-11-05,deer,5
@@ -303,22 +303,22 @@ $ bash sorted.sh *.pdb ../creatures/*.dat
 > ~~~
 > {: .source}
 >
-> An example of this type of file is given in `shell-lesson-data/data/animal-counts/animals.txt`.
+> `shell-lesson-data/data/animal-counts/animals.txt` 中给出了此类文件的示例。
 >
-> We can use the command `cut -d , -f 2 animals.txt | sort | uniq` to produce
-> the unique species in `animals.txt`.
-> In order to avoid having to type out this series of commands every time,
-> a scientist may choose to write a shell script instead.
+> 我们可以使用命令`cut -d , -f 2 animals.txt | 排序 | uniq`来生产
+> `animals.txt` 中的独特物种。
+> 为了避免每次都要打出这一系列命令，
+> 科学家可能会选择编写一个 shell 脚本。
 >
-> Write a shell script called `species.sh` that takes any number of
-> filenames as command-line arguments, and uses a variation of the above command
-> to print a list of the unique species appearing in each of those files separately.
+> 编写一个名为 `species.sh` 的 shell 脚本，它接受任意数量的
+> 文件名作为命令行参数，并使用上述命令的变体
+> 分别打印出现在每个文件中的独特物种的列表。
 >
-> > ## Solution
+> > ## 解决方案
 > >
 > > ```
-> > # Script to find unique species in csv files where species is the second data field
-> > # This script accepts any number of file names as command line arguments
+> > # 脚本在 csv 文件中查找唯一物种，其中物种是第二个数据字段
+> > # 这个脚本接受任意数量的文件名作为命令行参数
 > >
 > > # Loop over all files
 > > for file in $@
@@ -333,20 +333,20 @@ $ bash sorted.sh *.pdb ../creatures/*.dat
 {: .challenge}
 
 
-Suppose we have just run a series of commands that did something useful --- for example,
-that created a graph we'd like to use in a paper.
-We'd like to be able to re-create the graph later if we need to,
-so we want to save the commands in a file.
-Instead of typing them in again
-(and potentially getting them wrong)
-we can do this:
+假设我们刚刚运行了一系列有用的命令——例如，
+它创建了一个我们想在论文中使用的图表。
+如果需要，我们希望以后能够重新创建图表，
+所以我们想将命令保存在一个文件中。
+而不是再次输入它们
+（并可能让他们错了）
+我们做得到：
 
 ~~~
 $ history | tail -n 5 > redo-figure-3.sh
 ~~~
 {: .language-bash}
 
-The file `redo-figure-3.sh` now contains:
+文件 `redo-figure-3.sh` 现在包含：
 
 ~~~
 297 bash goostats.sh NENE01729B.txt stats-NENE01729B.txt
@@ -357,56 +357,56 @@ The file `redo-figure-3.sh` now contains:
 ~~~
 {: .source}
 
-After a moment's work in an editor to remove the serial numbers on the commands,
-and to remove the final line where we called the `history` command,
-we have a completely accurate record of how we created that figure.
+在编辑器中删除命令上的序列号后，
+并删除我们调用“历史”命令的最后一行，
+我们完全准确地记录了我们如何创建该数字。
 
-> ## Why Record Commands in the History Before Running Them?
+> ## 为什么在运行命令之前将命令记录在历史记录中？
 >
-> If you run the command:
+> 如果您运行命令：
 >
 > ~~~
 > $ history | tail -n 5 > recent.sh
 > ~~~
 > {: .language-bash}
 >
-> the last command in the file is the `history` command itself, i.e.,
-> the shell has added `history` to the command log before actually
-> running it. In fact, the shell *always* adds commands to the log
-> before running them. Why do you think it does this?
+> 文件中的最后一个命令是 `history` 命令本身，即，
+> 实际上，shell 已经在命令日志中添加了 `history`
+> 运行它。 实际上，shell *always* 将命令添加到日志中
+> 在运行它们之前。 为什么你认为它会这样做？
 >
-> > ## Solution
-> > If a command causes something to crash or hang, it might be useful
-> > to know what that command was, in order to investigate the problem.
-> > Were the command only be recorded after running it, we would not
-> > have a record of the last command run in the event of a crash.
+> > ## 解决方案
+> > 如果一个命令导致某些东西崩溃或挂起，它可能很有用
+> > 了解该命令是什么，以便调查问题。
+> > 如果命令只在运行后记录，我们就不会
+> > 在发生崩溃时记录最后运行的命令。
 > {: .solution}
 {: .challenge}
 
-In practice, most people develop shell scripts by running commands at the shell prompt a few times
-to make sure they're doing the right thing,
-then saving them in a file for re-use.
-This style of work allows people to recycle
-what they discover about their data and their workflow with one call to `history`
-and a bit of editing to clean up the output
-and save it as a shell script.
+在实践中，大多数人通过在 shell 提示符下运行几次命令来开发 shell 脚本
+确保他们在做正确的事，
+然后将它们保存在文件中以供重复使用。
+这种工作方式让人们可以循环利用
+他们通过一次调用“历史”来发现他们的数据和工作流程
+并进行一些编辑以清理输出
+并将其保存为 shell 脚本。
 
-## Nelle's Pipeline: Creating a Script
+## Nelle 的管道：创建脚本
 
 
-Nelle's supervisor insisted that all her analytics must be reproducible.
-The easiest way to capture all the steps is in a script.
+Nelle 的主管坚持认为她的所有分析都必须是可重复的。
+捕获所有步骤的最简单方法是在脚本中。
 
-First we return to Nelle's data directory:
+首先我们回到 Nelle 的数据目录：
 ```
 $ cd ../north-pacific-gyre/2012-07-03/
 ```
 {: .language-bash}
 
-She runs the editor and writes the following:
+她运行编辑器并编写以下内容：
 
 ~~~
-# Calculate stats for data files.
+# 计算数据文件的统计数据。
 for datafile in "$@"
 do
     echo $datafile
@@ -415,30 +415,29 @@ done
 ~~~
 {: .language-bash}
 
-She saves this in a file called `do-stats.sh`
-so that she can now re-do the first stage of her analysis by typing:
+她将其保存在一个名为“do-stats.sh”的文件中
+这样她现在可以通过键入以下内容重新进行第一阶段的分析：
 
 ~~~
 $ bash do-stats.sh NENE*A.txt NENE*B.txt
 ~~~
 {: .language-bash}
 
-She can also do this:
+她也可以这样做：
 
 ~~~
 $ bash do-stats.sh NENE*A.txt NENE*B.txt | wc -l
 ~~~
 {: .language-bash}
 
-so that the output is just the number of files processed
-rather than the names of the files that were processed.
+所以输出只是处理的文件数
+而不是已处理文件的名称。
 
-One thing to note about Nelle's script is that
-it lets the person running it decide what files to process.
-She could have written it as:
-
+关于 Nelle 的剧本需要注意的一件事是
+它让运行它的人决定要处理哪些文件。
+她可以这样写：
 ~~~
-# Calculate stats for Site A and Site B data files.
+# 计算站点 A 和站点 B 数据文件的统计数据。
 for datafile in NENE*A.txt NENE*B.txt
 do
     echo $datafile
@@ -447,21 +446,21 @@ done
 ~~~
 {: .language-bash}
 
-The advantage is that this always selects the right files:
-she doesn't have to remember to exclude the 'Z' files.
-The disadvantage is that it *always* selects just those files --- she can't run it on all files
-(including the 'Z' files),
-or on the 'G' or 'H' files her colleagues in Antarctica are producing,
-without editing the script.
-If she wanted to be more adventurous,
-she could modify her script to check for command-line arguments,
-and use `NENE*A.txt NENE*B.txt` if none were provided.
-Of course, this introduces another tradeoff between flexibility and complexity.
+这样做的好处是总是选择正确的文件：
+她不必记住排除“Z”文件。
+缺点是它*总是*只选择那些文件——她不能在所有文件上运行它
+（包括“Z”文件），
+或者在她在南极洲的同事正在制作的“G”或“H”文件上，
+无需编辑脚本。
+如果她想更冒险，
+她可以修改她的脚本来检查命令行参数，
+如果没有提供，请使用`NENE*A.txt NENE*B.txt`。
+当然，这在灵活性和复杂性之间引入了另一种权衡。
 
-> ## Variables in Shell Scripts
+> ## Shell 脚本中的变量
 >
-> In the `molecules` directory, imagine you have a shell script called `script.sh` containing the
-> following commands:
+> 在 `molecules` 目录中，假设您有一个名为 `script.sh` 的 shell 脚本，其中包含
+> 以下命令：
 >
 > ~~~
 > head -n $2 $1
@@ -469,54 +468,54 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 > ~~~
 > {: .language-bash}
 >
-> While you are in the `molecules` directory, you type the following command:
+> 当您在 `molecules` 目录中时，键入以下命令：
 >
 > ~~~
 > $ bash script.sh '*.pdb' 1 1
 > ~~~
 > {: .language-bash}
 >
-> Which of the following outputs would you expect to see?
+> 您希望看到以下哪些输出？
 >
-> 1. All of the lines between the first and the last lines of each file ending in `.pdb`
->    in the `molecules` directory
-> 2. The first and the last line of each file ending in `.pdb` in the `molecules` directory
-> 3. The first and the last line of each file in the `molecules` directory
-> 4. An error because of the quotes around `*.pdb`
+> 1. 以`.pdb`结尾的每个文件的第一行和最后一行之间的所有行
+> 在“分子”目录中
+> 2. `molecules`目录下每个以`.pdb`结尾的文件的第一行和最后一行
+> 3. `molecules`目录下每个文件的第一行和最后一行
+> 4. `*.pdb` 周围的引号引起的错误
 >
-> > ## Solution
-> > The correct answer is 2.
+> > ## 解决方案
+> > 正确答案是2。
 > >
-> > The special variables $1, $2 and $3 represent the command line arguments given to the
-> > script, such that the commands run are:
+> > 特殊变量 $1、$2 和 $3 表示赋予给
+>> 脚本，这样运行的命令是：
 > >
 > > ```
 > > $ head -n 1 cubane.pdb ethane.pdb octane.pdb pentane.pdb propane.pdb
 > > $ tail -n 1 cubane.pdb ethane.pdb octane.pdb pentane.pdb propane.pdb
 > > ```
 > > {: .language-bash}
-> > The shell does not expand `'*.pdb'` because it is enclosed by quote marks.
-> > As such, the first argument to the script is `'*.pdb'` which gets expanded within the
-> > script by `head` and `tail`.
+> > shell 不会扩展 `'*.pdb'`，因为它是用引号括起来的。
+> > 因此，脚本的第一个参数是`'*.pdb'`，它在
+> > 由 `head` 和 `tail` 编写的脚本。
 > {: .solution}
 {: .challenge}
 
-> ## Find the Longest File With a Given Extension
+> ## 查找具有给定扩展名的最长文件
 >
-> Write a shell script called `longest.sh` that takes the name of a
-> directory and a filename extension as its arguments, and prints
-> out the name of the file with the most lines in that directory
-> with that extension. For example:
+> 编写一个名为 `longest.sh` 的 shell 脚本，其名称为
+> 目录和文件扩展名作为其参数，并打印
+> 取出该目录中行数最多的文件名
+> 使用该扩展名。 例如：
 >
 > ~~~
 > $ bash longest.sh shell-lesson-data/data/pdb pdb
 > ~~~
 > {: .language-bash}
 >
-> would print the name of the `.pdb` file in `shell-lesson-data/data/pdb` that has
-> the most lines.
+> 将在 `shell-lesson-data/data/pdb` 中打印 `.pdb` 文件的名称
+> 最多的线路。
 >
-> Feel free to test your script on another directory e.g.
+> 随意在另一个目录上测试您的脚本，例如
 > ~~~
 > $ bash longest.sh shell-lesson-data/writing/data txt
 > ~~~
@@ -525,36 +524,36 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 > > ## Solution
 > >
 > > ```
-> > # Shell script which takes two arguments:
-> > #    1. a directory name
-> > #    2. a file extension
-> > # and prints the name of the file in that directory
-> > # with the most lines which matches the file extension.
+> > # Shell 脚本有两个参数：
+> > # 1.一个目录名
+> > # 2. 文件扩展名
+> > # 并打印该目录中的文件名
+> > # 与文件扩展名匹配的行数最多。
 > >
 > > wc -l $1/*.$2 | sort -n | tail -n 2 | head -n 1
 > > ```
 > > {: .language-bash}
 > >
-> > The first part of the pipeline, `wc -l $1/*.$2 | sort -n`, counts
-> > the lines in each file and sorts them numerically (largest last). When
-> > there's more than one file, `wc` also outputs a final summary line,
-> > giving the total number of lines across _all_ files.  We use `tail
-> > -n 2 | head -n 1` to throw away this last line.
+> > 管道的第一部分，`wc -l $1/*.$2 | 排序-n`，计数
+> > 每个文件中的行并按数字排序（最大的最后）。 什么时候
+> > 文件不止一个，`wc` 还输出最后的摘要行，
+> > 给出 _all_ 文件的总行数。 我们使用`tail
+> > -n 2 | head -n 1` 丢弃最后一行。
 > >
-> > With `wc -l $1/*.$2 | sort -n | tail -n 1` we'll see the final summary
-> > line: we can build our pipeline up in pieces to be sure we understand
-> > the output.
+> > 使用`wc -l $1/*.$2 | 排序-n | tail -n 1` 我们会看到最后的总结
+> > line：我们可以分段构建管道以确保我们理解
+> > 输出。
 > >
 > {: .solution}
 {: .challenge}
 
-> ## Script Reading Comprehension
+> ## 脚本阅读理解
 >
-> For this question, consider the `shell-lesson-data/molecules` directory once again.
-> This contains a number of `.pdb` files in addition to any other files you
-> may have created.
-> Explain what each of the following three scripts would do when run as
-> `bash script1.sh *.pdb`, `bash script2.sh *.pdb`, and `bash script3.sh *.pdb` respectively.
+> 对于这个问题，请再次考虑 `shell-lesson-data/molecules` 目录。
+> 这包含许多 `.pdb` 文件，以及您使用的任何其他文件
+> 可能已经创建。
+> 解释以下三个脚本中的每一个在运行时会做什么
+> 分别为 `bash script1.sh *.pdb`、`bash script2.sh *.pdb` 和 `bash script3.sh *.pdb`。
 >
 > ~~~
 > # Script 1
@@ -577,19 +576,19 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 > ~~~
 > {: .language-bash}
 >
-> > ## Solutions
-> > In each case, the shell expands the wildcard in `*.pdb` before passing the resulting
-> > list of file names as arguments to the script.
+> > ## 解决方案
+>> 在每种情况下，shell 在传递结果之前扩展 `*.pdb` 中的通配符
+>> 作为脚本参数的文件名列表。
 > >
-> > Script 1 would print out a list of all files containing a dot in their name.
-> > The arguments passed to the script are not actually used anywhere in the script.
+> > 脚本 1 将打印出名称中包含点的所有文件的列表。
+> > 传递给脚本的参数实际上并未在脚本中的任何地方使用。
 > >
-> > Script 2 would print the contents of the first 3 files with a `.pdb` file extension.
-> > `$1`, `$2`, and `$3` refer to the first, second, and third argument respectively.
+> > 脚本 2 将打印前 3 个文件的内容，文件扩展名为 `.pdb`。
+>> `$1`、`$2` 和 `$3` 分别指第一个、第二个和第三个参数。
 > >
-> > Script 3 would print all the arguments to the script (i.e. all the `.pdb` files),
-> > followed by `.pdb`.
-> > `$@` refers to *all* the arguments given to a shell script.
+> > 脚本 3 将打印脚本的所有参数（即所有 `.pdb` 文件），
+> > 后跟`.pdb`。
+> > `$@` 指的是 *所有* 给 shell 脚本的参数。
 > > ```
 > > cubane.pdb ethane.pdb methane.pdb octane.pdb pentane.pdb propane.pdb.pdb
 > > ```
@@ -597,13 +596,13 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 > {: .solution}
 {: .challenge}
 
-> ## Debugging Scripts
+> ## 调试脚本
 >
-> Suppose you have saved the following script in a file called `do-errors.sh`
-> in Nelle's `north-pacific-gyre/2012-07-03` directory:
+> 假设您已将以下脚本保存在名为 `do-errors.sh` 的文件中
+> 在 Nelle 的 `north-pacific-gyre/2012-07-03` 目录中：
 >
 > ~~~
-> # Calculate stats for data files.
+> # 计算数据文件的统计数据。
 > for datafile in "$@"
 > do
 >     echo $datfile
@@ -612,30 +611,30 @@ Of course, this introduces another tradeoff between flexibility and complexity.
 > ~~~
 > {: .language-bash}
 >
-> When you run it:
+> 当你运行它时：
 >
 > ~~~
 > $ bash do-errors.sh NENE*A.txt NENE*B.txt
 > ~~~
 > {: .language-bash}
 >
-> the output is blank.
-> To figure out why, re-run the script using the `-x` option:
+> 输出为空白。
+> 要找出原因，请使用 `-x` 选项重新运行脚本：
 >
 > ~~~
 > $ bash -x do-errors.sh NENE*A.txt NENE*B.txt
 > ~~~
 > {: .language-bash}
 >
-> What is the output showing you?
-> Which line is responsible for the error?
+> 输出显示给你什么？
+> 哪条线路对错误负责？
 >
-> > ## Solution
-> > The `-x` option causes `bash` to run in debug mode.
-> > This prints out each command as it is run, which will help you to locate errors.
-> > In this example, we can see that `echo` isn't printing anything. We have made a typo
-> > in the loop variable name, and the variable `datfile` doesn't exist, hence returning
-> > an empty string.
+> > ## 解决方案
+> > `-x` 选项使 `bash` 在调试模式下运行。
+> > 这会在运行时打印出每个命令，这将帮助您定位错误。
+> > 在这个例子中，我们可以看到 `echo` 没有打印任何东西。 我们打错了
+>> 在循环变量名中，变量`datfile`不存在，因此返回
+> > 一个空字符串。
 > {: .solution}
 {: .challenge}
 
