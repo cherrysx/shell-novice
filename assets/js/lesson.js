@@ -24,7 +24,7 @@ $(".solution").each(function() {
 function google_search() {
   var query = document.getElementById("google-search").value;
   var domain = $("meta[name=search-domain]").attr("value");
-  window.open("https://www.google.com/search?q=" + query + "+site:" + domain);
+  window.open("https://www.baidu.com/s?wd=" + query + "&si=" + domain);
 }
 
 // function to shrink the life cycle bar when scrolling
