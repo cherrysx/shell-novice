@@ -440,7 +440,7 @@ $ wc -l *.pdb | sort -n | head -n 1
 最后几个命令中使用的重定向和管道如下所示：
 
 ![不同命令的重定向和管道：“wc -l *.pdb”将直接
-输出到外壳。 “wc -l *.pdb > lengths”将直接输出到文件
+输出到shell。 “wc -l *.pdb > lengths”将直接输出到文件
 “长度”。 “wc -l *.pdb | sort -n | head -n 1”将构建一个管道，其中
 “wc”命令的输出是“sort”命令的输入，
 “排序”命令是“头”命令的输入和输出

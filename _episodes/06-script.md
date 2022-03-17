@@ -43,7 +43,7 @@ $ nano middle.sh
 {: .language-bash}
 
 命令“nano middle.sh”在文本编辑器“nano”中打开文件“middle.sh”
-（在外壳中运行）。
+（在shell中运行）。
 如果文件不存在，则会创建它。
 我们可以使用文本编辑器直接编辑文件——我们只需插入以下行：
 
