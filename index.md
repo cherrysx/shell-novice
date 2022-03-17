@@ -15,5 +15,5 @@ Linux shell的存在时间比大多数用户的存在时间都要长。它之所
 >
 > 如果您已经习惯于操作文件和目录，
 > 使用 `grep` 和 `find` 搜索文件，并编写简单的循环
-> 和脚本，那么可以尝试学习Shell进阶的课程（正在开发中...）
+> 和脚本，那么可以尝试学习[Shell进阶](https://www.yuanmadesign.com/shell2/)的课程
 {: .prereq}

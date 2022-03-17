@@ -1,5 +1,5 @@
 ---
-title: Setup
+title: 准备事项
 ---
 FIXME
 

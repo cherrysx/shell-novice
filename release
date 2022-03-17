@@ -1,0 +1,9 @@
+#!/bin/bash
+
+make site
+
+\mv -f _site shell1
+
+rsync -r shell1 root@175.24.122.92:/opt/elearning/
+
+\mv -f shell1 _site
